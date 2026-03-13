@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incitetales — The Untold Assam · 2026 Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c09;
+    --surface: #131210;
+    --surface2: #1a1814;
+    --gold: #c9a84c;
+    --gold-dim: #8a6e2f;
+    --gold-light: #e8c97a;
+    --cream: #f0e8d5;
+    --cream-dim: #a89880;
+    --red-accent: #c0392b;
+    --teal: #2a7a6a;
+    --text: #d8cfc0;
+    --text-dim: #7a7060;
+    --border: #2a2620;
+    --launch-color: #e8c97a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 32px 28px 48px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 10%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 85% 80%, rgba(42,122,106,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-block {}
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--cream);
+  }
+
+  .logo span {
+    color: var(--gold);
+  }
+
+  .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-top: 5px;
+  }
+
+  .header-right {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+
+  .header-right strong {
+    color: var(--gold);
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    margin-bottom: 2px;
+  }
+
+  /* ── TIMELINE CONNECTOR ── */
+  .timeline-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    gap: 0;
+  }
+
+  .tl-node {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .tl-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--border));
+  }
+
+  .tl-line.active {
+    background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+  }
+
+  /* ── PHASES GRID ── */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px 16px 20px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .phase:hover {
+    border-color: var(--gold-dim);
+  }
+
+  .phase.active-phase {
+    border-color: var(--gold);
+    background: #161410;
+  }
+
+  .phase.active-phase::before {
+    content: '● NOW';
+    position: absolute;
+    top: -9px;
+    left: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    background: var(--bg);
+    padding: 0 6px;
+  }
+
+  .phase.launch-phase {
+    border-color: var(--teal);
+    background: #101613;
+  }
+
+  .phase.launch-phase::before {
+    content: '🚀 LAUNCH DEADLINE';
+    position: absolute;
+    top: -9px;
+    left: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 0.18em;
+    color: #4ecbb4;
+    background: var(--bg);
+    padding: 0 6px;
+  }
+
+  .phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding: 3px 7px;
+    border: 1px solid var(--gold-dim);
+    display: inline-block;
+  }
+
+  .phase.launch-phase .phase-label {
+    color: #4ecbb4;
+    border-color: var(--teal);
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.15;
+  }
+
+  .phase ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase ul li {
+    padding: 5px 0;
+    padding-left: 14px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(42,38,32,0.6);
+    line-height: 1.5;
+  }
+
+  .phase ul li:last-child {
+    border-bottom: none;
+  }
+
+  .phase ul li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    font-size: 5px;
+    color: var(--gold-dim);
+  }
+
+  .phase ul li strong {
+    color: var(--cream);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .phase ul li em {
+    display: block;
+    color: var(--text-dim);
+    font-size: 11px;
+    font-style: italic;
+    margin-top: 1px;
+  }
+
+  .phase-target {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gold-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+
+  .phase.launch-phase .phase-target {
+    border-color: var(--teal);
+    color: #4ecbb4;
+  }
+
+  /* ── LAUNCH BANNER ── */
+  .launch-banner {
+    background: linear-gradient(135deg, #0f1a17 0%, #101613 100%);
+    border: 1px solid var(--teal);
+    border-left: 3px solid #4ecbb4;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .launch-banner .lb-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    color: #4ecbb4;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .launch-banner .lb-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--cream);
+  }
+
+  .launch-banner .lb-text span {
+    color: #4ecbb4;
+    font-style: italic;
+  }
+
+  .launch-banner .lb-deadline {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  /* ── BOTTOM GRID ── */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+  }
+
+  .bottom-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 16px;
+  }
+
+  .bottom-card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .bottom-card-title::before {
+    content: '◆';
+    font-size: 6px;
+  }
+
+  /* Daily discipline */
+  .discipline-item {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .discipline-item:last-child { border-bottom: none; }
+
+  .disc-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    font-weight: 500;
+    padding-top: 1px;
+  }
+
+  .disc-action {
+    font-size: 11.5px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  .disc-action strong { color: var(--cream); font-weight: 400; }
+  .disc-action em { display: block; color: var(--text-dim); font-size: 10.5px; font-style: italic; margin-top: 1px; }
+
+  /* AI Agents */
+  .agent-item {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .agent-item:last-child { border-bottom: none; }
+
+  .agent-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 2px;
+  }
+
+  .agent-name {
+    font-size: 12px;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+
+  .agent-desc {
+    font-size: 10.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Targets */
+  .targets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .target-item {
+    padding: 8px 0;
+  }
+
+  .target-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .target-num.rupee { font-size: 22px; }
+
+  .target-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-quote {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  .footer-quote span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+
+  /* connector dots row */
+  .connector-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .connector-row span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    display: inline-block;
+  }
+
+  .connector-row span.active {
+    background: var(--gold);
+    width: 7px;
+    height: 7px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-block">
+    <div class="logo">Incite<span>tales</span></div>
+    <div class="tagline">The Untold Assam &nbsp;·&nbsp; 2026 Roadmap</div>
+  </div>
+  <div class="header-right">
+    <strong>6am – 8am &nbsp;·&nbsp; 8pm – 10pm</strong>
+    Daily Build Hours<br>
+    Guwahati · Upper Assam<br>
+    incitetales.com &nbsp;·&nbsp; @incitetales
+  </div>
+</div>
+
+<!-- LAUNCH BANNER -->
+<div class="launch-banner">
+  <div class="lb-label">⚠ Hard Deadline</div>
+  <div class="lb-text">Platform must <span>go live before September 2026</span> — all phases before this point lead to launch</div>
+  <div class="lb-deadline">Launch window → Mar – Aug 2026</div>
+</div>
+
+<!-- PHASES -->
+<div class="phases">
+
+  <!-- PHASE 1 -->
+  <div class="phase active-phase">
+    <div class="phase-label">Mar – Apr 2026</div>
+    <div class="phase-title">Content Sprint</div>
+    <ul>
+      <li><strong>Monday 6am</strong> — Write Maguri Beel story. Send raw answers to Claude. Publish Saturday.<em></em></li>
+      <li><strong>One story/week</strong> — Dibru-Saikhowa · Stilwell Road · Digboi · Pangsau Pass · Majuli · Sibsagar · Tea Gardens · River Dolphins</li>
+      <li><strong>Instagram</strong> — @incitetales live. Every story becomes a reel + post. Real places. Real knowledge. No stock images.</li>
+      <li><strong>Website</strong> — incitetales.com homepage → "The Untold Assam." One destination page per story published.</li>
+      <li><strong>Identify</strong> — 5 operator contacts in Upper Assam with zero digital presence. List them. Don't reach out yet.</li>
+    </ul>
+    <div class="phase-target">Target → 8 stories live · 500+ Instagram followers · Zero spend</div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <div class="phase-label">Apr – Jun 2026</div>
+    <div class="phase-title">First Revenue</div>
+    <ul>
+      <li><strong>Operator outreach</strong> — Contact 3 boat operators + homestay owners. Build their Google listing + Instagram page. Rs. 5,000 setup each.</li>
+      <li><strong>Monthly retainer</strong> — Rs. 2,000/month per operator for content management. 3 clients = Rs. 6,000 MRR.</li>
+      <li><strong>Claude Code</strong> — Build full website with destination pages, operator directory, WhatsApp booking form. Evening sessions.</li>
+      <li><strong>Incorporate</strong> — Private Limited Company. Rs. 13,000–17,000. CoI arrives → DPIIT + MASI same day. Both free.</li>
+      <li><strong>Content Agent</strong> — Build Agent 3. Raw 200 words in → polished story + SEO + 3 captions out. 90 seconds per piece.</li>
+    </ul>
+    <div class="phase-target">Target → Rs. 15,000 setup revenue · Rs. 6,000 MRR · DPIIT certificate</div>
+  </div>
+
+  <!-- PHASE 3 — LAUNCH -->
+  <div class="phase launch-phase">
+    <div class="phase-label">Jun – Aug 2026</div>
+    <div class="phase-title">Grant + AI Build<br><small style="font-size:11px;color:#4ecbb4;font-family:'DM Mono',monospace;letter-spacing:0.1em;">← LAUNCH HERE</small></div>
+    <ul>
+      <li><strong>MASI ID arrives</strong> — Apply Idea2POC grant immediately. Rs. 5,00,000. Submit: live website + 12 stories + 3 operator clients as traction proof.</li>
+      <li><strong>Agent 1 live</strong> — Itinerary Builder. Tourist types preferences → complete Upper Assam itinerary with operators, costs, permits. Claude API powered.</li>
+      <li><strong>Agent 4 live</strong> — Permit Guide. Arunachal ILP · Manipur · Nagaland · Mizoram. Accurate, conversational, always updated.</li>
+      <li><strong>Experience packages</strong> — Maguri dawn birding Rs. 2,500 · Dibu dolphins Rs. 3,000 · Stilwell heritage Rs. 4,500. Listed on site. 25% commission.</li>
+      <li><strong>SISFS application</strong> — Rs. 20,00,000 seed fund via The Nest Guwahati. Requires DPIIT. Submit with traction data.</li>
+    </ul>
+    <div class="phase-target">Target → MASI grant applied · 3 AI agents live · Platform LIVE · First experience booking</div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase">
+    <div class="phase-label">Sep – Dec 2026</div>
+    <div class="phase-title">Scale</div>
+    <ul>
+      <li><strong>Grant deployed</strong> — Rs. 5L funds professional photography · Agent 2 operator bot · paid Instagram campaigns · platform upgrade.</li>
+      <li><strong>10 operator clients</strong> — Rs. 2,000/month each = Rs. 20,000 MRR from digital marketing service alone.</li>
+      <li><strong>Agent 2 live</strong> — Operator Onboarding Bot. WhatsApp-based. New operator onboarded in 15 minutes. Zero manual work.</li>
+      <li><strong>SISFS Rs. 20L</strong> — If approved, funds full platform rebuild, team hiring, Northeast expansion beyond Assam.</li>
+      <li><strong>Incitetales is real</strong> — Content authority built. Revenue proven. Agents running. Decision point → scale or stay parallel.</li>
+    </ul>
+    <div class="phase-target">Target → Rs. 30,000 MRR · 20+ stories · 4 agents · Rs. 5L grant deployed</div>
+  </div>
+
+</div>
+
+<div class="connector-row">
+  <span class="active"></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- BOTTOM GRID -->
+<div class="bottom-grid">
+
+  <!-- Daily Discipline -->
+  <div class="bottom-card">
+    <div class="bottom-card-title">Daily Discipline — Every Single Day</div>
+    <div class="discipline-item">
+      <div class="disc-time">6:00</div>
+      <div class="disc-action"><strong>CREATE</strong> — One story, one caption, one page. Raw knowledge → polished content with Claude.<em>Mon: Maguri answers · Claude writes · Tue-Fri: build tasks · Weekend: publish</em></div>
+    </div>
+    <div class="discipline-item">
+      <div class="disc-time">6:30</div>
+      <div class="disc-action"><strong>BUILD</strong> — One concrete platform task. Claude Code as coding partner.<em>Destination page · Operator listing · Agent feature · Client site</em></div>
+    </div>
+    <div class="discipline-item">
+      <div class="disc-time">7:00</div>
+      <div class="disc-action"><strong>DISTRIBUTE</strong> — Schedule content. Reply to DMs. One outreach message.<em>Engage Northeast travel accounts · Follow target audience · Show up daily</em></div>
+    </div>
+    <div class="discipline-item">
+      <div class="disc-time">7:30</div>
+      <div class="disc-action"><strong>PLAN</strong> — Review today. Write tomorrow's single most important task.<em>Close laptop. Go to 9-6 job. Return 8pm for deep work session.</em></div>
+    </div>
+    <div class="discipline-item">
+      <div class="disc-time">8–10pm</div>
+      <div class="disc-action"><strong>DEEP WORK</strong> — Long articles · Client work · Agent building · Strategy.<em>The hours that build what the morning hours cannot.</em></div>
+    </div>
+  </div>
+
+  <!-- AI Agents -->
+  <div class="bottom-card">
+    <div class="bottom-card-title">The Four AI Agents</div>
+    <div class="agent-item">
+      <div class="agent-id">A1</div>
+      <div class="agent-name">Itinerary Builder</div>
+      <div class="agent-desc">Tourist types preferences → complete Upper Assam itinerary with operators, costs, permits. Claude API. Runs while you work your 9-6.</div>
+    </div>
+    <div class="agent-item">
+      <div class="agent-id">A2</div>
+      <div class="agent-name">Operator Onboarding Bot</div>
+      <div class="agent-desc">WhatsApp-based. New operator answers questions by voice or text → profile created automatically. Built with Claude Code.</div>
+    </div>
+    <div class="agent-item">
+      <div class="agent-id">A3</div>
+      <div class="agent-name">Content Enhancement Agent</div>
+      <div class="agent-desc">Your raw 200 words → polished story + SEO tags + 3 Instagram captions. 90 seconds. Built first — Month 2.</div>
+    </div>
+    <div class="agent-item">
+      <div class="agent-id">A4</div>
+      <div class="agent-name">Permit Information Agent</div>
+      <div class="agent-desc">Arunachal ILP · Nagaland · Manipur · Mizoram. Accurate permit guidance by state, entry point, vehicle type. Your most trusted feature.</div>
+    </div>
+  </div>
+
+  <!-- Targets -->
+  <div class="bottom-card">
+    <div class="bottom-card-title">By August 2026 — The Targets</div>
+    <div class="targets-grid">
+      <div class="target-item">
+        <div class="target-num">20+</div>
+        <div class="target-label">Stories published<br>on site · Instagram</div>
+      </div>
+      <div class="target-item">
+        <div class="target-num">5K</div>
+        <div class="target-label">Instagram followers<br>organic</div>
+      </div>
+      <div class="target-item">
+        <div class="target-num rupee">₹30K</div>
+        <div class="target-label">Monthly recurring<br>revenue</div>
+      </div>
+      <div class="target-item">
+        <div class="target-num">10</div>
+        <div class="target-label">Operator clients<br>paying monthly</div>
+      </div>
+      <div class="target-item">
+        <div class="target-num rupee">₹5L</div>
+        <div class="target-label">MASI grant<br>received + deployed</div>
+      </div>
+      <div class="target-item">
+        <div class="target-num">4</div>
+        <div class="target-label">AI agents live<br>on platform</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-quote">"One story. Every week. <span>The world learns what Assam is."</span></div>
+  <div class="footer-meta">
+    incitetales.com · @incitetales<br>
+    updated march 2026 · guwahati
+  </div>
+</div>
+
+</body>
+</html>
