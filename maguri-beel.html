@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maguri Beel — Incitetales</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   STEP 1 — CSS VARIABLES (your design tokens)
+   Change these and the whole site changes.
+   ============================================ */
+:root {
+  --bg:        #0b0a07;
+  --bg2:       #111009;
+  --surface:   #161410;
+  --surface2:  #1c1a14;
+  --gold:      #c8a84b;
+  --gold-dim:  #7a6530;
+  --gold-pale: #e8d49a;
+  --cream:     #ede5d0;
+  --cream-dim: #9a8f7a;
+  --teal:      #2d7a68;
+  --teal-light:#4ecbb4;
+  --text:      #c8bfac;
+  --text-dim:  #6a6050;
+  --border:    #242018;
+  --border2:   #2e2a20;
+  --col-width: 680px; /* max width of article text */
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+/* ============================================
+   STEP 2 — NAV (same as homepage, copy-paste)
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 48px;
+  background: rgba(11,10,7,0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 8px 18px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--gold-pale); }
+
+/* ============================================
+   STEP 3 — STORY HERO
+   This is the big header image area at the top.
+   Replace .hero-img background with a real photo.
+   ============================================ */
+.story-hero {
+  margin-top: 57px; /* height of nav */
+  height: 70vh;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* 
+  HOW TO ADD A REAL PHOTO:
+  Replace the gradient below with:
+  background-image: url('your-photo.jpg');
+  background-size: cover;
+  background-position: center;
+*/
+.hero-img {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 30%, rgba(11,10,7,0.96) 100%),
+    radial-gradient(ellipse 100% 60% at 50% 80%, rgba(45,122,104,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 40% at 30% 20%, rgba(200,168,75,0.07) 0%, transparent 50%),
+    linear-gradient(160deg, #0a1810 0%, #0d1f18 40%, #091410 70%, #060e08 100%);
+  transition: transform 8s ease;
+}
+
+/* Subtle Ken Burns effect on load */
+.story-hero:hover .hero-img {
+  transform: scale(1.02);
+}
+
+/* Decorative horizon line — remove when you have real photo */
+.hero-img::before {
+  content: '';
+  position: absolute;
+  bottom: 35%;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(200,168,75,0.12), rgba(45,122,104,0.18), rgba(200,168,75,0.12), transparent 90%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 48px 48px;
+  max-width: 860px;
+}
+
+/* Breadcrumb trail — shows where you are */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.breadcrumb a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span { color: var(--gold); }
+
+/* Story category pill */
+.story-category {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 4px 10px;
+  margin-bottom: 16px;
+}
+
+/* The main headline */
+.story-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+.story-headline em { font-style: italic; color: var(--gold-pale); }
+
+/* Subtitle / standfirst */
+.story-standfirst {
+  font-size: 17px;
+  color: var(--cream-dim);
+  font-style: italic;
+  line-height: 1.55;
+  max-width: 560px;
+}
+
+/* ============================================
+   STEP 4 — ARTICLE META BAR
+   Author, date, read time, share buttons
+   ============================================ */
+.article-meta {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+}
+
+.meta-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.meta-item strong {
+  display: block;
+  color: var(--cream-dim);
+  font-weight: 400;
+  margin-top: 2px;
+  font-size: 10px;
+}
+
+.meta-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border2);
+}
+
+.meta-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.share-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border2);
+  padding: 6px 12px;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  transition: color 0.2s, border-color 0.2s;
+}
+.share-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+/* ============================================
+   STEP 5 — ARTICLE BODY LAYOUT
+   Two-column: article text + sticky sidebar
+   ============================================ */
+.article-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+  align-items: start;
+}
+
+/* ============================================
+   STEP 6 — THE ARTICLE TEXT
+   This is your story content. 
+   Each section below = one HTML block.
+   ============================================ */
+.article-body {
+  padding: 56px 64px 56px 0;
+  border-right: 1px solid var(--border);
+}
+
+/* Opening paragraph — bigger, bolder */
+.article-body .intro {
+  font-size: 19px;
+  color: var(--cream);
+  line-height: 1.65;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+/* Regular paragraphs */
+.article-body p {
+  margin-bottom: 24px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* Section headings inside the article */
+.article-body h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 48px 0 20px;
+  line-height: 1.2;
+}
+
+.article-body h2::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold-dim);
+  margin-bottom: 14px;
+}
+
+/* Pull quote — the big highlighted quote */
+.pullquote {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 28px;
+  margin: 40px 0;
+}
+
+.pullquote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px !important;
+  font-style: italic;
+  color: var(--cream) !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+/* Inline image with caption */
+.article-img {
+  margin: 40px 0;
+}
+
+.article-img .img-placeholder {
+  width: 100%;
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 
+  HOW TO ADD A REAL PHOTO HERE:
+  Replace .img-placeholder with:
+  <img src="your-photo.jpg" alt="description" style="width:100%; height:320px; object-fit:cover;">
+*/
+.img-placeholder-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #0a1810 0%, #0d2018 50%, #081410 100%);
+}
+.img-placeholder-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 80%, rgba(45,122,104,0.2) 0%, transparent 60%);
+}
+.img-placeholder-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.img-caption {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* Location tag within article */
+.location-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+/* Article end divider */
+.article-end {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 32px;
+}
+.article-end::before, .article-end::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border2);
+}
+.article-end span {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+}
+
+/* ============================================
+   STEP 7 — STICKY SIDEBAR
+   Stays visible as you read.
+   Contains: map location, quick facts, booking.
+   ============================================ */
+.article-sidebar {
+  padding: 56px 0 56px 40px;
+  position: sticky;
+  top: 80px;
+}
+
+.sidebar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.sidebar-card-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Quick facts list */
+.fact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+.fact-row:last-child { border-bottom: none; }
+
+.fact-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.fact-value {
+  font-size: 12px;
+  color: var(--cream);
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* Operator booking card */
+.op-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.op-card-header {
+  background: var(--surface2);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.op-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.op-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.op-card-location {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.op-card-body {
+  padding: 16px 20px;
+}
+
+.op-card-desc {
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.op-card-packages {
+  margin-bottom: 16px;
+}
+
+.package-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.package-row:last-child { border-bottom: none; }
+
+.package-name {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.package-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* 
+  THE WHATSAPP BOOKING BUTTON
+  The href uses wa.me with a pre-filled message.
+  Format: https://wa.me/[country code][number]?text=[encoded message]
+  
+  HOW TO USE:
+  1. Replace 919876543210 with the operator's real number
+  2. Edit the text= message to match the experience
+  3. The %20 = space, %0A = new line in URL encoding
+*/
+.book-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px;
+  background: var(--teal);
+  color: var(--bg);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 8px;
+}
+.book-whatsapp:hover { background: var(--teal-light); }
+
+.book-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ============================================
+   STEP 8 — RELATED STORIES (below article)
+   ============================================ */
+.related-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 64px 48px;
+}
+
+.related-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.related-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.related-card {
+  background: var(--surface);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.related-card-img {
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.related-card-img-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s ease;
+}
+.related-card:hover .related-card-img-bg { transform: scale(1.05); }
+
+.related-card:nth-child(1) .related-card-img-bg {
+  background: linear-gradient(160deg, #101820 0%, #0e1c28 60%, #080f14 100%);
+}
+.related-card:nth-child(2) .related-card-img-bg {
+  background: linear-gradient(160deg, #1a1208 0%, #251a0a 60%, #0d0a04 100%);
+}
+.related-card:nth-child(3) .related-card-img-bg {
+  background: linear-gradient(160deg, #0c1520 0%, #0e1c28 60%, #061018 100%);
+}
+
+.related-card-body {
+  padding: 18px;
+}
+
+.related-region {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.related-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.2;
+}
+
+/* ============================================
+   STEP 9 — FOOTER (same as homepage)
+   ============================================ */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 40px 48px 28px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-content > * {
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.25s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.4s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.55s; }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     NAV — copy this to every page
+     ============================================ -->
+<nav>
+  <a href="index.html" class="nav-logo">Incite<span>tales</span></a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Stories</a></li>
+    <li><a href="#">Destinations</a></li>
+    <li><a href="#">Operators</a></li>
+    <li><a href="#">Experiences</a></li>
+    <li><a href="#">Agents</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Plan a Trip</a>
+</nav>
+
+<!-- ============================================
+     HERO — swap .hero-img background with real photo
+     ============================================ -->
+<div class="story-hero">
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <div class="breadcrumb">
+      <a href="#">Home</a> ›
+      <a href="#">Stories</a> ›
+      <span>Maguri Beel</span>
+    </div>
+    <div class="story-category">◆ &nbsp; Wetland · Wildlife · Upper Assam</div>
+    <h1 class="story-headline">Maguri Beel: The World-Class Wonder<br>I Almost <em>Took for Granted</em></h1>
+    <p class="story-standfirst">Growing up in Bordoloi Nagar, I didn't know the word "wetland." I just knew there was a place ten minutes from home where the world went quiet.</p>
+  </div>
+</div>
+
+<!-- ============================================
+     META BAR — author, date, read time
+     ============================================ -->
+<div class="article-meta">
+  <div class="meta-left">
+    <div class="meta-item">
+      Location
+      <strong>Tinsukia · Upper Assam</strong>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Published
+      <strong>March 2026</strong>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Read time
+      <strong>6 minutes</strong>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Best season
+      <strong>Nov – Apr</strong>
+    </div>
+  </div>
+  <div class="meta-right">
+    <button class="share-btn">Share</button>
+    <button class="share-btn">Instagram</button>
+    <button class="share-btn">Copy link</button>
+  </div>
+</div>
+
+<!-- ============================================
+     ARTICLE LAYOUT — text + sidebar
+     ============================================ -->
+<div class="article-layout">
+
+  <!-- ── ARTICLE BODY ── -->
+  <article class="article-body">
+
+    <div class="location-tag">◆ &nbsp; Tinsukia · Dibrugarh District · Upper Assam</div>
+
+    <!-- Opening paragraph — make it count -->
+    <p class="intro">
+      Growing up in Bordoloi Nagar, I didn't know the word "wetland." I just knew there was a place ten minutes from home where the world went quiet.
+    </p>
+
+    <p>
+      Maguri Beel — the Maguri-Motapung wetland — sits at the edge of Tinsukia district, tucked between the Dibru River and the forests of Dibru-Saikhowa National Park. Ecologists call it one of the most biodiverse freshwater wetlands in Northeast India. Birdwatchers fly in from across the country to tick off species on their lists. For me, for most of my childhood, it was simply the place you went when you needed to breathe.
+    </p>
+
+    <!-- Inline image — replace with real photo -->
+    <div class="article-img">
+      <div class="img-placeholder">
+        <div class="img-placeholder-bg"></div>
+        <div class="img-placeholder-label">↑ Replace with photo: wide shot of Maguri Beel at sunrise</div>
+      </div>
+      <p class="img-caption">◆ &nbsp; The Maguri-Motapung wetland at dawn. Mist off the Dibru River, November.</p>
+    </div>
+
+    <h2>The Light Over the Water</h2>
+
+    <p>
+      The best thing about living close to Maguri Beel is that you learn it in different lights.
+    </p>
+
+    <p>
+      Sunrise is the most honest version. The mist comes off the Dibru before the sun clears the treeline — a low, slow drift that makes the reed beds look like they're exhaling. The first bird calls start before you can see much: a kingfisher somewhere to the left, the distant cry of something you can't identify, the quiet percussion of water against a wooden hull. By the time the light turns gold, the place has already been awake for an hour without you.
+    </p>
+
+    <!-- Pull quote — pick your best line -->
+    <div class="pullquote">
+      <p>"Evening is softer. The reed beds catch the sunset and hold it — every shade from pale yellow to deep amber, the colours deepening as the light drops."</p>
+    </div>
+
+    <p>
+      Local fishermen work until the last of it, their boats thin as leaves on the water, their silhouettes so still they look like they were painted there. Watching them, you understand something about Assam that no guidebook captures: the relationship between people and water here is not transactional. It is ancestral.
+    </p>
+
+    <!-- Another image slot -->
+    <div class="article-img">
+      <div class="img-placeholder">
+        <div class="img-placeholder-bg"></div>
+        <div class="img-placeholder-label">↑ Replace with photo: fishermen silhouettes at sunset</div>
+      </div>
+      <p class="img-caption">◆ &nbsp; Local fishermen on Maguri Beel. Evening, December.</p>
+    </div>
+
+    <h2>What It Gives You</h2>
+
+    <p>
+      Maguri Beel is known, among those who know it, for its Gangetic river dolphins. They don't announce themselves. There's no dramatic breach, no show. Just a soft exhale at the water's surface — a grey curve that disappears before you're sure you saw it. If you're patient, and quiet, and lucky, you'll see it again. That's the deal the Beel offers: stillness in exchange for everything.
+    </p>
+
+    <p>
+      The birds are extraordinary — the wetland lies along a major migratory corridor and hosts species that travel from Central Asia and Siberia to winter here. During peak season, the shoreline becomes something close to chaos: herons, egrets, ducks, fishing eagles, and dozens of species most visitors have never seen before. But you don't need to be a birder to feel it. You just need to stand still long enough.
+    </p>
+
+    <div class="pullquote">
+      <p>"The fishermen know where the dolphins surface and when. They know which mornings are worth getting up early for. That knowledge doesn't appear on any app."</p>
+    </div>
+
+    <h2>A Note on Growing Up Here</h2>
+
+    <p>
+      I left Bordoloi Nagar without fully understanding what I was leaving behind.
+    </p>
+
+    <p>
+      Most people who visit Maguri Beel save up for it, plan around it, travel hours to reach it. I used to walk there on an ordinary Tuesday evening because I felt like watching the sunset. That proximity — the casualness of it — made me take it for granted in the way you take for granted anything that has always been there.
+    </p>
+
+    <p>
+      I understand it differently now. Maguri Beel is not a backdrop. It is, quietly and without ceremony, one of the most beautiful places in India. The kind of place that stays with you long after you've left — not because it was dramatic or spectacular, but because it was real, and still, and entirely itself.
+    </p>
+
+    <p>
+      The world should know it exists.
+    </p>
+
+    <!-- Article end marker -->
+    <div class="article-end"><span>◆</span></div>
+
+    <!-- Getting there section -->
+    <h2>Getting There</h2>
+
+    <p>
+      Maguri Beel is about 12 kilometres from Tinsukia town, accessible via Guijan Ghat road. The nearest airport is Dibrugarh (approximately 60 km). Most visitors come between November and April, when migratory birds are present and the weather is clear.
+    </p>
+
+    <p>
+      The best way to see it is by boat — a local wooden boat, not a tourist launch. Early morning, before 7am, is when the dolphins are most active and the light is best for photography. The operator listed on this page has been on this water his whole life.
+    </p>
+
+  </article>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="article-sidebar">
+
+    <!-- Quick facts -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">Quick Facts</div>
+      <div class="fact-row">
+        <span class="fact-label">District</span>
+        <span class="fact-value">Tinsukia, Assam</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Type</span>
+        <span class="fact-value">Freshwater wetland</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Best time</span>
+        <span class="fact-value">Nov – Apr</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">From Tinsukia</span>
+        <span class="fact-value">~12 km</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">From Dibrugarh</span>
+        <span class="fact-value">~60 km</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Permit needed</span>
+        <span class="fact-value">No</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Best hour</span>
+        <span class="fact-value">Before 7am</span>
+      </div>
+    </div>
+
+    <!-- Operator booking card -->
+    <div class="op-card">
+      <div class="op-card-header">
+        <div class="op-card-label">◆ Local Operator</div>
+        <div class="op-card-name">Raju Moran</div>
+        <div class="op-card-location">Guijan Ghat · Tinsukia</div>
+      </div>
+      <div class="op-card-body">
+        <p class="op-card-desc">Third-generation boat operator. Knows every dolphin feeding spot and every early-morning birding window on Maguri Beel.</p>
+
+        <div class="op-card-packages">
+          <div class="package-row">
+            <span class="package-name">Dawn Birding (3hr)</span>
+            <span class="package-price">₹2,500</span>
+          </div>
+          <div class="package-row">
+            <span class="package-name">Sunset Stroll (2hr)</span>
+            <span class="package-price">₹1,800</span>
+          </div>
+          <div class="package-row">
+            <span class="package-name">Full Day (6hr)</span>
+            <span class="package-price">₹4,200</span>
+          </div>
+        </div>
+
+        <!--
+          WHATSAPP BOOKING BUTTON
+          ========================
+          How the URL works:
+          https://wa.me/[number]?text=[message]
+
+          The message is URL-encoded:
+          %20 = space
+          %0A = new line
+          %2C = comma
+
+          To customise:
+          1. Change 919876543210 to the real number
+          2. Edit the text after ?text= for each experience
+        -->
+        <a
+          href="https://wa.me/919876543210?text=Hi%20Raju%2C%20I%20found%20you%20on%20Incitetales.%0A%0AI%20want%20to%20book%20a%20boat%20tour%20at%20Maguri%20Beel.%0ADate%3A%20%5Benter%20date%5D%0AGroup%20size%3A%20%5Benter%20number%5D%0APreference%3A%20%5BDawn%20%2F%20Sunset%20%2F%20Full%20day%5D"
+          class="book-whatsapp"
+          target="_blank"
+        >
+          ◆ &nbsp; Book via WhatsApp
+        </a>
+        <p class="book-note">Direct booking · No agency fee<br>Responds within a few hours</p>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ============================================
+     RELATED STORIES
+     ============================================ -->
+<div class="related-section">
+  <div class="related-header">
+    <div class="related-title">More from Upper Assam</div>
+    <a href="#" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--cream-dim); text-decoration:none; border-bottom:1px solid var(--border2); padding-bottom:2px;">All stories →</a>
+  </div>
+
+  <div class="related-grid">
+    <div class="related-card">
+      <div class="related-card-img">
+        <div class="related-card-img-bg"></div>
+      </div>
+      <div class="related-card-body">
+        <div class="related-region">Dibru-Saikhowa</div>
+        <div class="related-card-title">The Feral Horses of the Brahmaputra</div>
+      </div>
+    </div>
+    <div class="related-card">
+      <div class="related-card-img">
+        <div class="related-card-img-bg"></div>
+      </div>
+      <div class="related-card-body">
+        <div class="related-region">Changlang · Arunachal</div>
+        <div class="related-card-title">Stilwell Road: The Road That Couldn't Be Built</div>
+      </div>
+    </div>
+    <div class="related-card">
+      <div class="related-card-img">
+        <div class="related-card-img-bg"></div>
+      </div>
+      <div class="related-card-body">
+        <div class="related-region">Majuli · Jorhat</div>
+        <div class="related-card-title">Majuli is Shrinking. The Monks Stay.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Incitetales · Guwahati, Assam</span>
+    <span class="footer-tagline">"One story. Every week. The world learns what Assam is."</span>
+  </div>
+</footer>
+
+<script>
+// Copy link button
+document.querySelectorAll('.share-btn').forEach(btn => {
+  if (btn.textContent.trim() === 'Copy link') {
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href);
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy link', 2000);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
