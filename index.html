@@ -4,52 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Incitetales — The Untold Assam</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:        #0b0a07;
-  --bg2:       #111009;
-  --surface:   #161410;
-  --surface2:  #1c1a14;
-  --gold:      #c8a84b;
-  --gold-dim:  #7a6530;
-  --gold-pale: #e8d49a;
-  --cream:     #ede5d0;
-  --cream-dim: #9a8f7a;
-  --rust:      #a04030;
-  --teal:      #2d7a68;
-  --text:      #c8bfac;
-  --text-dim:  #6a6050;
-  --border:    #242018;
-  --border2:   #2e2a20;
+  --bg:         #ffffff;
+  --bg2:        #fffdf5;
+  --bg3:        #fdf8e8;
+  --ink:        #1c1814;
+  --ink2:       #3a342c;
+  --ink3:       #6a6058;
+  --terra:      #8b4a2a;
+  --terra-dim:  #b87a58;
+  --terra-pale: #fff8e8;
+  --forest:     #2a5c48;
+  --forest-dim: #4a8c70;
+  --forest-pale:#d8ede5;
+  --yellow:     #f5c842;
+  --yellow-dim: #f5e090;
+  --yellow-pale:#fffbe8;
+  --border:     #ede8d8;
+  --border2:    #e0d8c4;
+  --cream:      #ffffff;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 15px;
-  line-height: 1.6;
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
   overflow-x: hidden;
-  cursor: default;
 }
 
-/* GRAIN OVERLAY */
-body::after {
+/* subtle paper texture */
+body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.35;
+  opacity: 0.5;
 }
 
-/* ─── NAV ─── */
+/* ── NAV ── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -57,211 +58,263 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 48px;
-  background: linear-gradient(180deg, rgba(11,10,7,0.98) 0%, rgba(11,10,7,0) 100%);
-  backdrop-filter: blur(2px);
+  padding: 16px 48px;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
 }
 
 .nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--cream);
+  color: var(--ink);
   text-decoration: none;
+  letter-spacing: 0.01em;
 }
-.nav-logo span { color: var(--gold); }
+.nav-logo span { color: var(--ink); background: var(--yellow); padding: 0 4px; }
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
 }
 .nav-links a {
   font-family: 'DM Mono', monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.18em;
+  font-size: 9px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream-dim);
+  color: var(--ink3);
   text-decoration: none;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover { color: var(--terra); }
 
 .nav-cta {
   font-family: 'DM Mono', monospace;
   font-size: 9px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
-  padding: 8px 18px;
+  color: var(--cream);
+  background: var(--ink);
+  padding: 9px 18px;
   text-decoration: none;
   transition: background 0.2s;
 }
-.nav-cta:hover { background: var(--gold-pale); }
+.nav-cta:hover { background: var(--terra); }
 
-/* ─── HERO ─── */
+/* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 48px 64px;
+  padding: 120px 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
   position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Simulated landscape using CSS — replace with real photo */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 120% 60% at 50% 110%, rgba(45,122,104,0.18) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 40% at 80% 20%, rgba(200,168,75,0.06) 0%, transparent 50%),
-    linear-gradient(180deg,
-      #0b0a07 0%,
-      #0f0e0a 30%,
-      #111209 55%,
-      #0d1210 75%,
-      #0a100e 100%
-    );
-}
-
-/* Horizon line — misty river feel */
-.hero-bg::before {
+/* Decorative vertical line */
+.hero::before {
   content: '';
   position: absolute;
-  bottom: 28%;
-  left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200,168,75,0.15), rgba(45,122,104,0.2), rgba(200,168,75,0.15), transparent);
+  top: 120px; bottom: 80px;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border2), transparent);
 }
 
-/* Water reflection */
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 30%;
-  background: linear-gradient(180deg, transparent, rgba(13,18,16,0.8));
-}
+.hero-left {}
 
-.hero-eyebrow {
+.hero-issue {
   font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.35em;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
+  color: var(--ink2);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-issue::before {
+  content: '';
+  width: 24px;
+  height: 3px;
+  background: var(--yellow);
 }
 
 .hero-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 7vw, 96px);
-  font-weight: 300;
-  line-height: 0.95;
-  color: var(--cream);
-  letter-spacing: -0.01em;
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  opacity: 0;
-  animation: fadeUp 0.9s ease 0.4s forwards;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 5.5vw, 80px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
 }
-
 .hero-headline em {
   font-style: italic;
-  color: var(--gold-pale);
+  color: var(--terra);
 }
 
-.hero-sub {
-  margin-top: 24px;
-  font-size: 15px;
-  color: var(--cream-dim);
-  max-width: 460px;
-  line-height: 1.65;
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeUp 0.9s ease 0.6s forwards;
+.hero-body {
+  font-size: 16px;
+  color: var(--ink2);
+  line-height: 1.75;
+  max-width: 420px;
+  margin-bottom: 36px;
 }
 
 .hero-actions {
-  margin-top: 36px;
   display: flex;
   gap: 20px;
   align-items: center;
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeUp 0.9s ease 0.8s forwards;
 }
 
 .btn-primary {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
-  padding: 13px 28px;
+  color: var(--cream);
+  background: var(--ink);
+  padding: 12px 24px;
   text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s;
   display: inline-block;
 }
-.btn-primary:hover { background: var(--gold-pale); transform: translateY(-1px); }
+.btn-primary:hover { background: var(--terra); }
 
 .btn-ghost {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream-dim);
+  color: var(--ink3);
   text-decoration: none;
   border-bottom: 1px solid var(--border2);
   padding-bottom: 2px;
   transition: color 0.2s, border-color 0.2s;
 }
-.btn-ghost:hover { color: var(--gold); border-color: var(--gold-dim); }
+.btn-ghost:hover { color: var(--terra); border-color: var(--terra-dim); }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 32px;
-  right: 48px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 0;
-  animation: fadeIn 1s ease 1.2s forwards;
+/* Hero right — featured story */
+.hero-right {
+  position: relative;
 }
-.hero-scroll span {
+
+.hero-featured {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-featured-img {
+  height: 340px;
+  background: linear-gradient(160deg, #1a2e20 0%, #1e3828 50%, #0e1e14 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-featured-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 70%, rgba(42,92,72,0.3) 0%, transparent 60%),
+    linear-gradient(180deg, transparent 40%, rgba(28,24,20,0.6) 100%);
+}
+
+.hero-featured-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 24px;
+  z-index: 2;
+}
+
+.featured-region {
   font-family: 'DM Mono', monospace;
   font-size: 8px;
   letter-spacing: 0.25em;
-  color: var(--text-dim);
   text-transform: uppercase;
-  writing-mode: vertical-rl;
-}
-.scroll-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(180deg, var(--gold-dim), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 6px;
 }
 
-/* ─── SECTION COMMON ─── */
-section {
+.featured-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--bg);
+  line-height: 1.2;
+}
+
+.hero-featured-body {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.hero-featured-excerpt {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.hero-featured-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.2s;
+}
+.hero-featured-link:hover { gap: 12px; }
+.hero-featured-link::after { content: '→'; }
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--ink);
+  padding: 11px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  animation: ticker 35s linear infinite;
+}
+.ticker-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  padding: 0 28px;
+  border-right: 1px solid rgba(245,240,232,0.1);
+}
+.ticker-item span { color: var(--yellow); margin-right: 8px; }
+
+/* ── SECTION COMMON ── */
+.section-wrap {
   padding: 80px 48px;
   position: relative;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
 }
 
 .section-label {
@@ -269,233 +322,131 @@ section {
   font-size: 8.5px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--ink2);
   margin-bottom: 8px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
-.section-label::after {
+.section-label::before {
   content: '';
-  flex: 1;
-  max-width: 60px;
-  height: 1px;
-  background: var(--gold-dim);
+  width: 16px;
+  height: 3px;
+  background: var(--yellow);
+  display: inline-block;
 }
 
 .section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 3.5vw, 48px);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3vw, 40px);
   font-weight: 400;
-  color: var(--cream);
-  line-height: 1.1;
-  margin-bottom: 48px;
+  color: var(--ink);
+  line-height: 1.15;
 }
-.section-title em { font-style: italic; color: var(--gold-pale); }
+.section-title em { font-style: italic; color: var(--terra); }
 
-/* ─── TICKER ─── */
-.ticker {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-inner {
-  display: inline-flex;
-  gap: 0;
-  animation: ticker 30s linear infinite;
-}
-.ticker-item {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  padding: 0 32px;
-  border-right: 1px solid var(--border2);
-}
-.ticker-item span { color: var(--gold); margin-right: 8px; }
-
-/* ─── STORIES SECTION ─── */
-.stories-section {
-  background: var(--bg);
-}
+/* ── STORIES ── */
+.stories-section { background: #fff; border-top: 1px solid var(--border); }
 
 .stories-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
 }
 
 .story-card {
-  background: var(--surface);
-  position: relative;
+  background: #fafaf8;
   overflow: hidden;
   cursor: pointer;
-  group: true;
+  transition: background 0.3s;
 }
+.story-card:hover { background: #f5f3ee; }
 
-.story-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 30%, rgba(11,10,7,0.92) 100%);
-  z-index: 1;
-  transition: opacity 0.4s;
-}
-
-.story-card:hover::before {
-  opacity: 0.7;
-}
-
-/* Placeholder image — replace with real photos */
-.story-img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  display: block;
+.story-card-img {
+  height: 200px;
   position: relative;
   overflow: hidden;
 }
 
-.story-card.featured .story-img {
-  aspect-ratio: unset;
-  height: 100%;
-  min-height: 460px;
-}
-
-.story-img-bg {
+.story-card-img-bg {
   position: absolute;
   inset: 0;
-  transition: transform 0.6s ease;
+  transition: transform 0.5s ease;
+}
+.story-card:hover .story-card-img-bg { transform: scale(1.04); }
+
+.story-card:nth-child(1) .story-card-img-bg {
+  background: linear-gradient(160deg, #1a2e20 0%, #1e3828 50%, #0e1e14 100%);
+}
+.story-card:nth-child(2) .story-card-img-bg {
+  background: linear-gradient(160deg, #2a1e10 0%, #3a2a14 50%, #1a1008 100%);
+}
+.story-card:nth-child(3) .story-card-img-bg {
+  background: linear-gradient(160deg, #1a1e2e 0%, #1e2438 50%, #0e1020 100%);
 }
 
-.story-card:hover .story-img-bg {
-  transform: scale(1.04);
-}
-
-/* Unique color per story card to simulate different landscapes */
-.story-card:nth-child(1) .story-img-bg {
-  background: linear-gradient(160deg, #0d1a15 0%, #152820 40%, #0a1510 70%, #081008 100%);
-}
-.story-card:nth-child(2) .story-img-bg {
-  background: linear-gradient(160deg, #1a1208 0%, #251a0a 40%, #1a1005 70%, #0d0a04 100%);
-}
-.story-card:nth-child(3) .story-img-bg {
-  background: linear-gradient(160deg, #0c1520 0%, #0e1c28 40%, #091218 70%, #060c10 100%);
-}
-.story-card:nth-child(4) .story-img-bg {
-  background: linear-gradient(160deg, #1a100a 0%, #221508 40%, #180e06 70%, #100904 100%);
-}
-.story-card:nth-child(5) .story-img-bg {
-  background: linear-gradient(160deg, #0a1818 0%, #0d2020 40%, #081414 70%, #050e0e 100%);
-}
-
-/* Decorative elements on placeholder images */
-.story-img-bg::after {
+.story-card-img-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 80%, rgba(45,122,104,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(200,168,75,0.08) 0%, transparent 50%);
+  background: linear-gradient(180deg, transparent 40%, rgba(28,24,20,0.5) 100%);
 }
 
-.story-content {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 20px 22px;
-  z-index: 2;
+.story-card-body {
+  padding: 20px;
+  border-top: 1px solid var(--border);
 }
 
-.story-region {
+.story-card-region {
   font-family: 'DM Mono', monospace;
   font-size: 8px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
+  color: var(--terra);
+  margin-bottom: 8px;
 }
 
-.story-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
+.story-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
   font-weight: 600;
-  color: var(--cream);
-  line-height: 1.2;
-  margin-bottom: 6px;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 10px;
 }
 
-.story-card.featured .story-title {
-  font-size: 30px;
+.story-card-excerpt {
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  font-style: italic;
 }
 
-.story-excerpt {
-  font-size: 12px;
-  color: var(--text);
-  line-height: 1.5;
-  display: none;
-}
-
-.story-card.featured .story-excerpt {
-  display: block;
-}
-
-.story-read {
+.story-card-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra);
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 8.5px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-decoration: none;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.3s, transform 0.3s;
+  gap: 6px;
+  transition: gap 0.2s;
 }
-.story-card:hover .story-read {
-  opacity: 1;
-  transform: translateY(0);
-}
-.story-read::after {
-  content: '→';
-  transition: transform 0.2s;
-}
-.story-read:hover::after { transform: translateX(4px); }
+.story-card-link:hover { gap: 10px; }
+.story-card-link::after { content: '→'; }
 
-.story-card.featured {
-  grid-row: span 2;
-}
-
-.stories-footer {
-  margin-top: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stories-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  color: var(--text-dim);
-  text-transform: uppercase;
-}
-
-/* ─── MANIFESTO STRIP ─── */
+/* ── MANIFESTO ── */
 .manifesto {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 56px 48px;
+  background: var(--ink);
+  padding: 72px 48px;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 64px;
+  grid-template-columns: 200px 1fr;
+  gap: 80px;
   align-items: center;
 }
 
@@ -504,442 +455,591 @@ section {
   font-size: 9px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--yellow);
 }
 
 .manifesto-text {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(22px, 2.5vw, 32px);
-  font-weight: 300;
+  font-weight: 400;
   font-style: italic;
-  color: var(--cream);
-  line-height: 1.45;
+  color: var(--bg);
+  line-height: 1.5;
 }
-
 .manifesto-text strong {
   font-style: normal;
-  font-weight: 600;
-  color: var(--gold-pale);
+  font-weight: 700;
+  color: var(--terra-dim);
 }
 
-/* ─── OPERATORS ─── */
-.operators-section { background: var(--bg2); }
+/* ── TRIPS — DISCOVER NE ── */
+.trips-section { background: var(--yellow-pale); }
 
-.operators-grid {
+.trips-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
   margin-bottom: 32px;
 }
 
-.operator-card {
-  background: var(--surface);
-  padding: 24px;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s, background 0.3s;
+.trip-card {
+  background: #ffffff;
+  padding: 28px;
+  transition: background 0.3s;
   position: relative;
   overflow: hidden;
 }
+.trip-card:hover { background: #fffdf5; }
 
-.operator-card::before {
+.trip-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
+  height: 3px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
 }
+.trip-card:hover::before { transform: scaleX(1); }
 
-.operator-card:hover {
-  background: var(--surface2);
-  border-color: var(--teal);
-}
-.operator-card:hover::before { opacity: 1; }
-
-.op-number {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px;
-  font-weight: 300;
+.trip-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 400;
   color: var(--border2);
   line-height: 1;
-  margin-bottom: 12px;
-  transition: color 0.3s;
+  margin-bottom: 16px;
 }
-.operator-card:hover .op-number { color: var(--border); }
 
-.op-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
+.trip-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
   font-weight: 600;
-  color: var(--cream);
-  margin-bottom: 4px;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 6px;
 }
 
-.op-location {
+.trip-duration {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
+  color: var(--terra);
+  margin-bottom: 14px;
 }
 
-.op-desc {
-  font-size: 12.5px;
-  color: var(--text);
-  line-height: 1.55;
-  margin-bottom: 18px;
+.trip-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
-.op-tags {
+.trip-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 20px;
 }
 
-.op-tag {
+.trip-tag {
   font-family: 'DM Mono', monospace;
-  font-size: 8px;
+  font-size: 7.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--ink3);
   border: 1px solid var(--border2);
   padding: 3px 8px;
+  background: var(--bg);
 }
 
-.op-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 8.5px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--teal);
-  text-decoration: none;
-  border: 1px solid var(--teal);
-  padding: 8px 14px;
-  transition: background 0.2s, color 0.2s;
-}
-.op-whatsapp:hover {
-  background: var(--teal);
-  color: var(--bg);
-}
-
-/* ─── EXPERIENCES ─── */
-.experiences-section { background: var(--bg); }
-
-.exp-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-
-.exp-card {
-  background: var(--surface);
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-}
-
-.exp-visual {
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-}
-
-.exp-visual-bg {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.5s ease;
-}
-
-.exp-card:hover .exp-visual-bg { transform: scale(1.05); }
-
-.exp-card:nth-child(1) .exp-visual-bg {
-  background: linear-gradient(160deg, #0a1a14 0%, #0d2018 60%, #081410 100%);
-}
-.exp-card:nth-child(2) .exp-visual-bg {
-  background: linear-gradient(160deg, #101820 0%, #0e1c28 60%, #080f14 100%);
-}
-.exp-card:nth-child(3) .exp-visual-bg {
-  background: linear-gradient(160deg, #1a120a 0%, #20180a 60%, #100c06 100%);
-}
-
-.exp-visual-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 50% at 50% 90%, rgba(45,122,104,0.2) 0%, transparent 60%);
-}
-
-.exp-body {
-  padding: 22px;
-}
-
-.exp-type {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-
-.exp-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--cream);
-  line-height: 1.15;
-  margin-bottom: 8px;
-}
-
-.exp-desc {
-  font-size: 12px;
-  color: var(--text);
-  line-height: 1.55;
-  margin-bottom: 16px;
-}
-
-.exp-footer {
+.trip-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 16px;
   border-top: 1px solid var(--border);
-  padding-top: 14px;
 }
 
-.exp-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
+.trip-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--ink);
 }
-.exp-price small {
+.trip-price small {
   font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--text-dim);
+  font-size: 8px;
+  color: var(--ink3);
   letter-spacing: 0.1em;
   display: block;
   margin-top: 2px;
 }
 
-.exp-book {
+.trip-book {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
+  color: var(--cream);
+  background: var(--forest);
   padding: 9px 16px;
   text-decoration: none;
+  transition: background 0.2s;
   border: none;
   cursor: pointer;
-  transition: background 0.2s;
 }
-.exp-book:hover { background: var(--gold-pale); }
+.trip-book:hover { background: var(--ink); }
 
-/* ─── AGENTS STRIP ─── */
-.agents-strip {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 48px;
-}
+/* ── EXPLORE NEARBY ── */
+.nearby-section { background: #f8f6f0; border-top: 1px solid var(--border); }
 
-.agents-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 32px;
-}
-
-.agents-grid {
+.nearby-card {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border);
+  overflow: hidden;
 }
 
-.agent-card {
-  background: var(--surface);
-  padding: 20px;
-  transition: background 0.3s;
-}
-.agent-card:hover { background: var(--surface2); }
-
-.agent-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-
-.agent-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--cream);
-  margin-bottom: 6px;
-  line-height: 1.2;
-}
-
-.agent-desc {
-  font-size: 11.5px;
-  color: var(--text-dim);
-  line-height: 1.5;
-  font-style: italic;
-}
-
-.agent-status {
-  display: inline-block;
-  margin-top: 12px;
-  font-family: 'DM Mono', monospace;
-  font-size: 7.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  border: 1px solid var(--border2);
-  padding: 3px 8px;
-}
-
-.agent-status.live {
-  color: #4ecbb4;
-  border-color: var(--teal);
-}
-
-/* ─── NEWSLETTER / CTA ─── */
-.cta-section {
-  background: var(--bg);
-  text-align: center;
-  padding: 100px 48px;
+.nearby-visual {
+  height: 360px;
+  background: linear-gradient(160deg, #1a1e2a 0%, #222838 50%, #101420 100%);
   position: relative;
   overflow: hidden;
 }
 
-.cta-section::before {
+.nearby-visual::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 300px;
-  background: radial-gradient(ellipse, rgba(200,168,75,0.05) 0%, transparent 70%);
-  pointer-events: none;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 40% 60%, rgba(42,92,72,0.25) 0%, transparent 60%),
+    linear-gradient(180deg, transparent 30%, rgba(16,20,32,0.5) 100%);
 }
 
-.cta-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-}
-
-.cta-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 4vw, 56px);
-  font-weight: 300;
+.nearby-visual-label {
+  position: absolute;
+  bottom: 20px; left: 24px;
+  z-index: 2;
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
   font-style: italic;
-  color: var(--cream);
+  color: var(--bg);
   line-height: 1.2;
+}
+
+.nearby-body {
+  padding: 40px;
+  background: #fafaf8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nearby-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nearby-tag::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--forest);
+}
+
+.nearby-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.15;
   margin-bottom: 16px;
 }
 
-.cta-title strong {
+.nearby-desc {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.nearby-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink2);
+}
+.highlight-item::before {
+  content: '◆';
+  font-size: 6px;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+/* ── ITINERARY BUILDER ── */
+.builder-section {
+  background: var(--forest);
+  padding: 80px 48px;
+}
+
+.builder-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.builder-left {}
+
+.builder-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 16px;
+}
+
+.builder-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+  color: var(--bg);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.builder-title em { font-style: italic; }
+
+.builder-desc {
+  font-size: 14px;
+  color: rgba(245,240,232,0.7);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.builder-destinations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dest-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.7);
+  border: 1px solid rgba(245,240,232,0.2);
+  padding: 4px 10px;
+}
+
+/* Builder form */
+.builder-form {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+
+.builder-form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  padding: 10px 14px;
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form-select:focus, .form-input:focus { border-color: var(--forest); }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-submit {
+  width: 100%;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--ink);
+  border: none;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.form-submit:hover { background: var(--terra); }
+
+.form-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ── MERCH ── */
+.merch-section {
+  background: var(--yellow-pale);
+  padding: 80px 48px;
+}
+
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+.merch-card {
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.merch-visual {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.merch-card:nth-child(1) .merch-visual { background: linear-gradient(135deg, #1a2e20 0%, #2a4a30 100%); }
+.merch-card:nth-child(2) .merch-visual { background: linear-gradient(135deg, #2a1e10 0%, #4a3020 100%); }
+.merch-card:nth-child(3) .merch-visual { background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4a 100%); }
+
+.merch-placeholder {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(245,240,232,0.4);
+  text-align: center;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+.merch-body {
+  padding: 18px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.merch-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 6px;
+}
+
+.merch-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.merch-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.merch-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.merch-coming {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  border: 1px solid var(--border2);
+  padding: 4px 10px;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  background: var(--ink);
+  padding: 80px 48px;
+  text-align: center;
+}
+
+.newsletter-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terra-dim);
+  margin-bottom: 20px;
+}
+
+.newsletter-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--bg);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.newsletter-title strong {
   font-style: normal;
   font-weight: 700;
 }
 
-.cta-sub {
+.newsletter-sub {
   font-size: 14px;
-  color: var(--cream-dim);
+  color: rgba(245,240,232,0.6);
   margin-bottom: 36px;
-  max-width: 400px;
+  max-width: 380px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.cta-form {
+.newsletter-form {
   display: flex;
-  gap: 0;
-  max-width: 420px;
+  max-width: 400px;
   margin: 0 auto;
 }
 
-.cta-input {
+.newsletter-input {
   flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border2);
+  background: rgba(245,240,232,0.08);
+  border: 1px solid rgba(245,240,232,0.2);
   border-right: none;
-  padding: 13px 18px;
+  padding: 12px 16px;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: var(--cream);
+  color: var(--bg);
   outline: none;
   transition: border-color 0.2s;
 }
-.cta-input::placeholder { color: var(--text-dim); }
-.cta-input:focus { border-color: var(--gold-dim); }
+.newsletter-input::placeholder { color: rgba(245,240,232,0.3); }
+.newsletter-input:focus { border-color: rgba(245,240,232,0.5); }
 
-.cta-btn {
+.newsletter-btn {
   font-family: 'DM Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  background: var(--gold);
-  color: var(--bg);
+  background: var(--terra);
+  color: var(--cream);
   border: none;
-  padding: 13px 22px;
+  padding: 12px 20px;
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
 }
-.cta-btn:hover { background: var(--gold-pale); }
+.newsletter-btn:hover { background: var(--terra-dim); }
 
-/* ─── FOOTER ─── */
+/* ── FOOTER ── */
 footer {
-  background: var(--surface);
+  background: var(--bg2);
   border-top: 1px solid var(--border);
-  padding: 48px 48px 32px;
+  padding: 48px 48px 28px;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 48px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
-.footer-brand .logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px;
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
   font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 10px;
+  color: var(--ink);
+  margin-bottom: 12px;
 }
-.footer-brand .logo span { color: var(--gold); }
+.footer-logo span { color: var(--terra); }
 
-.footer-brand p {
+.footer-about {
   font-size: 13px;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 18px;
+  color: var(--ink3);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.footer-social {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.15em;
+  color: var(--terra);
+  text-transform: uppercase;
 }
 
 .footer-col-title {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--ink);
   margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 }
 
 .footer-col ul {
@@ -951,11 +1051,11 @@ footer {
 
 .footer-col ul a {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--ink3);
   text-decoration: none;
   transition: color 0.2s;
 }
-.footer-col ul a:hover { color: var(--cream); }
+.footer-col ul a:hover { color: var(--terra); }
 
 .footer-bottom {
   border-top: 1px solid var(--border);
@@ -969,45 +1069,34 @@ footer {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
   letter-spacing: 0.12em;
-  color: var(--text-dim);
+  color: var(--ink3);
   text-transform: uppercase;
 }
 
 .footer-tagline {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 13px;
   font-style: italic;
-  color: var(--text-dim);
+  color: var(--ink3);
 }
 
-/* ─── ANIMATIONS ─── */
+/* ── ANIMATIONS ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 @keyframes ticker {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.4; transform: scaleY(1); }
-  50%       { opacity: 1;   transform: scaleY(1.1); }
-}
+.hero-issue { opacity:0; animation: fadeUp 0.7s ease 0.1s forwards; }
+.hero-headline { opacity:0; animation: fadeUp 0.8s ease 0.3s forwards; }
+.hero-body { opacity:0; animation: fadeUp 0.8s ease 0.5s forwards; }
+.hero-actions { opacity:0; animation: fadeUp 0.8s ease 0.7s forwards; }
+.hero-right { opacity:0; animation: fadeUp 0.9s ease 0.5s forwards; }
 
-/* Scroll reveal */
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1017,30 +1106,42 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Incite<span>tales</span></a>
+  <a href="/" class="nav-logo">Incite<span>tales</span></a>
   <ul class="nav-links">
-    <li><a href="#">Stories</a></li>
-    <li><a href="#">Destinations</a></li>
-    <li><a href="#">Operators</a></li>
-    <li><a href="#">Experiences</a></li>
-    <li><a href="#">Agents</a></li>
+    <li><a href="#stories">Stories</a></li>
+    <li><a href="#discover">Discover NE</a></li>
+    <li><a href="#nearby">Explore Nearby</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="#builder">Itinerary Builder</a></li>
   </ul>
-  <a href="#" class="nav-cta">Plan a Trip</a>
+  <a href="#builder" class="nav-cta">Plan a Trip</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-eyebrow">◆ &nbsp; Guwahati · Upper Assam · Northeast India</div>
-  <h1 class="hero-headline">The Untold<br><em>Assam.</em></h1>
-  <p class="hero-sub">Real places. Real operators. Real knowledge. Stories from the rivers, forests, and roads that don't appear on most maps.</p>
-  <div class="hero-actions">
-    <a href="#stories" class="btn-primary">Read the Stories</a>
-    <a href="#experiences" class="btn-ghost">Book an Experience</a>
+  <div class="hero-left">
+    <div class="hero-issue">◆ &nbsp; Guwahati · Upper Assam · Northeast India</div>
+    <h1 class="hero-headline">The Untold<br><em>Assam.</em></h1>
+    <p class="hero-body">Real places. Real stories. Curated trips built on personal experience — for people who want to discover Northeast India, and for Northeast Indians who want to see the world.</p>
+    <div class="hero-actions">
+      <a href="#stories" class="btn-primary">Read the Stories</a>
+      <a href="#discover" class="btn-ghost">Discover Northeast</a>
+    </div>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
+
+  <div class="hero-right">
+    <div class="hero-featured">
+      <div class="hero-featured-img">
+        <div class="hero-featured-label">
+          <div class="featured-region">Tinsukia · Upper Assam</div>
+          <div class="featured-title">Maguri Beel: The World-Class Wonder I Almost Took for Granted</div>
+        </div>
+      </div>
+      <div class="hero-featured-body">
+        <p class="hero-featured-excerpt">"Growing up in Bordoloi Nagar, I didn't know the word wetland. I just knew there was a place ten minutes from home where the world went quiet."</p>
+        <a href="maguri-beel.html" class="hero-featured-link">Read the story</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1048,277 +1149,311 @@ footer {
 <div class="ticker">
   <div class="ticker-inner">
     <div class="ticker-item"><span>◆</span>Maguri Beel · River Dolphins</div>
-    <div class="ticker-item"><span>◆</span>Dibru-Saikhowa · Wild Horses</div>
+    <div class="ticker-item"><span>◆</span>Mechuka · Hidden Valley</div>
+    <div class="ticker-item"><span>◆</span>Dawki · Crystal Waters</div>
+    <div class="ticker-item"><span>◆</span>Dzukou Valley · Nagaland</div>
+    <div class="ticker-item"><span>◆</span>Darjeeling · Sunrise at Tiger Hill</div>
+    <div class="ticker-item"><span>◆</span>Dibang Valley · Arunachal</div>
+    <div class="ticker-item"><span>◆</span>Aizawl · Mizoram</div>
+    <div class="ticker-item"><span>◆</span>Gurudongmar · North Sikkim</div>
     <div class="ticker-item"><span>◆</span>Stilwell Road · 1942</div>
     <div class="ticker-item"><span>◆</span>Majuli · Largest River Island</div>
-    <div class="ticker-item"><span>◆</span>Pangsau Pass · Burma Border</div>
-    <div class="ticker-item"><span>◆</span>Arunachal ILP · Permit Guide</div>
-    <div class="ticker-item"><span>◆</span>Tea Gardens · Upper Assam</div>
-    <div class="ticker-item"><span>◆</span>Kaziranga · Beyond the Gates</div>
-    <!-- duplicate for seamless loop -->
+    <!-- duplicate -->
     <div class="ticker-item"><span>◆</span>Maguri Beel · River Dolphins</div>
-    <div class="ticker-item"><span>◆</span>Dibru-Saikhowa · Wild Horses</div>
+    <div class="ticker-item"><span>◆</span>Mechuka · Hidden Valley</div>
+    <div class="ticker-item"><span>◆</span>Dawki · Crystal Waters</div>
+    <div class="ticker-item"><span>◆</span>Dzukou Valley · Nagaland</div>
+    <div class="ticker-item"><span>◆</span>Darjeeling · Sunrise at Tiger Hill</div>
+    <div class="ticker-item"><span>◆</span>Dibang Valley · Arunachal</div>
+    <div class="ticker-item"><span>◆</span>Aizawl · Mizoram</div>
+    <div class="ticker-item"><span>◆</span>Gurudongmar · North Sikkim</div>
     <div class="ticker-item"><span>◆</span>Stilwell Road · 1942</div>
     <div class="ticker-item"><span>◆</span>Majuli · Largest River Island</div>
-    <div class="ticker-item"><span>◆</span>Pangsau Pass · Burma Border</div>
-    <div class="ticker-item"><span>◆</span>Arunachal ILP · Permit Guide</div>
-    <div class="ticker-item"><span>◆</span>Tea Gardens · Upper Assam</div>
-    <div class="ticker-item"><span>◆</span>Kaziranga · Beyond the Gates</div>
   </div>
 </div>
 
 <!-- STORIES -->
-<section class="stories-section reveal" id="stories">
-  <div class="section-label">Field Notes</div>
-  <div class="section-title">Stories from <em>the ground</em></div>
-
+<div class="section-wrap stories-section reveal" id="stories">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Field Notes</div>
+      <h2 class="section-title">Stories from <em>the ground</em></h2>
+    </div>
+    <a href="#" class="btn-ghost">All stories</a>
+  </div>
   <div class="stories-grid">
-    <!-- Featured -->
-    <div class="story-card featured">
-      <div class="story-img">
-        <div class="story-img-bg"></div>
-      </div>
-      <div class="story-content">
-        <div class="story-region">Tinsukia · Dibrugarh</div>
-        <h3 class="story-title">Maguri Beel at Dawn: Where the River Dolphins Come to Breathe</h3>
-        <p class="story-excerpt">At 5:30am the wetland is still. Then the sound comes — a soft exhale from the water. Gangetic dolphins don't breach dramatically. They surface just enough to breathe, and disappear. This is how Assam keeps its secrets.</p>
-        <a href="maguri-beel.html" class="story-read">Read the story</a>
+    <div class="story-card">
+      <div class="story-card-img"><div class="story-card-img-bg"></div></div>
+      <div class="story-card-body">
+        <div class="story-card-region">Tinsukia · Upper Assam</div>
+        <h3 class="story-card-title">Maguri Beel: The World-Class Wonder I Almost Took for Granted</h3>
+        <p class="story-card-excerpt">Growing up in Bordoloi Nagar, it was just the place you went when you needed to breathe.</p>
+        <a href="maguri-beel.html" class="story-card-link">Read</a>
       </div>
     </div>
-
-    <!-- Secondary -->
     <div class="story-card">
-      <div class="story-img">
-        <div class="story-img-bg"></div>
-      </div>
-      <div class="story-content">
-        <div class="story-region">Dibru-Saikhowa</div>
-        <h3 class="story-title">The Feral Horses of the Brahmaputra</h3>
-        <a href="#" class="story-read">Read the story</a>
+      <div class="story-card-img"><div class="story-card-img-bg"></div></div>
+      <div class="story-card-body">
+        <div class="story-card-region">Dibru-Saikhowa</div>
+        <h3 class="story-card-title">The Feral Horses of the Brahmaputra</h3>
+        <p class="story-card-excerpt">Four generations. The horses came before anyone can remember. They never left.</p>
+        <a href="#" class="story-card-link">Coming soon</a>
       </div>
     </div>
-
     <div class="story-card">
-      <div class="story-img">
-        <div class="story-img-bg"></div>
-      </div>
-      <div class="story-content">
-        <div class="story-region">Changlang · Arunachal</div>
-        <h3 class="story-title">Stilwell Road: The Road That Couldn't Be Built</h3>
-        <a href="#" class="story-read">Read the story</a>
-      </div>
-    </div>
-
-    <div class="story-card">
-      <div class="story-img">
-        <div class="story-img-bg"></div>
-      </div>
-      <div class="story-content">
-        <div class="story-region">Majuli · Jorhat</div>
-        <h3 class="story-title">Majuli is Shrinking. The Monks Stay.</h3>
-        <a href="#" class="story-read">Read the story</a>
-      </div>
-    </div>
-
-    <div class="story-card">
-      <div class="story-img">
-        <div class="story-img-bg"></div>
-      </div>
-      <div class="story-content">
-        <div class="story-region">Sivasagar</div>
-        <h3 class="story-title">Tea, Rust, and the Ahom Kingdom</h3>
-        <a href="#" class="story-read">Read the story</a>
+      <div class="story-card-img"><div class="story-card-img-bg"></div></div>
+      <div class="story-card-body">
+        <div class="story-card-region">Changlang · Arunachal</div>
+        <h3 class="story-card-title">Stilwell Road: The Road That Couldn't Be Built</h3>
+        <p class="story-card-excerpt">1,726 kilometres of jungle, monsoon, and will. Most of it swallowed back by the forest.</p>
+        <a href="#" class="story-card-link">Coming soon</a>
       </div>
     </div>
   </div>
-
-  <div class="stories-footer">
-    <span class="stories-count">8 stories published · updated weekly</span>
-    <a href="#" class="btn-ghost">View all stories</a>
-  </div>
-</section>
+</div>
 
 <!-- MANIFESTO -->
 <div class="manifesto reveal">
   <div class="manifesto-label">Why Incitetales</div>
-  <p class="manifesto-text">
-    Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no digital presence. We're fixing that — one story, one operator, one honest guide at a time.
-  </p>
+  <p class="manifesto-text">Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no honest digital presence. We're fixing that — one story, one trip, one illustrated print at a time.</p>
 </div>
 
-<!-- OPERATORS -->
-<section class="operators-section reveal" id="operators">
-  <div class="section-label">On the Ground</div>
-  <div class="section-title">The <em>operators</em></div>
-
-  <div class="operators-grid">
-    <div class="operator-card">
-      <div class="op-number">01</div>
-      <div class="op-name">Raju Moran</div>
-      <div class="op-location">◆ Maguri Beel · Tinsukia</div>
-      <p class="op-desc">Third-generation boat operator on Maguri Beel. Knows every dolphin feeding spot, every early-morning birding window. No Google listing until now.</p>
-      <div class="op-tags">
-        <span class="op-tag">Boat tours</span>
-        <span class="op-tag">Bird watching</span>
-        <span class="op-tag">Dolphins</span>
-      </div>
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Raju%2C%20I%20found%20you%20on%20Incitetales%20and%20want%20to%20book%20a%20boat%20tour%20at%20Maguri%20Beel." class="op-whatsapp" target="_blank">
-        ◆ &nbsp; Book via WhatsApp
-      </a>
-    </div>
-
-    <div class="operator-card">
-      <div class="op-number">02</div>
-      <div class="op-name">Bimla Sonowal</div>
-      <div class="op-location">◆ Dibru-Saikhowa · Dibrugarh</div>
-      <p class="op-desc">Runs a homestay at the forest edge. Her family has coexisted with the feral horses for four generations. She knows where they graze at sunrise.</p>
-      <div class="op-tags">
-        <span class="op-tag">Homestay</span>
-        <span class="op-tag">Wild horses</span>
-        <span class="op-tag">Forest walks</span>
-      </div>
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Bimla%2C%20I%20found%20you%20on%20Incitetales%20and%20want%20to%20visit%20Dibru-Saikhowa." class="op-whatsapp" target="_blank">
-        ◆ &nbsp; Book via WhatsApp
-      </a>
-    </div>
-
-    <div class="operator-card">
-      <div class="op-number">03</div>
-      <div class="op-name">Thaneswar Gogoi</div>
-      <div class="op-location">◆ Stilwell Road · Margherita</div>
-      <p class="op-desc">Jeep operator who has driven every passable kilometre of the old Ledo Road. Will take you as far in as the trail allows. Knows the WWII history cold.</p>
-      <div class="op-tags">
-        <span class="op-tag">Jeep tours</span>
-        <span class="op-tag">Stilwell Road</span>
-        <span class="op-tag">History</span>
-      </div>
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Thaneswar%2C%20I%20found%20you%20on%20Incitetales%20and%20want%20to%20explore%20Stilwell%20Road." class="op-whatsapp" target="_blank">
-        ◆ &nbsp; Book via WhatsApp
-      </a>
-    </div>
-  </div>
-
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <span class="stories-count">3 operators listed · growing weekly</span>
-    <a href="#" class="btn-ghost">View all operators</a>
-  </div>
-</section>
-
-<!-- EXPERIENCES -->
-<section class="experiences-section reveal" id="experiences">
-  <div class="section-label">Book Directly</div>
-  <div class="section-title">Experience <em>packages</em></div>
-
-  <div class="exp-grid">
-    <div class="exp-card">
-      <div class="exp-visual">
-        <div class="exp-visual-bg"></div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-type">◆ Wetland · Dawn</div>
-        <h3 class="exp-name">Maguri Dawn Birding</h3>
-        <p class="exp-desc">3-hour boat tour at first light. Spot Gangetic dolphins, migratory birds, and the mist lifting off the beel. With Raju Moran.</p>
-        <div class="exp-footer">
-          <div class="exp-price">₹2,500 <small>per person · min 2</small></div>
-          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20book%20the%20Maguri%20Dawn%20Birding%20experience%20for%20[date]%2C%20group%20of%20[X]." class="exp-book" target="_blank">Book Now</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="exp-card">
-      <div class="exp-visual">
-        <div class="exp-visual-bg"></div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-type">◆ River · Wildlife</div>
-        <h3 class="exp-name">Dibru River Dolphins</h3>
-        <p class="exp-desc">Full-day Brahmaputra river trip into Dibru-Saikhowa. Dolphins, river islands, feral horses if you're lucky. Pack light.</p>
-        <div class="exp-footer">
-          <div class="exp-price">₹3,000 <small>per person · min 2</small></div>
-          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20book%20the%20Dibru%20River%20Dolphins%20experience." class="exp-book" target="_blank">Book Now</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="exp-card">
-      <div class="exp-visual">
-        <div class="exp-visual-bg"></div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-type">◆ History · Jeep</div>
-        <h3 class="exp-name">Stilwell Heritage Drive</h3>
-        <p class="exp-desc">Half-day jeep drive on the original Ledo Road. Visit WWII supply depots, the border markers, the jungle that reclaimed it all.</p>
-        <div class="exp-footer">
-          <div class="exp-price">₹4,500 <small>per jeep · up to 4</small></div>
-          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20book%20the%20Stilwell%20Heritage%20Drive." class="exp-book" target="_blank">Book Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI AGENTS -->
-<div class="agents-strip reveal">
-  <div class="agents-header">
+<!-- DISCOVER NORTHEAST -->
+<div class="section-wrap trips-section reveal" id="discover">
+  <div class="section-header">
     <div>
-      <div class="section-label">Powered by Claude</div>
-      <div class="section-title" style="margin-bottom:0; font-size:32px;">The AI <em>Agents</em></div>
+      <div class="section-label">For People Outside Northeast</div>
+      <h2 class="section-title">Discover <em>Northeast India</em></h2>
     </div>
-    <a href="#" class="btn-ghost">Try the Itinerary Builder</a>
+    <a href="#" class="btn-ghost">All trips</a>
   </div>
-  <div class="agents-grid">
-    <div class="agent-card">
-      <div class="agent-num">A1</div>
-      <div class="agent-name">Itinerary Builder</div>
-      <p class="agent-desc">Tell it your dates and interests. Get a complete Upper Assam itinerary with operators, costs, and permits.</p>
-      <span class="agent-status live">● Live</span>
+  <div class="trips-grid">
+    <div class="trip-card">
+      <div class="trip-number">01</div>
+      <div class="trip-name">Assam Immersion</div>
+      <div class="trip-duration">◆ &nbsp; 5 Days · Upper Assam</div>
+      <p class="trip-desc">Maguri Beel at dawn, river dolphins, tea gardens, Dibru-Saikhowa forest. The Assam that doesn't appear in travel magazines.</p>
+      <div class="trip-tags">
+        <span class="trip-tag">Wildlife</span>
+        <span class="trip-tag">Culture</span>
+        <span class="trip-tag">Photography</span>
+      </div>
+      <div class="trip-footer">
+        <div class="trip-price">₹14,500 <small>per person onwards</small></div>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Assam%20Immersion%20trip." class="trip-book" target="_blank">Enquire</a>
+      </div>
     </div>
-    <div class="agent-card">
-      <div class="agent-num">A2</div>
-      <div class="agent-name">Operator Onboarding</div>
-      <p class="agent-desc">WhatsApp-based. Any local operator can create their profile in 15 minutes. Zero manual work.</p>
-      <span class="agent-status">Coming Aug 2026</span>
+    <div class="trip-card">
+      <div class="trip-number">02</div>
+      <div class="trip-name">Meghalaya + Assam Loop</div>
+      <div class="trip-duration">◆ &nbsp; 6 Days · Guwahati → Dawki</div>
+      <p class="trip-desc">Guwahati to Shillong, Cherrapunji, Mawlynnong, Dawki. The cleanest river you've ever seen. The living root bridges. All of it.</p>
+      <div class="trip-tags">
+        <span class="trip-tag">Scenic</span>
+        <span class="trip-tag">Adventure</span>
+        <span class="trip-tag">Villages</span>
+      </div>
+      <div class="trip-footer">
+        <div class="trip-price">₹16,000 <small>per person onwards</small></div>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Meghalaya%20%2B%20Assam%20Loop%20trip." class="trip-book" target="_blank">Enquire</a>
+      </div>
     </div>
-    <div class="agent-card">
-      <div class="agent-num">A3</div>
-      <div class="agent-name">Content Agent</div>
-      <p class="agent-desc">Raw field notes → polished story + SEO + 3 Instagram captions. 90 seconds. Runs internally.</p>
-      <span class="agent-status live">● Live</span>
-    </div>
-    <div class="agent-card">
-      <div class="agent-num">A4</div>
-      <div class="agent-name">Permit Guide</div>
-      <p class="agent-desc">ILP requirements for Arunachal, Nagaland, Manipur, Mizoram. Accurate by entry point and vehicle type.</p>
-      <span class="agent-status">Coming Jun 2026</span>
+    <div class="trip-card">
+      <div class="trip-number">03</div>
+      <div class="trip-name">Arunachal — Tawang Circuit</div>
+      <div class="trip-duration">◆ &nbsp; 7 Days · ILP Included</div>
+      <p class="trip-desc">Bomdila, Dirang, Tawang monastery, Sela Pass. Inner Line Permit handled. The most complex trip to plan independently — we've done the hard part.</p>
+      <div class="trip-tags">
+        <span class="trip-tag">Permit handled</span>
+        <span class="trip-tag">Mountains</span>
+        <span class="trip-tag">Culture</span>
+      </div>
+      <div class="trip-footer">
+        <div class="trip-price">₹22,000 <small>per person onwards</small></div>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Arunachal%20Tawang%20Circuit%20trip." class="trip-book" target="_blank">Enquire</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- CTA / NEWSLETTER -->
-<section class="cta-section reveal">
-  <div class="cta-label">◆ &nbsp; One story, every week</div>
-  <h2 class="cta-title">The world learns<br><strong>what Assam is.</strong></h2>
-  <p class="cta-sub">Get new stories in your inbox. No algorithms. No ads. Just Assam.</p>
-  <div class="cta-form">
-    <input type="email" class="cta-input" placeholder="your@email.com">
-    <button class="cta-btn">Subscribe</button>
+<!-- EXPLORE NEARBY -->
+<div class="section-wrap nearby-section reveal" id="nearby">
+  <div class="section-header">
+    <div>
+      <div class="section-label">For People From Northeast</div>
+      <h2 class="section-title">Explore <em>Nearby</em></h2>
+    </div>
   </div>
-</section>
+  <div class="nearby-card">
+    <div class="nearby-visual">
+      <div class="nearby-visual-label">Darjeeling<br>+ Sikkim</div>
+    </div>
+    <div class="nearby-body">
+      <div class="nearby-tag">Explore Nearby · Phase 1</div>
+      <h3 class="nearby-title">Darjeeling + Sikkim</h3>
+      <p class="nearby-desc">Seven days. Two states. Tiger Hill at sunrise, the toy train, Gurudongmar Lake, Yuksom monasteries. Planned by someone who's done it themselves — all bookings from Guwahati, all permits sorted.</p>
+      <div class="nearby-highlights">
+        <div class="highlight-item">4 days Darjeeling · 3 days Sikkim — the perfect split</div>
+        <div class="highlight-item">Sikkim Inner Line Permit handled</div>
+        <div class="highlight-item">Budget and mid-range tiers available</div>
+        <div class="highlight-item">Flights from Guwahati or Dibrugarh</div>
+      </div>
+      <div style="display:flex; gap:16px; align-items:center;">
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Darjeeling%20%2B%20Sikkim%20trip." class="trip-book" target="_blank">Enquire on WhatsApp</a>
+        <a href="#" class="btn-ghost">View full itinerary</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ITINERARY BUILDER -->
+<div class="builder-section reveal" id="builder">
+  <div class="builder-inner">
+    <div class="builder-left">
+      <div class="builder-label">◆ &nbsp; Powered by AI</div>
+      <h2 class="builder-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h2>
+      <p class="builder-desc">Tell us where you want to go, how many days, and your budget. We'll generate a complete day-by-day itinerary — with stays, transport, permit guidance, and the hidden spots only locals know.</p>
+      <div class="builder-destinations">
+        <span class="dest-pill">Assam</span>
+        <span class="dest-pill">Meghalaya</span>
+        <span class="dest-pill">Mizoram</span>
+        <span class="dest-pill">Arunachal</span>
+        <span class="dest-pill">Darjeeling</span>
+        <span class="dest-pill">Sikkim</span>
+        <span class="dest-pill">Goa</span>
+      </div>
+    </div>
+    <div class="builder-form">
+      <div class="builder-form-title">Plan My Trip</div>
+      <div class="form-group">
+        <label class="form-label">Where do you want to go?</label>
+        <select class="form-select" id="destination">
+          <option value="">Select destination</option>
+          <option>Assam — Upper Assam & Kaziranga</option>
+          <option>Meghalaya — Shillong, Cherrapunji & Dawki</option>
+          <option>Mizoram — Aizawl & surroundings</option>
+          <option>Arunachal — Tawang & Kameng</option>
+          <option>Arunachal — Mechuka (Shi-Yomi)</option>
+          <option>Arunachal — Dibang Valley</option>
+          <option>Arunachal — Lohit</option>
+          <option>Darjeeling + Sikkim</option>
+          <option>Goa — North & South</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">How many days?</label>
+          <select class="form-select" id="days">
+            <option>5 days</option>
+            <option>7 days</option>
+            <option>10 days</option>
+            <option>14 days</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Travelling as?</label>
+          <select class="form-select" id="group">
+            <option>Solo</option>
+            <option>Couple</option>
+            <option>Friends (3-5)</option>
+            <option>Family</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Budget per person (excluding flights)</label>
+        <select class="form-select" id="budget">
+          <option>Under ₹10,000</option>
+          <option>₹10,000 – ₹20,000</option>
+          <option>₹20,000 – ₹35,000</option>
+          <option>₹35,000+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your email — to receive your itinerary</label>
+        <input type="email" class="form-input" id="email" placeholder="you@email.com">
+      </div>
+      <button class="form-submit" onclick="generateItinerary()">Generate My Itinerary →</button>
+      <p class="form-note">Free · Takes 30 seconds · No spam, ever</p>
+    </div>
+  </div>
+</div>
+
+<!-- MERCH -->
+<div class="section-wrap merch-section reveal" id="merch">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Illustrated Prints & Apparel</div>
+      <h2 class="section-title">Wear <em>Northeast India</em></h2>
+    </div>
+    <a href="#" class="btn-ghost">All products</a>
+  </div>
+  <div class="merch-grid">
+    <div class="merch-card">
+      <div class="merch-visual">
+        <div class="merch-placeholder">Brahmaputra River<br>Illustrated Print<br>Coming Soon</div>
+      </div>
+      <div class="merch-body">
+        <div class="merch-type">◆ Art Print</div>
+        <div class="merch-name">Brahmaputra — River of Life</div>
+        <div class="merch-footer">
+          <div class="merch-price">₹850</div>
+          <span class="merch-coming">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-visual">
+        <div class="merch-placeholder">Kaziranga Rhino<br>Illustrated T-Shirt<br>Coming Soon</div>
+      </div>
+      <div class="merch-body">
+        <div class="merch-type">◆ T-Shirt</div>
+        <div class="merch-name">Kaziranga — One Horned</div>
+        <div class="merch-footer">
+          <div class="merch-price">₹1,200</div>
+          <span class="merch-coming">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-visual">
+        <div class="merch-placeholder">Tawang Monastery<br>Illustrated Tote<br>Coming Soon</div>
+      </div>
+      <div class="merch-body">
+        <div class="merch-type">◆ Tote Bag</div>
+        <div class="merch-name">Tawang — 3,000 Metres</div>
+        <div class="merch-footer">
+          <div class="merch-price">₹950</div>
+          <span class="merch-coming">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter reveal">
+  <div class="newsletter-label">◆ &nbsp; One story, every week</div>
+  <h2 class="newsletter-title">The world learns<br><strong>what Assam is.</strong></h2>
+  <p class="newsletter-sub">New stories, trip guides, and illustrated prints — in your inbox. No algorithms. Just Northeast India.</p>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" placeholder="your@email.com">
+    <button class="newsletter-btn">Subscribe</button>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo">Incite<span>tales</span></div>
-      <p>The untold stories of Northeast India. Built in Guwahati. Powered by field work, local operators, and Claude AI.</p>
-      <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase;">
-        incitetales.com &nbsp;·&nbsp; @incitetales
-      </div>
+    <div>
+      <div class="footer-logo">Incite<span>tales</span></div>
+      <p class="footer-about">The untold stories of Northeast India. Curated trips built on personal experience. Illustrated prints from the field. Built in Guwahati.</p>
+      <div class="footer-social">incitetales.com · @incitetales</div>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Stories</div>
       <ul>
-        <li><a href="#">Maguri Beel</a></li>
+        <li><a href="maguri-beel.html">Maguri Beel</a></li>
         <li><a href="#">Dibru-Saikhowa</a></li>
         <li><a href="#">Stilwell Road</a></li>
         <li><a href="#">Majuli Island</a></li>
@@ -1326,13 +1461,13 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <div class="footer-col-title">Plan</div>
+      <div class="footer-col-title">Trips</div>
       <ul>
-        <li><a href="#">Itinerary Builder</a></li>
-        <li><a href="#">Permit Guide</a></li>
-        <li><a href="#">Operators</a></li>
-        <li><a href="#">Experiences</a></li>
-        <li><a href="#">Destinations</a></li>
+        <li><a href="#discover">Assam Immersion</a></li>
+        <li><a href="#discover">Meghalaya Loop</a></li>
+        <li><a href="#discover">Arunachal Tawang</a></li>
+        <li><a href="#nearby">Darjeeling + Sikkim</a></li>
+        <li><a href="#builder">Itinerary Builder</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1340,9 +1475,9 @@ footer {
       <ul>
         <li><a href="#">Why Incitetales</a></li>
         <li><a href="#">For Operators</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#merch">Merch</a></li>
+        <li><a href="#"><span class="__cf_email__" data-cfemail="1f777a7373705f76717c766b7a6b7e737a6c317c7072">[email&#160;protected]</span></a></li>
         <li><a href="#">Instagram</a></li>
-        <li><a href="#">WhatsApp</a></li>
       </ul>
     </div>
   </div>
@@ -1352,7 +1487,7 @@ footer {
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1361,23 +1496,30 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
-
+}, { threshold: 0.06 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Nav background on scroll
+// Nav scroll
 const nav = document.querySelector('nav');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    nav.style.background = 'rgba(11,10,7,0.97)';
-    nav.style.backdropFilter = 'blur(8px)';
-    nav.style.borderBottom = '1px solid #242018';
-  } else {
-    nav.style.background = 'linear-gradient(180deg, rgba(11,10,7,0.98) 0%, rgba(11,10,7,0) 100%)';
-    nav.style.backdropFilter = 'blur(2px)';
-    nav.style.borderBottom = 'none';
-  }
+  nav.style.boxShadow = window.scrollY > 40
+    ? '0 2px 20px rgba(28,24,20,0.08)'
+    : 'none';
 });
+
+// Itinerary builder
+function generateItinerary() {
+  const destination = document.getElementById('destination').value;
+  const email = document.getElementById('email').value;
+  if (!destination) { alert('Please select a destination.'); return; }
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Building your itinerary...';
+  setTimeout(() => {
+    alert('Thank you! We are building your custom itinerary and will send it to ' + email + ' shortly.');
+    btn.textContent = 'Generate My Itinerary →';
+  }, 1500);
+}
 </script>
 </body>
 </html>
