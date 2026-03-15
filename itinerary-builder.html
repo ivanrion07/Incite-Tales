@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itinerary Builder — Incitetales</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #ffffff;
+  --bg2:        #fffdf5;
+  --ink:        #1c1814;
+  --ink2:       #3a342c;
+  --ink3:       #6a6058;
+  --terra:      #8b4a2a;
+  --forest:     #2a5c48;
+  --forest-dim: #4a8c70;
+  --yellow:     #f5c842;
+  --yellow-pale:#fffbe8;
+  --border:     #ede8d8;
+  --border2:    #e0d8c4;
+}
+
+/* ─────────────────────────────────
+   IMPORTANT: Replace YOUR_GEMINI_API_KEY_HERE
+   with your actual Gemini API key from
+   aistudio.google.com
+   ───────────────────────────────── */
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-logo span {
+  background: var(--yellow);
+  padding: 0 4px;
+}
+
+.nav-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--terra); }
+
+/* ── HERO ── */
+.page-hero {
+  padding: 120px 48px 60px;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(42,92,72,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(245,200,66,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.hero-label::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.hero-title em { font-style: italic; color: var(--yellow); }
+
+.hero-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 48px;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* ── FORM PANEL ── */
+.form-panel {
+  position: sticky;
+  top: 90px;
+}
+
+.form-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+
+.form-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.form-card-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border2);
+  padding: 10px 14px;
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6058' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-input {
+  background-image: none;
+  padding-right: 14px;
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--forest);
+  background-color: #ffffff;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-submit {
+  width: 100%;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--ink);
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.form-submit:hover { background: var(--forest); }
+.form-submit:disabled { background: var(--ink3); cursor: not-allowed; }
+
+.form-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ── OUTPUT PANEL ── */
+.output-panel {}
+
+/* Empty state */
+.empty-state {
+  padding: 60px 40px;
+  text-align: center;
+  border: 1px dashed var(--border2);
+}
+
+.empty-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink3);
+  margin-bottom: 10px;
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.sample-destinations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.sample-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  border: 1px solid var(--border2);
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg2);
+}
+.sample-pill:hover {
+  border-color: var(--forest);
+  color: var(--forest);
+  background: #f0f8f4;
+}
+
+/* Loading state */
+.loading-state {
+  display: none;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--forest);
+  border-radius: 50%;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.loading-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink2);
+  margin-bottom: 8px;
+}
+
+.loading-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+/* Itinerary output */
+.itinerary-output {
+  display: none;
+}
+
+.itinerary-header {
+  background: var(--ink);
+  padding: 28px 32px;
+  margin-bottom: 2px;
+}
+
+.itinerary-destination {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+
+.itinerary-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.itinerary-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 10px;
+}
+
+.itinerary-body {
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+/* Overview section */
+.overview-section {
+  padding: 24px 32px;
+  background: var(--yellow-pale);
+  border-bottom: 1px solid var(--border);
+}
+
+.section-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-tag::before {
+  content: '';
+  width: 14px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.overview-text {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* Day cards */
+.days-section {
+  padding: 0;
+}
+
+.day-card {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.day-header {
+  padding: 16px 32px;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-left: 3px solid transparent;
+}
+.day-header:hover { background: #f5f3ee; border-left-color: var(--yellow); }
+.day-header.active { border-left-color: var(--forest); background: #f0f8f4; }
+
+.day-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--border2);
+  line-height: 1;
+  min-width: 36px;
+}
+
+.day-info {}
+
+.day-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.day-route {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-top: 3px;
+}
+
+.day-toggle {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  transition: transform 0.2s;
+}
+.day-header.active .day-toggle { transform: rotate(180deg); }
+
+.day-content {
+  display: none;
+  padding: 20px 32px 24px 84px;
+  background: #ffffff;
+}
+.day-content.visible { display: block; }
+
+.time-block {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.time-block:last-child { border-bottom: none; }
+
+.time-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra);
+  padding-top: 2px;
+}
+
+.time-text {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+.time-text strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.time-text .tip {
+  display: block;
+  font-size: 12px;
+  color: var(--forest-dim);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+/* Info sections */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.info-card {
+  background: var(--bg2);
+  padding: 24px 32px;
+}
+
+.info-card.full {
+  grid-column: span 2;
+}
+
+.info-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-title::before {
+  content: '';
+  width: 12px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.info-content {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.permit-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #fff3e0;
+  color: #8b4a2a;
+  border: 1px solid #e8c090;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.budget-row:last-child { border-bottom: none; }
+.budget-row.total {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 2px solid var(--ink);
+  border-bottom: none;
+}
+
+.budget-label { color: var(--ink2); }
+.budget-value { color: var(--ink); font-weight: 500; }
+
+.packing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.packing-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+.packing-item::before {
+  content: '◆';
+  font-size: 5px;
+  color: var(--forest);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* Email capture */
+.email-capture {
+  background: var(--forest);
+  padding: 32px;
+  margin-top: 2px;
+  display: none;
+}
+
+.email-capture-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.email-capture-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.email-capture-form {
+  display: flex;
+  gap: 0;
+  max-width: 440px;
+  margin-bottom: 12px;
+}
+
+.email-capture-input {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-right: none;
+  padding: 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  outline: none;
+}
+.email-capture-input::placeholder { color: rgba(255,255,255,0.35); }
+.email-capture-input:focus { border-color: rgba(255,255,255,0.5); }
+
+.email-capture-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  color: var(--ink);
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.email-capture-btn:hover { background: #f0d060; }
+
+.email-success {
+  display: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  padding: 12px 0;
+}
+
+/* Book CTA */
+.book-cta {
+  background: var(--ink);
+  padding: 28px 32px;
+  margin-top: 2px;
+  display: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.book-cta-text {}
+
+.book-cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.book-cta-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+
+.book-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 13px 24px;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.book-whatsapp:hover { background: #f0d060; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn 0.5s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Incite<span>tales</span></a>
+  <a href="index.html" class="nav-back">← Back to home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-label">Powered by AI · Free to use</div>
+  <h1 class="hero-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h1>
+  <p class="hero-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with transport, permits, budget, and the spots only locals know.</p>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="form-card">
+      <div class="form-card-title">Plan My Trip</div>
+      <div class="form-card-sub">Takes 30 seconds. Completely free.</div>
+
+      <div class="form-group">
+        <label class="form-label">Where do you want to go?</label>
+        <select class="form-select" id="destination">
+          <option value="">Select destination</option>
+          <optgroup label="Assam">
+            <option value="Upper Assam (Tinsukia, Dibrugarh, Maguri Beel, Dibru-Saikhowa)">Upper Assam — Maguri Beel & Dibru-Saikhowa</option>
+            <option value="Central Assam (Kaziranga, Majuli, Jorhat)">Central Assam — Kaziranga & Majuli</option>
+            <option value="Guwahati and surroundings">Guwahati & Surroundings</option>
+          </optgroup>
+          <optgroup label="Northeast India">
+            <option value="Meghalaya (Shillong, Cherrapunji, Dawki, Mawlynnong)">Meghalaya — Shillong, Cherrapunji & Dawki</option>
+            <option value="Mizoram (Aizawl and surroundings)">Mizoram — Aizawl</option>
+            <option value="Arunachal Pradesh - Tawang and Kameng district (Bomdila, Dirang, Tawang, Sela Pass) - ILP required">Arunachal — Tawang Circuit (ILP required)</option>
+            <option value="Arunachal Pradesh - Mechuka in Shi-Yomi district - ILP and PAP required">Arunachal — Mechuka (ILP + PAP required)</option>
+            <option value="Arunachal Pradesh - Dibang Valley - ILP and PAP required">Arunachal — Dibang Valley (ILP + PAP required)</option>
+            <option value="Arunachal Pradesh - Lohit district (Tezu, Parashuram Kund) - ILP required">Arunachal — Lohit (ILP required)</option>
+          </optgroup>
+          <optgroup label="Explore Nearby">
+            <option value="Darjeeling and Sikkim (Darjeeling town, Tiger Hill, Gangtok, North Sikkim, Gurudongmar Lake) - Sikkim ILP required">Darjeeling + Sikkim</option>
+          </optgroup>
+          <optgroup label="Go Further">
+            <option value="Goa (North Goa and South Goa, self-drive recommended)">Goa — North & South</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">How many days?</label>
+          <select class="form-select" id="days">
+            <option value="5">5 days</option>
+            <option value="7" selected>7 days</option>
+            <option value="10">10 days</option>
+            <option value="14">14 days</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Travelling as?</label>
+          <select class="form-select" id="group">
+            <option value="solo traveller">Solo</option>
+            <option value="couple">Couple</option>
+            <option value="friend group of 3-5 people" selected>Friends (3–5)</option>
+            <option value="family with children">Family</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Budget per person (excluding flights)</label>
+        <select class="form-select" id="budget">
+          <option value="budget (under ₹10,000)">Budget — under ₹10,000</option>
+          <option value="mid-range (₹10,000–₹20,000)" selected>Mid-range — ₹10,000–₹20,000</option>
+          <option value="comfortable (₹20,000–₹35,000)">Comfortable — ₹20,000–₹35,000</option>
+          <option value="premium (₹35,000+)">Premium — ₹35,000+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What matters most to you?</label>
+        <select class="form-select" id="interests">
+          <option value="wildlife and nature">Wildlife & Nature</option>
+          <option value="culture and history">Culture & History</option>
+          <option value="adventure and trekking">Adventure & Trekking</option>
+          <option value="photography">Photography</option>
+          <option value="food and local life">Food & Local Life</option>
+          <option value="a mix of everything">Mix of Everything</option>
+        </select>
+      </div>
+
+      <button class="form-submit" id="generate-btn" onclick="generateItinerary()">
+        <span id="btn-text">Generate My Itinerary</span>
+        <span>→</span>
+      </button>
+      <p class="form-note">Free · No login required · Takes ~20 seconds</p>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-panel">
+
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">◈</div>
+      <div class="empty-title">Your itinerary will appear here</div>
+      <div class="empty-sub">Select a destination and fill in your preferences.<br>We'll build a complete day-by-day plan instantly.</div>
+      <div class="sample-destinations">
+        <div class="sample-pill" onclick="quickFill('Meghalaya (Shillong, Cherrapunji, Dawki, Mawlynnong)', '7', 'friend group of 3-5 people', 'mid-range (₹10,000–₹20,000)', 'a mix of everything')">Meghalaya 7 days</div>
+        <div class="sample-pill" onclick="quickFill('Arunachal Pradesh - Tawang and Kameng district (Bomdila, Dirang, Tawang, Sela Pass) - ILP required', '7', 'couple', 'mid-range (₹10,000–₹20,000)', 'culture and history')">Arunachal Tawang</div>
+        <div class="sample-pill" onclick="quickFill('Upper Assam (Tinsukia, Dibrugarh, Maguri Beel, Dibru-Saikhowa)', '5', 'friend group of 3-5 people', 'budget (under ₹10,000)', 'wildlife and nature')">Upper Assam 5 days</div>
+        <div class="sample-pill" onclick="quickFill('Darjeeling and Sikkim (Darjeeling town, Tiger Hill, Gangtok, North Sikkim, Gurudongmar Lake) - Sikkim ILP required', '7', 'couple', 'mid-range (₹10,000–₹20,000)', 'a mix of everything')">Darjeeling + Sikkim</div>
+        <div class="sample-pill" onclick="quickFill('Goa (North Goa and South Goa, self-drive recommended)', '7', 'friend group of 3-5 people', 'mid-range (₹10,000–₹20,000)', 'a mix of everything')">Goa 7 days</div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-state" id="loading-state">
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+      <div class="loading-text">Building your itinerary...</div>
+      <div class="loading-sub" id="loading-msg">Researching the best routes</div>
+    </div>
+
+    <!-- Itinerary output -->
+    <div class="itinerary-output" id="itinerary-output">
+
+      <div class="itinerary-header">
+        <div class="itinerary-destination" id="out-destination"></div>
+        <div class="itinerary-title" id="out-title"></div>
+        <div class="itinerary-meta" id="out-meta"></div>
+      </div>
+
+      <div class="itinerary-body">
+        <div class="overview-section">
+          <div class="section-tag">Overview</div>
+          <div class="overview-text" id="out-overview"></div>
+        </div>
+
+        <div class="days-section" id="out-days"></div>
+
+        <div class="info-grid" id="out-info"></div>
+      </div>
+
+      <!-- Email capture -->
+      <div class="email-capture" id="email-capture">
+        <div class="email-capture-title">Save this itinerary</div>
+        <div class="email-capture-sub">Get the full plan — including packing list and budget breakdown — sent to your inbox as a PDF. Free, no spam.</div>
+        <div class="email-capture-form">
+          <input type="email" class="email-capture-input" id="capture-email" placeholder="your@email.com">
+          <button class="email-capture-btn" onclick="saveItinerary()">Send to my inbox</button>
+        </div>
+        <div class="email-success" id="email-success">✓ &nbsp; Check your inbox — your itinerary is on its way</div>
+      </div>
+
+      <!-- Book CTA -->
+      <div class="book-cta" id="book-cta">
+        <div class="book-cta-text">
+          <div class="book-cta-title">Want us to book this for you?</div>
+          <div class="book-cta-sub">We handle everything — stays, transport, permits. You just pack.</div>
+        </div>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20just%20used%20the%20Incitetales%20Itinerary%20Builder%20and%20want%20to%20book%20my%20trip." class="book-whatsapp" target="_blank">
+          ◆ &nbsp; Book via WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// REPLACE THIS WITH YOUR GEMINI API KEY
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
+// ─────────────────────────────────────────
+
+const BREVO_API_KEY = 'YOUR_BREVO_API_KEY_HERE';
+
+const loadingMessages = [
+  'Researching the best routes...',
+  'Checking permit requirements...',
+  'Finding hidden local spots...',
+  'Calculating your budget...',
+  'Building your day-by-day plan...',
+  'Adding local tips and tricks...',
+  'Almost ready...'
+];
+
+let loadingInterval;
+let currentItinerary = '';
+
+function quickFill(dest, days, group, budget, interests) {
+  document.getElementById('destination').value = dest;
+  document.getElementById('days').value = days;
+  document.getElementById('group').value = group;
+  document.getElementById('budget').value = budget;
+  document.getElementById('interests').value = interests;
+}
+
+function showLoading() {
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('itinerary-output').style.display = 'none';
+  document.getElementById('loading-state').style.display = 'block';
+  let i = 0;
+  loadingInterval = setInterval(() => {
+    document.getElementById('loading-msg').textContent = loadingMessages[i % loadingMessages.length];
+    i++;
+  }, 2500);
+}
+
+function hideLoading() {
+  clearInterval(loadingInterval);
+  document.getElementById('loading-state').style.display = 'none';
+}
+
+async function generateItinerary() {
+  const destination = document.getElementById('destination').value;
+  const days = document.getElementById('days').value;
+  const group = document.getElementById('group').value;
+  const budget = document.getElementById('budget').value;
+  const interests = document.getElementById('interests').value;
+
+  if (!destination) {
+    alert('Please select a destination first.');
+    return;
+  }
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').textContent = 'Building...';
+
+  showLoading();
+
+  const prompt = `You are the Incitetales travel expert — a Northeast Indian who has personally visited every destination you recommend. You write like a knowledgeable local friend, not a travel agent. Be specific, practical, and honest.
+
+Generate a detailed travel itinerary for:
+- Destination: ${destination}
+- Duration: ${days} days
+- Group type: ${group}
+- Budget: ${budget} per person (excluding flights)
+- Primary interest: ${interests}
+
+Return ONLY a valid JSON object in this exact format (no markdown, no code blocks, just raw JSON):
+
+{
+  "destination": "Short destination name e.g. Meghalaya",
+  "title": "Evocative trip title e.g. The Living Bridges and Crystal Waters of Meghalaya",
+  "overview": "2-3 sentences on why this destination, what makes it special, and best time to visit. Write in first person as someone who has been there.",
+  "days": [
+    {
+      "number": 1,
+      "theme": "Arrival and first impressions",
+      "route": "Starting point → Ending point",
+      "morning": "Specific activity with local detail",
+      "afternoon": "Specific activity with local detail",
+      "evening": "Specific activity + meal suggestion with approximate cost",
+      "stay": "Specific stay recommendation + price range per night",
+      "transport": "Exact transport option with cost",
+      "tip": "One genuine insider tip only locals would know"
+    }
+  ],
+  "permits": "Detailed permit information if required for this destination. Include application process, cost, processing time, and where to apply. If no permits needed write null.",
+  "budget": [
+    {"label": "Accommodation (total)", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Local transport", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Food and meals", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Entry fees and activities", "value": "₹XXX – ₹X,XXX"},
+    {"label": "Permits (if applicable)", "value": "₹XXX"},
+    {"label": "Miscellaneous", "value": "₹XXX – ₹XXX"},
+    {"label": "Total per person (ex-flights)", "value": "₹X,XXX – ₹XX,XXX", "isTotal": true}
+  ],
+  "packing": [
+    "Item 1 — specific to this destination and season",
+    "Item 2",
+    "Item 3",
+    "Item 4",
+    "Item 5",
+    "Item 6",
+    "Item 7",
+    "Item 8",
+    "Item 9",
+    "Item 10"
+  ]
+}
+
+Rules:
+- Generate exactly ${days} day objects
+- Be specific — name real places, real transport options, real costs
+- Permit info must be accurate for ${destination}
+- Budget must match the ${budget} tier selected
+- Packing list must be specific to this destination and season
+- Write like a friend who has been there, not a travel brochure
+- No generic filler — every line must be genuinely useful`;
+
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 4000,
+        }
+      })
+    });
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!text) throw new Error('No response from API');
+
+    const clean = text.replace(/```json|```/g, '').trim();
+    const itinerary = JSON.parse(clean);
+
+    currentItinerary = JSON.stringify(itinerary);
+    hideLoading();
+    renderItinerary(itinerary, destination, days, group, budget);
+
+  } catch (error) {
+    hideLoading();
+    document.getElementById('empty-state').style.display = 'block';
+    alert('Something went wrong generating your itinerary. Please check your API key and try again.');
+    console.error(error);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('btn-text').textContent = 'Generate My Itinerary';
+  }
+}
+
+function renderItinerary(data, destination, days, group, budget) {
+  // Header
+  document.getElementById('out-destination').textContent = '◆  ' + destination.split('(')[0].trim().toUpperCase();
+  document.getElementById('out-title').textContent = data.title;
+
+  const meta = document.getElementById('out-meta');
+  meta.innerHTML = `
+    <span class="meta-chip">${days} days</span>
+    <span class="meta-chip">${group}</span>
+    <span class="meta-chip">${budget}</span>
+  `;
+
+  // Overview
+  document.getElementById('out-overview').textContent = data.overview;
+
+  // Days
+  const daysContainer = document.getElementById('out-days');
+  daysContainer.innerHTML = '';
+
+  data.days.forEach((day, idx) => {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `
+      <div class="day-header ${idx === 0 ? 'active' : ''}" onclick="toggleDay(this)">
+        <div class="day-number">0${day.number}</div>
+        <div class="day-info">
+          <div class="day-title">${day.theme}</div>
+          <div class="day-route">${day.route}</div>
+        </div>
+        <div class="day-toggle">▾</div>
+      </div>
+      <div class="day-content ${idx === 0 ? 'visible' : ''}">
+        <div class="time-block">
+          <div class="time-label">Morning</div>
+          <div class="time-text">${day.morning}</div>
+        </div>
+        <div class="time-block">
+          <div class="time-label">Afternoon</div>
+          <div class="time-text">${day.afternoon}</div>
+        </div>
+        <div class="time-block">
+          <div class="time-label">Evening</div>
+          <div class="time-text">${day.evening}</div>
+        </div>
+        <div class="time-block">
+          <div class="time-label">Stay</div>
+          <div class="time-text"><strong>${day.stay}</strong></div>
+        </div>
+        <div class="time-block">
+          <div class="time-label">Transport</div>
+          <div class="time-text">${day.transport}</div>
+        </div>
+        <div class="time-block">
+          <div class="time-label">Local tip</div>
+          <div class="time-text" style="color: var(--forest); font-style: italic;">${day.tip}</div>
+        </div>
+      </div>
+    `;
+    daysContainer.appendChild(card);
+  });
+
+  // Info grid
+  const infoGrid = document.getElementById('out-info');
+  infoGrid.innerHTML = '';
+
+  // Permits
+  if (data.permits) {
+    const permitsCard = document.createElement('div');
+    permitsCard.className = 'info-card full';
+    permitsCard.innerHTML = `
+      <div class="info-title">Permit requirements</div>
+      <div class="info-content">${data.permits}</div>
+    `;
+    infoGrid.appendChild(permitsCard);
+  }
+
+  // Budget
+  const budgetCard = document.createElement('div');
+  budgetCard.className = 'info-card';
+  let budgetHTML = '<div class="info-title">Budget breakdown</div>';
+  data.budget.forEach(item => {
+    budgetHTML += `<div class="budget-row ${item.isTotal ? 'total' : ''}">
+      <span class="budget-label">${item.label}</span>
+      <span class="budget-value">${item.value}</span>
+    </div>`;
+  });
+  budgetCard.innerHTML = budgetHTML;
+  infoGrid.appendChild(budgetCard);
+
+  // Packing
+  const packingCard = document.createElement('div');
+  packingCard.className = 'info-card';
+  let packingHTML = '<div class="info-title">Packing list</div><div class="packing-grid">';
+  data.packing.forEach(item => {
+    packingHTML += `<div class="packing-item">${item}</div>`;
+  });
+  packingHTML += '</div>';
+  packingCard.innerHTML = packingHTML;
+  infoGrid.appendChild(packingCard);
+
+  // Show output
+  const output = document.getElementById('itinerary-output');
+  output.style.display = 'block';
+  output.classList.add('fade-in');
+
+  document.getElementById('email-capture').style.display = 'block';
+  document.getElementById('book-cta').style.display = 'flex';
+
+  // Scroll to output
+  setTimeout(() => {
+    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function toggleDay(header) {
+  const content = header.nextElementSibling;
+  const isActive = header.classList.contains('active');
+
+  document.querySelectorAll('.day-header').forEach(h => h.classList.remove('active'));
+  document.querySelectorAll('.day-content').forEach(c => c.classList.remove('visible'));
+
+  if (!isActive) {
+    header.classList.add('active');
+    content.classList.add('visible');
+  }
+}
+
+async function saveItinerary() {
+  const email = document.getElementById('capture-email').value;
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  const btn = document.querySelector('.email-capture-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: { name: 'Incitetales', email: 'hello@incitetales.com' },
+        to: [{ email: email }],
+        subject: 'Your Incitetales itinerary is here',
+        htmlContent: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #1c1814;">
+          <h1 style="font-size: 28px; font-weight: 400; margin-bottom: 8px;">Your itinerary is ready</h1>
+          <p style="color: #6a6058; font-style: italic; margin-bottom: 32px;">From Incitetales — The Untold Assam</p>
+          <pre style="white-space: pre-wrap; font-family: Georgia, serif; font-size: 14px; line-height: 1.8; color: #3a342c;">${JSON.parse(currentItinerary).title}\n\n${JSON.parse(currentItinerary).overview}\n\nFor the complete interactive itinerary, visit:\nhttps://incitetales.com/itinerary-builder.html</pre>
+          <hr style="border: none; border-top: 1px solid #ede8d8; margin: 32px 0;">
+          <p style="font-size: 13px; color: #6a6058;">Want us to book this for you? Reply to this email or WhatsApp us.</p>
+          <p style="font-size: 13px; color: #8b4a2a; font-weight: 500;">incitetales.com · @incitetales</p>
+        </div>`
+      })
+    });
+
+    if (response.ok) {
+      document.getElementById('email-success').style.display = 'block';
+      document.querySelector('.email-capture-form').style.display = 'none';
+    } else {
+      throw new Error('Email failed');
+    }
+  } catch (error) {
+    alert('Could not send email right now. Please try again.');
+    btn.textContent = 'Send to my inbox';
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>
