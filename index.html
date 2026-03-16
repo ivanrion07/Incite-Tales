@@ -696,145 +696,12 @@ nav {
   flex-shrink: 0;
 }
 
-/* ── ITINERARY BUILDER ── */
-.builder-section {
-  background: var(--forest);
-  padding: 80px 48px;
-}
-
-.builder-inner {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 80px;
-  align-items: start;
-}
-
-.builder-left {}
-
-.builder-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 8.5px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(245,240,232,0.6);
-  margin-bottom: 16px;
-}
-
-.builder-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 3vw, 42px);
-  font-weight: 400;
-  color: var(--bg);
-  line-height: 1.15;
-  margin-bottom: 20px;
-}
-.builder-title em { font-style: italic; }
-
-.builder-desc {
-  font-size: 14px;
-  color: rgba(245,240,232,0.7);
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-
-.builder-destinations {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.dest-pill {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(245,240,232,0.7);
-  border: 1px solid rgba(245,240,232,0.2);
-  padding: 4px 10px;
-}
-
-/* Builder form */
-.builder-form {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  padding: 32px;
-}
-
-.builder-form-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  display: block;
-  margin-bottom: 6px;
-}
-
-.form-select, .form-input {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  padding: 10px 14px;
-  font-family: 'Lora', serif;
-  font-size: 13px;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s;
-  appearance: none;
-}
-.form-select:focus, .form-input:focus { border-color: var(--forest); }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.form-submit {
-  width: 100%;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cream);
-  background: var(--ink);
-  border: none;
-  padding: 14px;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-top: 8px;
-}
-.form-submit:hover { background: var(--terra); }
-
-.form-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  color: var(--ink3);
-  text-align: center;
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
 /* ── NEWSLETTER ── */
 .newsletter {
   background: var(--ink);
-  padding: 80px 48px;
+  padding: 96px 48px;
   text-align: center;
+  border-top: 1px solid var(--border);
 }
 
 .newsletter-label {
@@ -1027,7 +894,7 @@ footer {
     <li><a href="itinerary-builder.html">Itinerary Builder</a></li>
     <li><a href="merch.html">Merch</a></li>
   </ul>
-  <a href="#builder" class="nav-cta">Plan a Trip</a>
+  <a href="#newsletter" class="nav-cta">Newsletter</a>
 </nav>
 
 <!-- HERO -->
@@ -1219,81 +1086,8 @@ footer {
   </div>
 </div>
 
-<!-- ITINERARY BUILDER -->
-<div class="builder-section reveal" id="builder">
-  <div class="builder-inner">
-    <div class="builder-left">
-      <div class="builder-label">◆ &nbsp; Powered by AI</div>
-      <h2 class="builder-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h2>
-      <p class="builder-desc">Tell us where you want to go, how many days, and your budget. We'll generate a complete day-by-day itinerary — with stays, transport, permit guidance, and the hidden spots only locals know.</p>
-      <div class="builder-destinations">
-        <span class="dest-pill">Assam</span>
-        <span class="dest-pill">Meghalaya</span>
-        <span class="dest-pill">Mizoram</span>
-        <span class="dest-pill">Arunachal</span>
-        <span class="dest-pill">Darjeeling</span>
-        <span class="dest-pill">Sikkim</span>
-        <span class="dest-pill">Goa</span>
-      </div>
-    </div>
-    <div class="builder-form">
-      <div class="builder-form-title">Plan My Trip</div>
-      <div class="form-group">
-        <label class="form-label">Where do you want to go?</label>
-        <select class="form-select" id="destination">
-          <option value="">Select destination</option>
-          <option>Assam — Upper Assam & Kaziranga</option>
-          <option>Meghalaya — Shillong, Cherrapunji & Dawki</option>
-          <option>Mizoram — Aizawl & surroundings</option>
-          <option>Arunachal — Tawang & Kameng</option>
-          <option>Arunachal — Mechuka (Shi-Yomi)</option>
-          <option>Arunachal — Dibang Valley</option>
-          <option>Arunachal — Lohit</option>
-          <option>Darjeeling + Sikkim</option>
-          <option>Goa — North & South</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">How many days?</label>
-          <select class="form-select" id="days">
-            <option>5 days</option>
-            <option>7 days</option>
-            <option>10 days</option>
-            <option>14 days</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Travelling as?</label>
-          <select class="form-select" id="group">
-            <option>Solo</option>
-            <option>Couple</option>
-            <option>Friends (3-5)</option>
-            <option>Family</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Budget per person (excluding flights)</label>
-        <select class="form-select" id="budget">
-          <option>Under ₹10,000</option>
-          <option>₹10,000 – ₹20,000</option>
-          <option>₹20,000 – ₹35,000</option>
-          <option>₹35,000+</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Your email — to receive your itinerary</label>
-        <input type="email" class="form-input" id="email" placeholder="you@email.com">
-      </div>
-      <button class="form-submit" onclick="generateItinerary()">Generate My Itinerary →</button>
-      <p class="form-note">Free · Takes 30 seconds · No spam, ever</p>
-    </div>
-  </div>
-</div>
-
 <!-- NEWSLETTER -->
-<div class="newsletter reveal">
+<div class="newsletter reveal" id="newsletter">
   <div class="newsletter-label">◆ &nbsp; One story, every week</div>
   <h2 class="newsletter-title">The world learns<br><strong>what NORTHEAST is.</strong></h2>
   <p class="newsletter-sub">New stories, trip guides, and illustrated prints — in your inbox. No algorithms. Just Northeast India.</p>
@@ -1346,7 +1140,8 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1365,12 +1160,6 @@ window.addEventListener('scroll', () => {
     ? '0 2px 20px rgba(28,24,20,0.08)'
     : 'none';
 });
-
-// Itinerary builder
-function generateItinerary() {
-  const destination = document.getElementById('destination').value;
-  const email = document.getElementById('email').value;
-  if (!destination) { alert('Please select a destination.'); return; }
-  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'B
+</script>
+</body>
+</html>
