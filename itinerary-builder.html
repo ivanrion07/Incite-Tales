@@ -1249,6 +1249,7 @@ async function saveItinerary() {
       },
       body: JSON.stringify({
         action: 'email',
+        itineraryData: JSON.parse(currentItinerary),
         email: email,
         itineraryTitle: JSON.parse(currentItinerary).title,
         itineraryOverview: JSON.parse(currentItinerary).overview,
