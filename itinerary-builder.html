@@ -1078,7 +1078,7 @@ Rules:
     });
 
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const text = data.choices?.[0]?.message?.content;
 
     if (!text) {
       console.error('Full API response:', JSON.stringify(data));
