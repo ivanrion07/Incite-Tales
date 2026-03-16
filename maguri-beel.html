@@ -27,6 +27,7 @@
   --border:    #242018;
   --border2:   #2e2a20;
   --col-width: 680px; /* max width of article text */
+  --maguri-image: url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773693474/849484299_Maguri_Beel_Tinsukia1_1_z0krti.webp');
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -132,11 +133,13 @@ nav {
 .hero-img {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, transparent 30%, rgba(11,10,7,0.96) 100%),
+  background-image:
+    linear-gradient(180deg, rgba(11,10,7,0.08) 20%, rgba(11,10,7,0.96) 100%),
     radial-gradient(ellipse 100% 60% at 50% 80%, rgba(45,122,104,0.2) 0%, transparent 60%),
     radial-gradient(ellipse 80% 40% at 30% 20%, rgba(200,168,75,0.07) 0%, transparent 50%),
-    linear-gradient(160deg, #0a1810 0%, #0d1f18 40%, #091410 70%, #060e08 100%);
+    var(--maguri-image);
+  background-size: cover;
+  background-position: center;
   transition: transform 8s ease;
 }
 
@@ -370,26 +373,17 @@ nav {
 .img-placeholder-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, #0a1810 0%, #0d2018 50%, #081410 100%);
+  background-image:
+    linear-gradient(180deg, rgba(11,10,7,0.1) 0%, rgba(11,10,7,0.28) 100%),
+    var(--maguri-image);
+  background-size: cover;
+  background-position: center;
 }
 .img-placeholder-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 80% 50% at 50% 80%, rgba(45,122,104,0.2) 0%, transparent 60%);
-}
-.img-placeholder-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  z-index: 1;
 }
 
 .img-caption {
@@ -822,7 +816,6 @@ footer {
     <div class="article-img">
       <div class="img-placeholder">
         <div class="img-placeholder-bg"></div>
-        <div class="img-placeholder-label">↑ Replace with photo: wide shot of Maguri Beel at sunrise</div>
       </div>
       <p class="img-caption">◆ &nbsp; The Maguri-Motapung wetland at dawn. Mist off the Dibru River, November.</p>
     </div>
@@ -850,7 +843,6 @@ footer {
     <div class="article-img">
       <div class="img-placeholder">
         <div class="img-placeholder-bg"></div>
-        <div class="img-placeholder-label">↑ Replace with photo: fishermen silhouettes at sunset</div>
       </div>
       <p class="img-caption">◆ &nbsp; Local fishermen on Maguri Beel. Evening, December.</p>
     </div>

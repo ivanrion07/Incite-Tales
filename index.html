@@ -25,6 +25,7 @@
   --border:     #ede8d8;
   --border2:    #e0d8c4;
   --cream:      #ffffff;
+  --maguri-image: url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773693474/849484299_Maguri_Beel_Tinsukia1_1_z0krti.webp');
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -214,7 +215,11 @@ nav {
 
 .hero-featured-img {
   height: 340px;
-  background: linear-gradient(160deg, #1a2e20 0%, #1e3828 50%, #0e1e14 100%);
+  background-image:
+    linear-gradient(180deg, rgba(12, 18, 14, 0.12) 0%, rgba(12, 18, 14, 0.38) 100%),
+    var(--maguri-image);
+  background-size: cover;
+  background-position: center;
   position: relative;
   overflow: hidden;
 }
@@ -378,7 +383,11 @@ nav {
 .story-card:hover .story-card-img-bg { transform: scale(1.04); }
 
 .story-card:nth-child(1) .story-card-img-bg {
-  background: linear-gradient(160deg, #1a2e20 0%, #1e3828 50%, #0e1e14 100%);
+  background-image:
+    linear-gradient(180deg, rgba(12, 18, 14, 0.14) 0%, rgba(12, 18, 14, 0.34) 100%),
+    var(--maguri-image);
+  background-size: cover;
+  background-position: center;
 }
 .story-card:nth-child(2) .story-card-img-bg {
   background: linear-gradient(160deg, #2a1e10 0%, #3a2a14 50%, #1a1008 100%);
