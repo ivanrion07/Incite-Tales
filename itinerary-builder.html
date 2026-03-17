@@ -526,6 +526,13 @@ nav {
   border-top: none;
 }
 
+.itinerary-hero-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
 /* Overview section */
 .overview-section {
   padding: 24px 32px;
@@ -624,6 +631,21 @@ nav {
   background: #ffffff;
 }
 .day-content.visible { display: block; }
+
+.day-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.day-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  background: var(--bg2);
+}
 
 .time-block {
   display: grid;
@@ -1122,6 +1144,67 @@ const loadingMessages = [
   'Almost ready...'
 ];
 
+const placeImageMap = {
+  Shillong: [
+    "shillong city hills",
+    "umiam lake sunrise",
+    "police bazaar night"
+  ],
+  Cherrapunji: [
+    "nohkalikai falls meghalaya",
+    "living root bridge cherrapunji",
+    "seven sisters falls"
+  ],
+  Dawki: [
+    "umngot river crystal clear boat",
+    "dawki river boating",
+    "indo bangladesh border river"
+  ],
+  Kaziranga: [
+    "kaziranga national park safari",
+    "one horned rhino kaziranga",
+    "jeep safari assam"
+  ],
+  Tawang: [
+    "tawang monastery snow",
+    "sela pass arunachal",
+    "madhuri lake tawang"
+  ],
+  Ziro: [
+    "ziro valley landscape",
+    "apatani tribe ziro",
+    "ziro rice fields"
+  ]
+};
+
+const fallbackImages = [
+  "northeast india mountains",
+  "northeast india waterfalls",
+  "northeast india scenic landscape"
+];
+
+function getImagesForPlace(place) {
+  if (!place) return fallbackImages;
+
+  return placeImageMap[place] || fallbackImages;
+}
+
+function getBestImages(title) {
+  const keys = Object.keys(placeImageMap);
+
+  for (let key of keys) {
+    if (title.toLowerCase().includes(key.toLowerCase())) {
+      return placeImageMap[key];
+    }
+  }
+
+  return fallbackImages;
+}
+
+function buildImageUrl(query, width = 1200, height = 800) {
+  return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(query)}`;
+}
+
 const destinationGroups = [
   {
     label: "✨ Quick Picks",
@@ -1552,9 +1635,9 @@ Rules:
 
 function renderItinerary(data, destination, days, group, budget) {
   // Header
-document.getElementById('out-destination').textContent =
-  '◆  ' + destination.toUpperCase(); 
-   document.getElementById('out-title').textContent = data.title;
+  document.getElementById('out-destination').textContent =
+    '◆  ' + destination.toUpperCase();
+  document.getElementById('out-title').textContent = data.title;
 
   const meta = document.getElementById('out-meta');
   meta.innerHTML = `
@@ -1564,13 +1647,33 @@ document.getElementById('out-destination').textContent =
   `;
 
   // Overview
-  document.getElementById('out-overview').textContent = data.overview;
+  const overviewEl = document.getElementById('out-overview');
+  const destinationImageQuery = getImagesForPlace(data.destination || destination)[0];
+  overviewEl.innerHTML = `
+    <img
+      class="itinerary-hero-image"
+      src="${buildImageUrl(destinationImageQuery, 1400, 700)}"
+      alt="${destination}"
+      loading="lazy"
+    >
+    <div style="padding-top:18px;">${data.overview}</div>
+  `;
 
   // Days
   const daysContainer = document.getElementById('out-days');
   daysContainer.innerHTML = '';
 
   data.days.forEach((day, idx) => {
+    const dayImageQueries = getBestImages(`${day.route || ''} ${day.theme || ''}`).slice(0, 3);
+    const dayImagesHtml = dayImageQueries.map((query) => `
+      <img
+        class="day-image"
+        src="${buildImageUrl(query, 900, 600)}"
+        alt="${day.theme}"
+        loading="lazy"
+      >
+    `).join('');
+
     const card = document.createElement('div');
     card.className = 'day-card';
     card.innerHTML = `
@@ -1583,6 +1686,7 @@ document.getElementById('out-destination').textContent =
         <div class="day-toggle">▾</div>
       </div>
       <div class="day-content ${idx === 0 ? 'visible' : ''}">
+        <div class="day-images">${dayImagesHtml}</div>
         <div class="time-block">
           <div class="time-label">Morning</div>
           <div class="time-text">${day.morning}</div>
