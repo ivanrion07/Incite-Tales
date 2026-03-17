@@ -1,0 +1,12 @@
+request_id,created_at,status_code,time_to_first_token,time_to_completion,model,api_key_id,project_id,input_tokens,input_non_cached_tokens,input_cached_tokens,input_audio_seconds,output_tokens
+req_01kkv95qhrex8agqynkv65beb5,1773663346232,200,0.097241,4.677136,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,804,804,0,0,2008
+req_01kkv8s2p5e328vy49t433n6aa,1773662931653,200,0.205095,4.276403,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,753,753,0,0,1755
+req_01kkv66kmnewsbg2tth33mjjd0,1773660229269,200,0.094237,4.111145,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,768,768,0,0,1756
+req_01kkv4bxjdfjzvyjfvsd4nnb4x,1773658306125,200,0.206398,5.748846,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,782,782,0,0,2805
+req_01kkv44gmkepwstjsgqw0jgmn1,1773658063507,200,0.119498,4.3502,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,781,781,0,0,1891
+req_01kkv43y9senrbc4bb4bwddctx,1773658044729,200,0.118401,4.051758,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,809,809,0,0,1720
+req_01kkv32rbke9z9zzmt3t3nvb0r,1773656957299,200,0.090716,4.644132,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,782,782,0,0,1970
+req_01kkv323tjekzas4fngpg3rj45,1773656936274,200,0.108437,5.005545,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,782,782,0,0,2075
+req_01kkv2jragf61vcetz0a72d6en,1773656432976,200,0.099316,6.063958,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,812,812,0,0,2700
+req_01kkv1fxsqff8t255hf3ahn7nn,1773655291703,200,0.132754,4.916698,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,803,803,0,0,2065
+req_01kkv1e5m2fbytjes0fc4fcebe,1773655234178,200,0.155618,3.855794,llama-3.3-70b-versatile,key_01kkv05cd9e1psjhzg55ht2mmd,project_01kkv043peek6adc3evpxdw0b6,780,780,0,0,1551
