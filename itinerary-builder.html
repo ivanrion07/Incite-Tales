@@ -877,6 +877,7 @@ nav {
     <div class="form-card-title">Not sure where to go?</div>
     <div class="form-card-sub">Tell us what you want. We’ll figure it out.</div>
     <input type="hidden" id="custom-destination">
+    <input type="hidden" id="custom-focus">
 
     <div class="form-group">
       <textarea 
@@ -1111,6 +1112,7 @@ function quickFill(dest, days, group, budget, interests) {
   document.getElementById('group').value = group;
   document.getElementById('budget').value = budget;
   document.getElementById('interests').value = interests;
+  document.getElementById('custom-focus').value = interests;
 }
 
 function titleCase(text) {
@@ -1171,13 +1173,14 @@ Return ONLY JSON:
   "days": "5 or 7 or 10 or 14",
   "group": "solo traveller / couple / friend group of 3-5 people / family with children",
   "budget": "budget (under ₹10,000) / mid-range (₹10,000–₹20,000) / comfortable (₹20,000–₹35,000) / premium (₹35,000+)",
-  "interests": "wildlife and nature / culture and history / adventure and trekking / photography / food and local life / a mix of everything",
+  "interests": "short phrase describing the real trip focus",
   "summary": "1 short sentence explaining what you understood"
 }
 
 Rules:
 - Destination MUST be specific (e.g. Ziro Valley, Mechuka, Majuli, Dawki)
 - DO NOT limit to dropdown list
+- Interests SHOULD be natural and specific, not forced into the dropdown labels
 - Pick best Northeast location based on idea
 - Default days = 5–7 if not mentioned
 - Return raw JSON only`;
@@ -1219,10 +1222,25 @@ Rules:
       dropdown.value = '';
     }
 
+    document.getElementById('custom-focus').value = result.interests;
+    const focusDropdown = document.getElementById('interests');
+    let focusMatched = false;
+
+    for (let i = 0; i < focusDropdown.options.length; i++) {
+      if (focusDropdown.options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
+        focusDropdown.value = focusDropdown.options[i].value;
+        focusMatched = true;
+        break;
+      }
+    }
+
+    if (!focusMatched) {
+      focusDropdown.value = '';
+    }
+
     document.getElementById('days').value = String(result.days);
     document.getElementById('group').value = result.group;
     document.getElementById('budget').value = result.budget;
-    document.getElementById('interests').value = result.interests;
     showInterpretation(result, idea);
   } catch (error) {
     alert('Could not turn that idea into a trip right now. Please try again.');
@@ -1257,7 +1275,9 @@ async function generateItinerary() {
   const days = document.getElementById('days').value;
   const group = document.getElementById('group').value;
   const budget = document.getElementById('budget').value;
-  const interests = document.getElementById('interests').value;
+  const selectedFocus = document.getElementById('interests').value;
+  const customFocus = document.getElementById('custom-focus').value.trim();
+  const interests = customFocus || selectedFocus;
 
   if (!destination) {
     alert('Tell us where you want to go.');
@@ -1558,11 +1578,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('custom-destination').value = event.target.value;
     resetInterpretation();
   });
+  document.getElementById('interests').addEventListener('change', (event) => {
+    document.getElementById('custom-focus').value = event.target.value;
+    resetInterpretation();
+  });
   document.getElementById('idea-input').addEventListener('input', resetInterpretation);
   document.getElementById('days').addEventListener('change', resetInterpretation);
   document.getElementById('group').addEventListener('change', resetInterpretation);
   document.getElementById('budget').addEventListener('change', resetInterpretation);
-  document.getElementById('interests').addEventListener('change', resetInterpretation);
 
   document.querySelectorAll('.sample-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
