@@ -979,25 +979,6 @@ nav {
         <label class="form-label">Where do you want to go?</label>
         <select class="form-select" id="destination">
           <option value="">Select destination</option>
-          <optgroup label="Assam">
-            <option value="Upper Assam (Tinsukia, Dibrugarh, Maguri Beel, Dibru-Saikhowa)">Upper Assam — Maguri Beel & Dibru-Saikhowa</option>
-            <option value="Central Assam (Kaziranga, Majuli, Jorhat)">Central Assam — Kaziranga & Majuli</option>
-            <option value="Guwahati and surroundings">Guwahati & Surroundings</option>
-          </optgroup>
-          <optgroup label="Northeast India">
-            <option value="Meghalaya (Shillong, Cherrapunji, Dawki, Mawlynnong)">Meghalaya — Shillong, Cherrapunji & Dawki</option>
-            <option value="Mizoram (Aizawl and surroundings)">Mizoram — Aizawl</option>
-            <option value="Arunachal Pradesh - Tawang and Kameng district (Bomdila, Dirang, Tawang, Sela Pass) - ILP required">Arunachal — Tawang Circuit (ILP required)</option>
-            <option value="Arunachal Pradesh - Mechuka in Shi-Yomi district - ILP and PAP required">Arunachal — Mechuka (ILP + PAP required)</option>
-            <option value="Arunachal Pradesh - Dibang Valley - ILP and PAP required">Arunachal — Dibang Valley (ILP + PAP required)</option>
-            <option value="Arunachal Pradesh - Lohit district (Tezu, Parashuram Kund) - ILP required">Arunachal — Lohit (ILP required)</option>
-          </optgroup>
-          <optgroup label="Explore Nearby">
-            <option value="Darjeeling and Sikkim (Darjeeling town, Tiger Hill, Gangtok, North Sikkim, Gurudongmar Lake) - Sikkim ILP required">Darjeeling + Sikkim</option>
-          </optgroup>
-          <optgroup label="Go Further">
-            <option value="Goa (North Goa and South Goa, self-drive recommended)">Goa — North & South</option>
-          </optgroup>
         </select>
       </div>
 
@@ -1141,13 +1122,89 @@ const loadingMessages = [
   'Almost ready...'
 ];
 
+const destinationGroups = [
+  {
+    label: "✨ Quick Picks",
+    options: [
+      { value: "meghalaya_3_5", name: "Meghalaya Escape (3–5 days)" },
+      { value: "tawang_5_7", name: "Tawang Adventure (5–7 days)" },
+      { value: "kaziranga_majuli", name: "Kaziranga + Majuli (4–6 days)" },
+      { value: "shillong_cherrapunji", name: "Shillong + Cherrapunji (3 days)" }
+    ]
+  },
+  {
+    label: "🎯 By Experience",
+    options: [
+      { value: "peaceful", name: "Peaceful & Scenic" },
+      { value: "adventure", name: "Adventure & Trek" },
+      { value: "waterfalls", name: "Waterfalls & Nature" },
+      { value: "culture", name: "Culture & Heritage" }
+    ]
+  },
+  {
+    label: "📍 By State",
+    options: [
+      { value: "assam", name: "Assam" },
+      { value: "meghalaya", name: "Meghalaya" },
+      { value: "arunachal", name: "Arunachal Pradesh" },
+      { value: "nagaland", name: "Nagaland" }
+    ]
+  },
+  {
+    label: "🌿 Offbeat Picks",
+    options: [
+      { value: "ziro", name: "Ziro Valley" },
+      { value: "mechuka", name: "Mechuka" },
+      { value: "dzukou", name: "Dzukou Valley" },
+      { value: "majuli", name: "Majuli" }
+    ]
+  },
+  {
+    label: "🧭 Combo Trips",
+    options: [
+      { value: "assam_meghalaya", name: "Assam + Meghalaya" },
+      { value: "arunachal_assam", name: "Arunachal + Assam" },
+      { value: "meghalaya_kaziranga", name: "Meghalaya + Kaziranga" }
+    ]
+  }
+];
+
 let loadingInterval;
 let currentItinerary = '';
 let ideaRequestInFlight = false;
 let interpretedIdea = null;
 
+function populateDestinationDropdown() {
+  const select = document.getElementById('destination');
+  const placeholder = '<option value="">Select destination</option>';
+
+  select.innerHTML = placeholder;
+
+  destinationGroups.forEach((group) => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = group.label;
+
+    group.options.forEach((optionData) => {
+      const option = document.createElement('option');
+      option.value = optionData.value;
+      option.textContent = optionData.name;
+      option.dataset.name = optionData.name;
+      optgroup.appendChild(option);
+    });
+
+    select.appendChild(optgroup);
+  });
+}
+
+function getSelectedDestinationLabel() {
+  const select = document.getElementById('destination');
+  const selectedOption = select.options[select.selectedIndex];
+  return selectedOption ? (selectedOption.dataset.name || selectedOption.textContent || '').trim() : '';
+}
+
 function quickFill(dest, days, group, budget, interests) {
-  document.getElementById('destination').value = dest;
+  const destinationSelect = document.getElementById('destination');
+  destinationSelect.value = '';
   document.getElementById('custom-destination').value = dest;
   document.getElementById('days').value = days;
   document.getElementById('group').value = group;
@@ -1301,8 +1358,10 @@ Rules:
     let matched = false;
 
     for (let i = 0; i < dropdown.options.length; i++) {
-      if (dropdown.options[i].value.toLowerCase().includes(result.destination.toLowerCase())) {
+      const optionText = (dropdown.options[i].dataset.name || dropdown.options[i].textContent || '').toLowerCase();
+      if (optionText.includes(result.destination.toLowerCase())) {
         dropdown.value = dropdown.options[i].value;
+        document.getElementById('custom-destination').value = dropdown.options[i].dataset.name || result.destination;
         matched = true;
         break;
       }
@@ -1360,7 +1419,7 @@ function hideLoading() {
 }
 
 async function generateItinerary() {
-  const dropdownDestination = document.getElementById('destination').value;
+  const dropdownDestination = getSelectedDestinationLabel();
   const customDestination = document.getElementById('custom-destination').value.trim();
   const destination = customDestination || dropdownDestination;
   const days = document.getElementById('days').value;
@@ -1657,6 +1716,7 @@ async function saveItinerary() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  populateDestinationDropdown();
   document.getElementById('idea-generate-btn').addEventListener('click', generateFromIdea);
   document.getElementById('generate-btn').addEventListener('click', generateItinerary);
   document.getElementById('save-itinerary-btn').addEventListener('click', saveItinerary);
@@ -1668,7 +1728,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ideaInput.setSelectionRange(ideaInput.value.length, ideaInput.value.length);
   });
   document.getElementById('destination').addEventListener('change', (event) => {
-    document.getElementById('custom-destination').value = event.target.value;
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || '') : '';
     resetInterpretation();
   });
   document.getElementById('interests').addEventListener('change', (event) => {
