@@ -295,6 +295,43 @@ nav {
   margin-bottom: 14px;
 }
 
+.interpretation-routes {
+  margin-bottom: 14px;
+}
+
+.interpretation-routes-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 8px;
+}
+
+.interpretation-route-list {
+  display: grid;
+  gap: 8px;
+}
+
+.interpretation-route-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+.interpretation-route-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.interpretation-route-why {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+
 .interpretation-chip {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -897,6 +934,10 @@ nav {
       <div class="interpretation-label">AI Interpretation</div>
       <div class="interpretation-title" id="interpretation-title"></div>
       <div class="interpretation-copy" id="interpretation-copy"></div>
+      <div class="interpretation-routes" id="interpretation-routes" style="display:none;">
+        <div class="interpretation-routes-title">Route suggestions</div>
+        <div class="interpretation-route-list" id="interpretation-route-list"></div>
+      </div>
       <div class="interpretation-grid">
         <div class="interpretation-chip">
           <div class="interpretation-chip-label">Destination</div>
@@ -1126,13 +1167,50 @@ function titleCase(text) {
 function resetInterpretation() {
   interpretedIdea = null;
   document.getElementById('interpretation-card').style.display = 'none';
+  document.getElementById('interpretation-routes').style.display = 'none';
+  document.getElementById('interpretation-route-list').innerHTML = '';
 }
 
 function showInterpretation(result, originalIdea) {
   interpretedIdea = result;
+  const interpretationContent = document.getElementById('interpretation-copy');
+  const routesWrap = document.getElementById('interpretation-routes');
+  const routeList = document.getElementById('interpretation-route-list');
+  const confidence = "Strong match based on your preferences";
   document.getElementById('interpretation-title').textContent = 'Here is what I understood';
-  document.getElementById('interpretation-copy').textContent =
-    result.summary || `"${originalIdea}" points to a ${result.days}-day trip centered on ${result.destination}.`;
+  interpretationContent.innerHTML = `
+    <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;">
+      Suggested destination
+    </div>
+
+    <div style="font-family:'Playfair Display'; font-size:20px; margin-bottom:14px;">
+      ${result.destination}
+    </div>
+
+    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
+    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
+    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
+    <div style="margin-top:10px; font-size:12px; color:var(--forest);">
+      ✓ ${confidence}
+    </div>
+  `;
+
+  routeList.innerHTML = '';
+  if (Array.isArray(result.routeSuggestions) && result.routeSuggestions.length) {
+    result.routeSuggestions.slice(0, 3).forEach((route) => {
+      const item = document.createElement('div');
+      item.className = 'interpretation-route-item';
+      item.innerHTML = `
+        <div class="interpretation-route-name">${route.route}</div>
+        <div class="interpretation-route-why">${route.why}</div>
+      `;
+      routeList.appendChild(item);
+    });
+    routesWrap.style.display = 'block';
+  } else {
+    routesWrap.style.display = 'none';
+  }
+
   document.getElementById('interpretation-destination').textContent = result.destination;
   document.getElementById('interpretation-days').textContent = `${result.days} days`;
   document.getElementById('interpretation-group').textContent = titleCase(result.group);
@@ -1174,7 +1252,13 @@ Return ONLY JSON:
   "group": "solo traveller / couple / friend group of 3-5 people / family with children",
   "budget": "budget (under ₹10,000) / mid-range (₹10,000–₹20,000) / comfortable (₹20,000–₹35,000) / premium (₹35,000+)",
   "interests": "short phrase describing the real trip focus",
-  "summary": "1 short sentence explaining what you understood"
+  "summary": "1 short sentence explaining what you understood",
+  "routeSuggestions": [
+    {
+      "route": "Route name or flow",
+      "why": "Why this route fits the user's idea"
+    }
+  ]
 }
 
 Rules:
@@ -1183,6 +1267,8 @@ Rules:
 - Interests SHOULD be natural and specific, not forced into the dropdown labels
 - Pick best Northeast location based on idea
 - Default days = 5–7 if not mentioned
+- Return 2 or 3 routeSuggestions only
+- Each routeSuggestions.why should be practical and specific
 - Return raw JSON only`;
 
   try {
@@ -1572,7 +1658,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('confirm-interpretation-btn').addEventListener('click', generateItinerary);
   document.getElementById('reset-interpretation-btn').addEventListener('click', () => {
     resetInterpretation();
-    document.getElementById('idea-input').focus();
+    const ideaInput = document.getElementById('idea-input');
+    ideaInput.focus();
+    ideaInput.setSelectionRange(ideaInput.value.length, ideaInput.value.length);
   });
   document.getElementById('destination').addEventListener('change', (event) => {
     document.getElementById('custom-destination').value = event.target.value;
