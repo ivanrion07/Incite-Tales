@@ -990,6 +990,7 @@ let ideaRequestInFlight = false;
 
 function quickFill(dest, days, group, budget, interests) {
   document.getElementById('destination').value = dest;
+  document.getElementById('custom-destination').value = dest;
   document.getElementById('days').value = days;
   document.getElementById('group').value = group;
   document.getElementById('budget').value = budget;
@@ -1015,7 +1016,7 @@ async function generateFromIdea() {
   btn.disabled = true;
   btn.querySelector('span').textContent = 'Turning idea into trip...';
 
- const planningPrompt = `You are a Northeast India travel expert.
+  const planningPrompt = `You are a Northeast India travel expert.
 
 User idea: "${idea}"
 
@@ -1053,20 +1054,32 @@ Rules:
     }
 
     const clean = text.replace(/```json|```/g, '').trim();
-    const suggestion = JSON.parse(clean);
+    const result = JSON.parse(clean);
 
-    // Store AI destination (custom)
-document.getElementById('custom-destination').value = suggestion.destination;
+    // Store AI destination (even if not in dropdown)
+    document.getElementById('custom-destination').value = result.destination;
 
-// Clear dropdown (important)
-document.getElementById('destination').value = "";
+    // Try to match dropdown (optional fallback)
+    const dropdown = document.getElementById('destination');
+    let matched = false;
 
-// Fill other fields
-document.getElementById('days').value = suggestion.days;
-document.getElementById('group').value = suggestion.group;
-document.getElementById('budget').value = suggestion.budget;
-document.getElementById('interests').value = suggestion.interests;
-    );
+    for (let i = 0; i < dropdown.options.length; i++) {
+      if (dropdown.options[i].value.toLowerCase().includes(result.destination.toLowerCase())) {
+        dropdown.value = dropdown.options[i].value;
+        matched = true;
+        break;
+      }
+    }
+
+    // If not matched, clear dropdown
+    if (!matched) {
+      dropdown.value = '';
+    }
+
+    document.getElementById('days').value = String(result.days);
+    document.getElementById('group').value = result.group;
+    document.getElementById('budget').value = result.budget;
+    document.getElementById('interests').value = result.interests;
 
     await generateItinerary();
   } catch (error) {
@@ -1096,18 +1109,17 @@ function hideLoading() {
 }
 
 async function generateItinerary() {
-const dropdownDestination = document.getElementById('destination').value;
-const customDestination = document.getElementById('custom-destination').value;
-
-const destination = customDestination || dropdownDestination;  const days = document.getElementById('days').value;
+  const dropdownDestination = document.getElementById('destination').value;
+  const customDestination = document.getElementById('custom-destination').value.trim();
+  const destination = customDestination || dropdownDestination;
+  const days = document.getElementById('days').value;
   const group = document.getElementById('group').value;
   const budget = document.getElementById('budget').value;
   const interests = document.getElementById('interests').value;
 
   if (!destination) {
-  alert('Tell us where you want to go.');
-  return;
-}
+    alert('Tell us where you want to go.');
+    return;
   }
 
   const btn = document.getElementById('generate-btn');
@@ -1395,6 +1407,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('idea-generate-btn').addEventListener('click', generateFromIdea);
   document.getElementById('generate-btn').addEventListener('click', generateItinerary);
   document.getElementById('save-itinerary-btn').addEventListener('click', saveItinerary);
+  document.getElementById('destination').addEventListener('change', (event) => {
+    document.getElementById('custom-destination').value = event.target.value;
+  });
 
   document.querySelectorAll('.sample-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
