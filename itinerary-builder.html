@@ -1201,8 +1201,42 @@ function getBestImages(title) {
   return fallbackImages;
 }
 
+function escapeSvgText(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function buildImageUrl(query, width = 1200, height = 800) {
-  return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(query)}`;
+  const label = query || 'Northeast India';
+  const safeLabel = escapeSvgText(label);
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1c1814" />
+          <stop offset="45%" stop-color="#2a5c48" />
+          <stop offset="100%" stop-color="#8b4a2a" />
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#bg)" />
+      <circle cx="${Math.round(width * 0.82)}" cy="${Math.round(height * 0.22)}" r="${Math.round(Math.min(width, height) * 0.12)}" fill="rgba(245,200,66,0.22)" />
+      <circle cx="${Math.round(width * 0.18)}" cy="${Math.round(height * 0.78)}" r="${Math.round(Math.min(width, height) * 0.16)}" fill="rgba(255,255,255,0.08)" />
+      <path d="M0 ${Math.round(height * 0.78)} C ${Math.round(width * 0.18)} ${Math.round(height * 0.64)}, ${Math.round(width * 0.34)} ${Math.round(height * 0.88)}, ${Math.round(width * 0.52)} ${Math.round(height * 0.74)} S ${Math.round(width * 0.82)} ${Math.round(height * 0.62)}, ${width} ${Math.round(height * 0.76)} L ${width} ${height} L 0 ${height} Z" fill="rgba(255,255,255,0.10)" />
+      <text x="${Math.round(width * 0.08)}" y="${Math.round(height * 0.16)}" fill="#f5c842" font-family="Georgia, serif" font-size="${Math.max(18, Math.round(width * 0.028))}" letter-spacing="4">INCITETALES</text>
+      <text x="${Math.round(width * 0.08)}" y="${Math.round(height * 0.70)}" fill="#ffffff" font-family="Georgia, serif" font-size="${Math.max(28, Math.round(width * 0.055))}" font-weight="600">${safeLabel}</text>
+      <text x="${Math.round(width * 0.08)}" y="${Math.round(height * 0.80)}" fill="rgba(255,255,255,0.72)" font-family="Georgia, serif" font-size="${Math.max(16, Math.round(width * 0.022))}">Northeast journey inspiration</text>
+    </svg>
+  `.trim();
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function buildFallbackPlaceholder(width = 1200, height = 800, label = 'Northeast India') {
+  return buildImageUrl(label, width, height);
 }
 
 const destinationGroups = [
@@ -1654,6 +1688,7 @@ function renderItinerary(data, destination, days, group, budget) {
       class="itinerary-hero-image"
       src="${buildImageUrl(destinationImageQuery, 1400, 700)}"
       alt="${destination}"
+      onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(1400, 700, destination)}';"
       loading="lazy"
     >
     <div style="padding-top:18px;">${data.overview}</div>
@@ -1670,6 +1705,7 @@ function renderItinerary(data, destination, days, group, budget) {
         class="day-image"
         src="${buildImageUrl(query, 900, 600)}"
         alt="${day.theme}"
+        onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(900, 600, day.theme)}';"
         loading="lazy"
       >
     `).join('');
