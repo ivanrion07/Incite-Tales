@@ -1440,7 +1440,23 @@ async function generateItinerary() {
 
   showLoading();
 
-  const itineraryPrompt = `You are the Incitetales travel expert — a Northeast Indian who has personally visited every destination you recommend. You write like a knowledgeable local friend, not a travel agent. Be specific, practical, and honest.
+  const itineraryPrompt = `You are a Northeast India travel expert trained on real local experiences.
+
+Write a short overview for the destination.
+
+Tone rules:
+- Do NOT always start with personal experience
+- Vary sentence openings every time
+- Sound like a local expert, not a blogger
+- Subtle personal insights are allowed, but avoid repeating phrases like "I've been there"
+- Keep it natural, crisp, and insightful
+
+Avoid:
+- Repetitive openings
+- Overused phrases
+- Generic tourism descriptions
+
+Make it feel like insider knowledge.
 
 Generate a detailed travel itinerary for:
 - Destination: ${destination}
@@ -1449,7 +1465,7 @@ Generate a detailed travel itinerary for:
 - Budget: ${budget} per person (excluding flights)
 - Primary interest: ${interests}
 
-Return ONLY a valid JSON object in this exact format (no markdown, no code blocks, just raw JSON):
+Return JSON only in this exact format:
 
 {
   "destination": "Short destination name e.g. Meghalaya",
