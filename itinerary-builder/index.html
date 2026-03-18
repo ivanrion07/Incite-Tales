@@ -253,21 +253,120 @@ nav {
 }
 
 /* ── INSIGHT BADGE (shows when engine finds local data) ── */
-.insight-badge {
+.insight-selector {
   display: none;
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: #f0f8f4;
+  margin-top: 14px;
   border: 1px solid #c0dcd0;
-  border-left: 3px solid var(--forest);
+  background: #f4faf7;
+}
+.insight-selector.visible { display: block; }
+
+.insight-selector-header {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid #c0dcd0;
+}
+.insight-selector-label {
   font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.12em;
+  font-size: 7.5px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--forest);
-  line-height: 1.6;
+  margin-bottom: 3px;
 }
-.insight-badge.visible { display: block; }
+.insight-selector-sub {
+  font-size: 11px;
+  color: var(--ink3);
+  font-style: italic;
+}
+.insight-selector-options {
+  padding: 8px 0;
+}
+.insight-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e0f0e8;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.insight-option:last-child { border-bottom: none; }
+.insight-option:hover { background: #eaf5f0; }
+.insight-option.selected { background: #e0f5ea; }
+.insight-option-check {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #a0c8b8;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--forest);
+  background: #fff;
+  transition: all 0.15s;
+}
+.insight-option.selected .insight-option-check {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+.insight-option-body {}
+.insight-option-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 2px;
+}
+.insight-option-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.insight-option-detail {
+  font-size: 11px;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+.insight-option-score {
+  margin-left: auto;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--forest);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.insight-selector-footer {
+  padding: 8px 14px 10px;
+  border-top: 1px solid #c0dcd0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.insight-selector-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.insight-skip-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.insight-skip-link:hover { color: var(--terra); }
 
 .interpretation-card {
   display: none;
@@ -1011,8 +1110,18 @@ nav {
           style="resize:none;"></textarea>
       </div>
 
-      <!-- Insight badge — shows when engine finds local data -->
-      <div class="insight-badge" id="insight-badge"></div>
+      <!-- Insight selector — shown when engine finds local data for this area -->
+      <div class="insight-selector" id="insight-selector">
+        <div class="insight-selector-header">
+          <div class="insight-selector-label">◆ We found verified spots for this area</div>
+          <div class="insight-selector-sub">Select which to include in your itinerary — or skip to let AI decide freely</div>
+        </div>
+        <div class="insight-selector-options" id="insight-selector-options"></div>
+        <div class="insight-selector-footer">
+          <span class="insight-selector-count" id="insight-selector-count"></span>
+          <span class="insight-skip-link" id="insight-skip-link">Skip — let AI decide freely</span>
+        </div>
+      </div>
 
       <button class="form-submit" id="idea-generate-btn" type="button">
         <span>Turn this into a trip</span>
@@ -1218,100 +1327,211 @@ function parseIntent(ideaText, destination) {
   if (!engineReady || !ideaText) return { filters: {}, matchedInsights: [], contextBlock: '' };
 
   const text = ideaText.toLowerCase();
-  const filters = {};
-
-  // ── Detect state from idea text or destination ──
-  const stateMap = {
-    'meghalaya': 'Meghalaya',
-    'shillong': 'Meghalaya',
-    'cherrapunji': 'Meghalaya',
-    'dawki': 'Meghalaya',
-    'assam': 'Assam',
-    'tinsukia': 'Assam',
-    'dibrugarh': 'Assam',
-    'guwahati': 'Assam',
-    'majuli': 'Assam',
-    'kaziranga': 'Assam',
-    'arunachal': 'Arunachal Pradesh',
-    'tawang': 'Arunachal Pradesh',
-    'bomdila': 'Arunachal Pradesh',
-    'ziro': 'Arunachal Pradesh',
-    'mechuka': 'Arunachal Pradesh',
-    'nagaland': 'Nagaland',
-    'kohima': 'Nagaland',
-    'dzukou': 'Nagaland',
-    'manipur': 'Manipur',
-    'sikkim': 'Sikkim',
-    'mizoram': 'Mizoram',
-  };
-
   const combined = `${text} ${(destination || '').toLowerCase()}`;
-  for (const [keyword, state] of Object.entries(stateMap)) {
-    if (combined.includes(keyword)) {
-      filters.state = state;
-      break;
-    }
-  }
 
-  // ── Detect intent keywords ──
-  const intentMap = [
-    { keywords: ['offbeat', 'hidden', 'secret', 'unknown', 'undiscovered', 'off the beaten', 'no tourist', 'less crowd', 'avoid crowd'], action: () => { filters.minHiddenScore = 7; } },
-    { keywords: ['camping', 'camp', 'tent', 'riverside camp', 'outdoor stay'], action: () => { filters.stayType = 'camp'; } },
-    { keywords: ['homestay', 'home stay', 'local stay', 'family stay', 'village stay'], action: () => { filters.stayType = 'homestay'; } },
-    { keywords: ['trek', 'trekking', 'hike', 'hiking', 'trail', 'mountains'], action: () => { filters.tags = [...(filters.tags || []), 'trekking']; } },
-    { keywords: ['wildlife', 'animals', 'safari', 'birds', 'birdwatch', 'dolphin'], action: () => { filters.tags = [...(filters.tags || []), 'wildlife']; } },
-    { keywords: ['river', 'waterfall', 'water', 'lake', 'crystal'], action: () => { filters.tags = [...(filters.tags || []), 'river']; } },
-    { keywords: ['culture', 'tribe', 'tribal', 'heritage', 'local life', 'village'], action: () => { filters.type = 'cultural'; } },
-    { keywords: ['no permit', 'permit free', 'without permit', 'no ilp'], action: () => { filters.permitNeeded = false; } },
-    { keywords: ['digital detox', 'no signal', 'offline', 'disconnect', 'no phone'], action: () => { filters.noSignal = true; } },
-    { keywords: ['peaceful', 'quiet', 'calm', 'serene', 'relaxing', 'slow'], action: () => { filters.minHiddenScore = filters.minHiddenScore || 5; } },
-    { keywords: ['photography', 'photo', 'landscape', 'scenic', 'view'], action: () => { filters.tags = [...(filters.tags || []), 'birdwatching']; } },
-  ];
-
-  intentMap.forEach(({ keywords, action }) => {
-    if (keywords.some(k => text.includes(k))) action();
+  // ── STEP 1: Geographic scope matching (district/town level) ──
+  // Each schema entry has geographic_scope[] — exact towns and districts it covers.
+  // We match the user's query against these directly.
+  // This is strict: "upper dibang" will NOT match a Tawang entry.
+  const scopeMatches = engine.insights.filter(entry => {
+    const scope = entry.geographic_scope || [];
+    return scope.some(keyword => combined.includes(keyword.toLowerCase()));
   });
 
-  // ── Run query ──
-  const matchedInsights = engineReady ? engine.query({ ...filters, limit: 5 }) : [];
+  // ── STEP 2: Intent detection ──
+  // Only applied ON TOP of scope matches — never used to broaden geography
+  const intentKeywords = {
+    offbeat:    ['offbeat', 'hidden', 'secret', 'unknown', 'undiscovered', 'off the beaten', 'no tourist', 'less crowd', 'avoid crowd'],
+    camping:    ['camping', 'camp', 'tent', 'riverside camp', 'outdoor stay'],
+    homestay:   ['homestay', 'home stay', 'local stay', 'family stay', 'village stay'],
+    trekking:   ['trek', 'trekking', 'hike', 'hiking', 'trail'],
+    wildlife:   ['wildlife', 'animals', 'safari', 'birds', 'birdwatch', 'dolphin'],
+    river:      ['river', 'waterfall', 'water', 'lake', 'crystal'],
+    cultural:   ['culture', 'tribe', 'tribal', 'heritage', 'local life', 'village'],
+    nopermit:   ['no permit', 'permit free', 'without permit', 'no ilp'],
+    detox:      ['digital detox', 'no signal', 'offline', 'disconnect'],
+  };
 
-  // ── Build context block for Groq prompt ──
-  let contextBlock = '';
-  if (matchedInsights.length > 0) {
-    contextBlock = `
+  const detectedIntents = new Set();
+  for (const [intent, keywords] of Object.entries(intentKeywords)) {
+    if (keywords.some(k => combined.includes(k))) detectedIntents.add(intent);
+  }
+
+  const wantsOffbeat = detectedIntents.has('offbeat');
+
+  // ── STEP 3: Filter scope matches by intent ──
+  let matchedInsights = scopeMatches;
+
+  if (detectedIntents.has('camping'))  matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'camp') || e.tags?.includes('camping'));
+  if (detectedIntents.has('homestay')) matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'homestay'));
+  if (detectedIntents.has('nopermit')) matchedInsights = matchedInsights.filter(e => (e.permit_needed ?? e.local_intel?.permit_needed) === false);
+  if (detectedIntents.has('detox'))    matchedInsights = matchedInsights.filter(e => e.connectivity?.mobile_signal === 'none');
+  if (detectedIntents.has('cultural')) matchedInsights = matchedInsights.filter(e => e.type === 'cultural' || e.tags?.some(t => ['tribe','culture','heritage'].includes(t)));
+  if (wantsOffbeat)                    matchedInsights = matchedInsights.filter(e => (e.hidden_score || 0) >= 7);
+
+  // If intent filters wiped everything out, fall back to all scope matches
+  // Better to show geographically correct entries than nothing
+  if (matchedInsights.length === 0 && scopeMatches.length > 0) {
+    matchedInsights = scopeMatches;
+  }
+
+  // ── STEP 4: GEOGRAPHIC GUARD ──
+  // If zero scope matches — we have no verified data for this area.
+  // Do NOT inject. Tell the truth.
+  if (scopeMatches.length === 0) {
+    return { filters: {}, matchedInsights: [], contextBlock: '' };
+  }
+
+  // Sort by hidden_score desc, take top 4
+  matchedInsights = matchedInsights
+    .sort((a, b) => (b.hidden_score || 0) - (a.hidden_score || 0))
+    .slice(0, 4);
+
+  // ── STEP 5: Build context block for Groq prompt ──
+  const contextBlock = `
 VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
-The following locations have been verified by the Incitetales team with personal experience.
-Incorporate these into the itinerary where relevant. Use the exact local intel provided — do not replace with generic information.
+The following have been verified on the ground by the Incitetales team.
+Use this data exactly as provided. Do not substitute with generic information.
+If a location is listed here, include it in the itinerary by name.
 
 ${matchedInsights.map((ins, i) => `
-[${i + 1}] ${ins.title} (${ins.type.toUpperCase()} · Hidden Score: ${ins.hidden_score}/10)
-Region: ${ins.region}, ${ins.state}
+[${i + 1}] ${ins.title}
+Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
 ${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
 ${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
-${ins.local_intel?.how_to_get ? `How to get there: ${ins.local_intel.how_to_get}` : ''}
-${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel.permit_notes || 'Yes'}` : ''}
+${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
+${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
 ${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
-${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal inside` : ''}
+${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
+${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
 ${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
-${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}, ${s.price_range || ''})`).join(', ')}` : ''}
+${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
+${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
 `).join('\n---\n')}
 
-INSTRUCTION: Build the itinerary around these verified spots. Mention them by name. Use the "what most people miss" as insider tips. Use the recommended stays if available.
+INSTRUCTIONS:
+- Include these exact locations in the itinerary where geographically logical
+- Use the "what most people miss" detail as the local tip for that day
+- Use recommended stays if available — do not replace with generic hotel names
+- Mention permit requirements explicitly in the permits section
+- The local angle quotes are field notes — reference them naturally, not verbatim
 `;
+
+  return { filters: {}, matchedInsights, contextBlock };
+}
+// ── Selected insights (user-chosen) ──
+let selectedInsightIds = new Set();
+
+// ── Render insight selector panel ──
+function updateInsightSelector(matchedInsights) {
+  const selector  = document.getElementById('insight-selector');
+  const optionsEl = document.getElementById('insight-selector-options');
+  const countEl   = document.getElementById('insight-selector-count');
+  const skipLink  = document.getElementById('insight-skip-link');
+
+  if (!matchedInsights.length) {
+    selector.classList.remove('visible');
+    selectedInsightIds = new Set();
+    return;
   }
 
-  return { filters, matchedInsights, contextBlock };
+  // Default: all selected
+  selectedInsightIds = new Set(matchedInsights.map(i => i.id));
+  optionsEl.innerHTML = '';
+
+  matchedInsights.forEach(ins => {
+    const opt = document.createElement('div');
+    opt.className = 'insight-option selected';
+    opt.dataset.id = ins.id;
+
+    const bestMonths = ins.season?.best?.slice(0,3).join(', ') || '';
+    const stayInfo = ins.stays?.length ? `· ${ins.stays[0].name}` : '';
+    const detail = [ins.region, bestMonths ? `Best: ${bestMonths}` : '', stayInfo]
+      .filter(Boolean).join(' · ');
+
+    opt.innerHTML = `
+      <div class="insight-option-check">✓</div>
+      <div class="insight-option-body">
+        <div class="insight-option-type">${ins.type.replace('-',' ')}</div>
+        <div class="insight-option-title">${ins.title}</div>
+        <div class="insight-option-detail">${detail}</div>
+      </div>
+      <div class="insight-option-score">${ins.hidden_score}</div>
+    `;
+
+    opt.addEventListener('click', () => {
+      const id = opt.dataset.id;
+      if (selectedInsightIds.has(id)) {
+        selectedInsightIds.delete(id);
+        opt.classList.remove('selected');
+        opt.querySelector('.insight-option-check').textContent = '';
+      } else {
+        selectedInsightIds.add(id);
+        opt.classList.add('selected');
+        opt.querySelector('.insight-option-check').textContent = '✓';
+      }
+      updateSelectorCount();
+    });
+
+    optionsEl.appendChild(opt);
+  });
+
+  updateSelectorCount();
+
+  // Skip link — deselect all and proceed
+  skipLink.onclick = () => {
+    selectedInsightIds = new Set();
+    document.querySelectorAll('.insight-option').forEach(o => {
+      o.classList.remove('selected');
+      o.querySelector('.insight-option-check').textContent = '';
+    });
+    updateSelectorCount();
+  };
+
+  selector.classList.add('visible');
 }
 
-// ── Show insight badge when engine finds matches ──
-function updateInsightBadge(matchedInsights) {
-  const badge = document.getElementById('insight-badge');
-  if (matchedInsights.length > 0) {
-    badge.textContent = `◆ Found ${matchedInsights.length} verified local spot${matchedInsights.length > 1 ? 's' : ''} from Incitetales database — will be included in your itinerary`;
-    badge.classList.add('visible');
-  } else {
-    badge.classList.remove('visible');
-  }
+function updateSelectorCount() {
+  const countEl = document.getElementById('insight-selector-count');
+  const n = selectedInsightIds.size;
+  countEl.textContent = n > 0
+    ? `${n} spot${n > 1 ? 's' : ''} selected — will anchor the itinerary`
+    : 'None selected — Groq generates freely';
+}
+
+// ── Build context block from SELECTED insights only ──
+function buildContextFromSelected(allInsights) {
+  const selected = allInsights.filter(i => selectedInsightIds.has(i.id));
+  if (!selected.length) return '';
+
+  return `
+VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
+The following have been verified on the ground by the Incitetales team.
+The user has specifically chosen to include these in their itinerary.
+Use this data exactly as provided. Include these locations by name.
+
+${selected.map((ins, i) => `
+[${i + 1}] ${ins.title}
+Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
+${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
+${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
+${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
+${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
+${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
+${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
+${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
+${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
+${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
+${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
+`).join('\n---\n')}
+
+INSTRUCTIONS:
+- Include these exact locations in the itinerary where geographically logical
+- Use the "what most people miss" detail as the local tip for that day
+- Use recommended stays if available — do not replace with generic hotel names
+- Mention permit requirements explicitly in the permits section
+- The local angle quotes are field notes — reference them naturally, not verbatim
+`;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1425,7 +1645,7 @@ function resetInterpretation() {
   document.getElementById('interpretation-card').style.display = 'none';
   document.getElementById('interpretation-suggestions').style.display = 'none';
   document.getElementById('interpretation-suggestion-list').innerHTML = '';
-  document.getElementById('insight-badge').classList.remove('visible');
+  document.getElementById('insight-selector').classList.remove('visible'); selectedInsightIds = new Set();
 }
 
 function showInterpretation(result, originalIdea) {
@@ -1476,7 +1696,7 @@ async function generateFromIdea() {
 
   // Run InsightEngine intent parse immediately on idea text
   const { matchedInsights } = parseIntent(idea, '');
-  updateInsightBadge(matchedInsights);
+  updateInsightSelector(matchedInsights);
   currentInsights = matchedInsights;
 
   const planningPrompt = `You are a Northeast India travel expert.
@@ -1555,7 +1775,7 @@ Rules:
     // Re-run intent parse now that we have the AI destination too
     const refined = parseIntent(idea, result.destination);
     currentInsights = refined.matchedInsights;
-    updateInsightBadge(refined.matchedInsights);
+    updateInsightSelector(refined.matchedInsights);
 
     showInterpretation(result, idea);
   } catch (error) {
@@ -1604,8 +1824,9 @@ async function generateItinerary() {
     currentInsights = parsed.matchedInsights;
   }
 
-  // ── Build context block from insights ──
-  const { contextBlock } = parseIntent(ideaText, destination);
+  // ── Build context block from USER-SELECTED insights only ──
+  // If user deselected all (or skipped), contextBlock is empty → Groq generates freely
+  const contextBlock = buildContextFromSelected(currentInsights);
 
   const btn = document.getElementById('generate-btn');
   btn.disabled = true;
@@ -1856,7 +2077,7 @@ function prefillFromUrl() {
     if (engineReady) {
       const parsed = parseIntent(decodeURIComponent(dest), decodeURIComponent(dest));
       currentInsights = parsed.matchedInsights;
-      updateInsightBadge(parsed.matchedInsights);
+      updateInsightSelector(parsed.matchedInsights);
     } else {
       // Engine still loading — try again in 1s
       setTimeout(() => prefillFromUrl(), 1000);
@@ -1895,7 +2116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (idea.length > 10 && engineReady) {
         const parsed = parseIntent(idea, '');
         currentInsights = parsed.matchedInsights;
-        updateInsightBadge(parsed.matchedInsights);
+        updateInsightSelector(parsed.matchedInsights);
       }
     }, 500);
   });
