@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../favicon.png">
+<title>Itinerary Builder — Incitetales</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #ffffff;
+  --bg2:        #fffdf5;
+  --ink:        #1c1814;
+  --ink2:       #3a342c;
+  --ink3:       #6a6058;
+  --terra:      #8b4a2a;
+  --forest:     #2a5c48;
+  --forest-dim: #4a8c70;
+  --yellow:     #f5c842;
+  --yellow-pale:#fffbe8;
+  --border:     #ede8d8;
+  --border2:    #e0d8c4;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-logo span {
+  background: var(--yellow);
+  padding: 0 4px;
+}
+
+.nav-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--terra); }
+
+/* ── HERO ── */
+.page-hero {
+  padding: 120px 48px 60px;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(42,92,72,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(245,200,66,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.hero-label::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.hero-title em { font-style: italic; color: var(--yellow); }
+
+.hero-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 48px;
+}
+
+.form-panel {
+  position: static !important;
+}
+
+/* ── FORM PANEL ── */
+.form-panel {
+  position: sticky;
+  top: 90px;
+}
+
+.form-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+
+.form-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.form-card-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border2);
+  padding: 10px 14px;
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6058' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-input {
+  background-image: none;
+  padding-right: 14px;
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--forest);
+  background-color: #ffffff;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-submit {
+  width: 100%;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--ink);
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.form-submit:hover { background: var(--forest); }
+.form-submit:disabled { background: var(--ink3); cursor: not-allowed; }
+
+.form-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ── INSIGHT BADGE (shows when engine finds local data) ── */
+.insight-selector {
+  display: none;
+  margin-top: 14px;
+  border: 1px solid #c0dcd0;
+  background: #f4faf7;
+}
+.insight-selector.visible { display: block; }
+
+.insight-selector-header {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid #c0dcd0;
+}
+.insight-selector-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 3px;
+}
+.insight-selector-sub {
+  font-size: 11px;
+  color: var(--ink3);
+  font-style: italic;
+}
+.insight-selector-options {
+  padding: 8px 0;
+}
+.insight-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e0f0e8;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.insight-option:last-child { border-bottom: none; }
+.insight-option:hover { background: #eaf5f0; }
+.insight-option.selected { background: #e0f5ea; }
+.insight-option-check {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #a0c8b8;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--forest);
+  background: #fff;
+  transition: all 0.15s;
+}
+.insight-option.selected .insight-option-check {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+.insight-option-body {}
+.insight-option-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 2px;
+}
+.insight-option-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.insight-option-detail {
+  font-size: 11px;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+.insight-option-score {
+  margin-left: auto;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--forest);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.insight-selector-footer {
+  padding: 8px 14px 10px;
+  border-top: 1px solid #c0dcd0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.insight-selector-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.insight-skip-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.insight-skip-link:hover { color: var(--terra); }
+
+.interpretation-card {
+  display: none;
+  margin-top: 16px;
+  padding: 18px;
+  background: #fffaf0;
+  border: 1px solid var(--border2);
+}
+
+.interpretation-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 10px;
+}
+
+.interpretation-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.interpretation-copy {
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 14px;
+}
+
+.interpretation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.interpretation-suggestions {
+  margin-bottom: 14px;
+}
+
+.interpretation-suggestions-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 8px;
+}
+
+.interpretation-suggestion-list {
+  display: grid;
+  gap: 8px;
+}
+
+.interpretation-suggestion-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+.interpretation-suggestion-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.interpretation-suggestion-why {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+
+.interpretation-chip {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.interpretation-chip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 4px;
+}
+
+.interpretation-chip-value {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.interpretation-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.interpretation-actions .form-submit {
+  margin-top: 0;
+}
+
+.form-submit.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border2);
+}
+
+.form-submit.secondary:hover {
+  background: #ffffff;
+  color: var(--forest);
+}
+
+/* ── OUTPUT PANEL ── */
+.output-panel {}
+
+.empty-state {
+  padding: 60px 40px;
+  text-align: center;
+  border: 1px dashed var(--border2);
+}
+
+.empty-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink3);
+  margin-bottom: 10px;
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.sample-destinations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.sample-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  border: 1px solid var(--border2);
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg2);
+}
+.sample-pill:hover {
+  border-color: var(--forest);
+  color: var(--forest);
+  background: #f0f8f4;
+}
+
+.loading-state {
+  display: none;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--forest);
+  border-radius: 50%;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.loading-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink2);
+  margin-bottom: 8px;
+}
+
+.loading-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.itinerary-output {
+  display: none;
+}
+
+.itinerary-header {
+  background: var(--ink);
+  padding: 28px 32px;
+  margin-bottom: 2px;
+}
+
+.itinerary-destination {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+
+.itinerary-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.itinerary-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 10px;
+}
+
+.itinerary-body {
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+.itinerary-hero-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.overview-section {
+  padding: 24px 32px;
+  background: var(--yellow-pale);
+  border-bottom: 1px solid var(--border);
+}
+
+.section-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-tag::before {
+  content: '';
+  width: 14px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.overview-text {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* ── LOCAL INSIGHTS SECTION (new) ── */
+.local-insights-section {
+  padding: 20px 32px;
+  background: #f4faf7;
+  border-bottom: 1px solid #c8e0d4;
+  display: none;
+}
+.local-insights-section.visible { display: block; }
+
+.local-insights-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.local-insights-label::before {
+  content: '';
+  width: 14px;
+  height: 2px;
+  background: var(--forest);
+}
+
+.insight-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.insight-card-mini {
+  background: #ffffff;
+  border: 1px solid #c8e0d4;
+  padding: 12px 14px;
+}
+
+.insight-card-mini-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 4px;
+}
+
+.insight-card-mini-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.insight-card-mini-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: var(--ink3);
+}
+
+.days-section {
+  padding: 0;
+}
+
+.day-card {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.day-header {
+  padding: 16px 32px;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-left: 3px solid transparent;
+}
+.day-header:hover { background: #f5f3ee; border-left-color: var(--yellow); }
+.day-header.active { border-left-color: var(--forest); background: #f0f8f4; }
+
+.day-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--border2);
+  line-height: 1;
+  min-width: 36px;
+}
+
+.day-info {}
+
+.day-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.day-route {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-top: 3px;
+}
+
+.day-toggle {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  transition: transform 0.2s;
+}
+.day-header.active .day-toggle { transform: rotate(180deg); }
+
+.day-content {
+  display: none;
+  padding: 20px 32px 24px 84px;
+  background: #ffffff;
+}
+.day-content.visible { display: block; }
+
+.day-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.day-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  background: var(--bg2);
+}
+
+.time-block {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.time-block:last-child { border-bottom: none; }
+
+.time-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra);
+  padding-top: 2px;
+}
+
+.time-text {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+.time-text strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.time-text .tip {
+  display: block;
+  font-size: 12px;
+  color: var(--forest-dim);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.info-card {
+  background: var(--bg2);
+  padding: 24px 32px;
+}
+
+.info-card.full {
+  grid-column: span 2;
+}
+
+.info-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-title::before {
+  content: '';
+  width: 12px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.info-content {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.permit-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #fff3e0;
+  color: #8b4a2a;
+  border: 1px solid #e8c090;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.budget-row:last-child { border-bottom: none; }
+.budget-row.total {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 2px solid var(--ink);
+  border-bottom: none;
+}
+
+.budget-label { color: var(--ink2); }
+.budget-value { color: var(--ink); font-weight: 500; }
+
+.packing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.packing-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+.packing-item::before {
+  content: '◆';
+  font-size: 5px;
+  color: var(--forest);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.email-capture {
+  background: var(--forest);
+  padding: 32px;
+  margin-top: 2px;
+  display: none;
+}
+
+.email-capture-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.email-capture-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.email-capture-form {
+  display: flex;
+  gap: 0;
+  max-width: 440px;
+  margin-bottom: 12px;
+}
+
+.email-capture-input {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-right: none;
+  padding: 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  outline: none;
+}
+.email-capture-input::placeholder { color: rgba(255,255,255,0.35); }
+.email-capture-input:focus { border-color: rgba(255,255,255,0.5); }
+
+.email-capture-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  color: var(--ink);
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.email-capture-btn:hover { background: #f0d060; }
+
+.email-success {
+  display: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  padding: 12px 0;
+}
+
+.book-cta {
+  background: var(--ink);
+  padding: 28px 32px;
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.book-cta-text {}
+
+.book-cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.book-cta-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+
+.book-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 13px 24px;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.book-whatsapp:hover { background: #f0d060; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn 0.5s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../" class="nav-logo">Incite<span>tales</span></a>
+  <a href="../" class="nav-back">← Back to home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-label">Powered by AI · Free to use</div>
+  <h1 class="hero-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h1>
+  <p class="hero-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with transport, permits, budget, and the spots only locals know.</p>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="form-card" style="margin-bottom:20px;">
+      <div class="form-card-title">Not sure where to go?</div>
+      <div class="form-card-sub">Tell us what you want. We'll figure it out.</div>
+      <input type="hidden" id="custom-destination">
+      <input type="hidden" id="custom-focus">
+
+      <div class="form-group">
+        <textarea
+          id="idea-input"
+          class="form-input"
+          rows="3"
+          placeholder="Offbeat Meghalaya, riverside camping, no tourist traps"
+          style="resize:none;"></textarea>
+      </div>
+
+      <!-- Insight selector — shown when engine finds local data for this area -->
+      <div class="insight-selector" id="insight-selector">
+        <div class="insight-selector-header">
+          <div class="insight-selector-label">◆ We found verified spots for this area</div>
+          <div class="insight-selector-sub">Select which to include in your itinerary — or skip to let AI decide freely</div>
+        </div>
+        <div class="insight-selector-options" id="insight-selector-options"></div>
+        <div class="insight-selector-footer">
+          <span class="insight-selector-count" id="insight-selector-count"></span>
+          <span class="insight-skip-link" id="insight-skip-link">Skip — let AI decide freely</span>
+        </div>
+      </div>
+
+      <button class="form-submit" id="idea-generate-btn" type="button">
+        <span>Turn this into a trip</span>
+        <span>→</span>
+      </button>
+
+      <div class="interpretation-card" id="interpretation-card">
+        <div class="interpretation-label">AI Interpretation</div>
+        <div class="interpretation-title" id="interpretation-title"></div>
+        <div class="interpretation-copy" id="interpretation-copy"></div>
+        <div class="interpretation-suggestions" id="interpretation-suggestions" style="display:none;">
+          <div class="interpretation-suggestions-title">Other location suggestions</div>
+          <div class="interpretation-suggestion-list" id="interpretation-suggestion-list"></div>
+        </div>
+        <div class="interpretation-grid">
+          <div class="interpretation-chip">
+            <div class="interpretation-chip-label">Destination</div>
+            <div class="interpretation-chip-value" id="interpretation-destination"></div>
+          </div>
+          <div class="interpretation-chip">
+            <div class="interpretation-chip-label">Duration</div>
+            <div class="interpretation-chip-value" id="interpretation-days"></div>
+          </div>
+          <div class="interpretation-chip">
+            <div class="interpretation-chip-label">Travel Style</div>
+            <div class="interpretation-chip-value" id="interpretation-group"></div>
+          </div>
+          <div class="interpretation-chip">
+            <div class="interpretation-chip-label">Budget</div>
+            <div class="interpretation-chip-value" id="interpretation-budget"></div>
+          </div>
+          <div class="interpretation-chip">
+            <div class="interpretation-chip-label">Focus</div>
+            <div class="interpretation-chip-value" id="interpretation-interests"></div>
+          </div>
+        </div>
+        <div class="interpretation-actions">
+          <button class="form-submit" id="confirm-interpretation-btn" type="button">
+            <span>Generate itinerary</span>
+            <span>→</span>
+          </button>
+          <button class="form-submit secondary" id="reset-interpretation-btn" type="button">
+            <span>Adjust idea</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Plan My Trip</div>
+      <div class="form-card-sub">Takes 30 seconds. Completely free.</div>
+
+      <div class="form-group">
+        <label class="form-label">Where do you want to go?</label>
+        <select class="form-select" id="destination">
+          <option value="">Select destination</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">How many days?</label>
+          <select class="form-select" id="days">
+            <option value="5">5 days</option>
+            <option value="7" selected>7 days</option>
+            <option value="10">10 days</option>
+            <option value="14">14 days</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Travelling as?</label>
+          <select class="form-select" id="group">
+            <option value="solo traveller">Solo</option>
+            <option value="couple">Couple</option>
+            <option value="friend group of 3-5 people" selected>Friends (3–5)</option>
+            <option value="family with children">Family</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Budget per person (excluding flights)</label>
+        <select class="form-select" id="budget">
+          <option value="budget (under ₹10,000)">Budget — under ₹10,000</option>
+          <option value="mid-range (₹10,000–₹20,000)" selected>Mid-range — ₹10,000–₹20,000</option>
+          <option value="comfortable (₹20,000–₹35,000)">Comfortable — ₹20,000–₹35,000</option>
+          <option value="premium (₹35,000+)">Premium — ₹35,000+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What matters most to you?</label>
+        <select class="form-select" id="interests">
+          <option value="wildlife and nature">Wildlife & Nature</option>
+          <option value="culture and history">Culture & History</option>
+          <option value="adventure and trekking">Adventure & Trekking</option>
+          <option value="photography">Photography</option>
+          <option value="food and local life">Food & Local Life</option>
+          <option value="a mix of everything">Mix of Everything</option>
+        </select>
+      </div>
+
+      <button class="form-submit" id="generate-btn" type="button">
+        <span id="btn-text">Generate My Itinerary</span>
+        <span>→</span>
+      </button>
+      <p class="form-note">Free · No login required · Takes ~20 seconds</p>
+    </div>
+  </div>
+
+  <!-- OUTPUT — loading state only; result renders on /itinerary-result/ -->
+  <div class="output-panel">
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">◈</div>
+      <div class="empty-title">Your itinerary will appear on the next page</div>
+      <div class="empty-sub">Fill in your preferences and click Generate.<br>Your full plan opens instantly in a new view.</div>
+      <div class="sample-destinations">
+        <div class="sample-pill" data-destination="Meghalaya (Shillong, Cherrapunji, Dawki, Mawlynnong)" data-days="7" data-group="friend group of 3-5 people" data-budget="mid-range (₹10,000–₹20,000)" data-interests="a mix of everything">Meghalaya 7 days</div>
+        <div class="sample-pill" data-destination="Arunachal Pradesh - Tawang and Kameng district (Bomdila, Dirang, Tawang, Sela Pass) - ILP required" data-days="7" data-group="couple" data-budget="mid-range (₹10,000–₹20,000)" data-interests="culture and history">Arunachal Tawang</div>
+        <div class="sample-pill" data-destination="Upper Assam (Tinsukia, Dibrugarh, Maguri Beel, Dibru-Saikhowa)" data-days="5" data-group="friend group of 3-5 people" data-budget="budget (under ₹10,000)" data-interests="wildlife and nature">Upper Assam 5 days</div>
+        <div class="sample-pill" data-destination="Darjeeling and Sikkim (Darjeeling town, Tiger Hill, Gangtok, North Sikkim, Gurudongmar Lake) - Sikkim ILP required" data-days="7" data-group="couple" data-budget="mid-range (₹10,000–₹20,000)" data-interests="a mix of everything">Darjeeling + Sikkim</div>
+        <div class="sample-pill" data-destination="Goa (North Goa and South Goa, self-drive recommended)" data-days="7" data-group="friend group of 3-5 people" data-budget="mid-range (₹10,000–₹20,000)" data-interests="a mix of everything">Goa 7 days</div>
+      </div>
+    </div>
+    <div class="loading-state" id="loading-state">
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+      <div class="loading-text">Building your itinerary...</div>
+      <div class="loading-sub" id="loading-msg">Researching the best routes</div>
+    </div>
+  </div>
+
+<!-- ── INSIGHT ENGINE ── -->
+<script src="/js/InsightEngine.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// INSIGHT ENGINE — init
+// ─────────────────────────────────────────────────────────────
+const engine = new InsightEngine('/data/insights');
+let engineReady = false;
+engine.load().then(() => { engineReady = true; });
+
+// Stores matched insights for the current itinerary
+let currentInsights = [];
+
+// ─────────────────────────────────────────────────────────────
+// INTENT PARSER
+// Reads the raw idea text and maps to InsightEngine filters
+// Returns: { filters, matchedInsights, contextBlock }
+// ─────────────────────────────────────────────────────────────
+function parseIntent(ideaText, destination) {
+  if (!engineReady || !ideaText) return { filters: {}, matchedInsights: [], contextBlock: '' };
+
+  const text = ideaText.toLowerCase();
+  const combined = `${text} ${(destination || '').toLowerCase()}`;
+
+  // ── STEP 1: Geographic scope matching (district/town level) ──
+  // Each schema entry has geographic_scope[] — exact towns and districts it covers.
+  // We match the user's query against these directly.
+  // This is strict: "upper dibang" will NOT match a Tawang entry.
+  const scopeMatches = engine.insights.filter(entry => {
+    const scope = entry.geographic_scope || [];
+    return scope.some(keyword => combined.includes(keyword.toLowerCase()));
+  });
+
+  // ── STEP 2: Intent detection ──
+  // Only applied ON TOP of scope matches — never used to broaden geography
+  const intentKeywords = {
+    offbeat:    ['offbeat', 'hidden', 'secret', 'unknown', 'undiscovered', 'off the beaten', 'no tourist', 'less crowd', 'avoid crowd'],
+    camping:    ['camping', 'camp', 'tent', 'riverside camp', 'outdoor stay'],
+    homestay:   ['homestay', 'home stay', 'local stay', 'family stay', 'village stay'],
+    trekking:   ['trek', 'trekking', 'hike', 'hiking', 'trail'],
+    wildlife:   ['wildlife', 'animals', 'safari', 'birds', 'birdwatch', 'dolphin'],
+    river:      ['river', 'waterfall', 'water', 'lake', 'crystal'],
+    cultural:   ['culture', 'tribe', 'tribal', 'heritage', 'local life', 'village'],
+    nopermit:   ['no permit', 'permit free', 'without permit', 'no ilp'],
+    detox:      ['digital detox', 'no signal', 'offline', 'disconnect'],
+  };
+
+  const detectedIntents = new Set();
+  for (const [intent, keywords] of Object.entries(intentKeywords)) {
+    if (keywords.some(k => combined.includes(k))) detectedIntents.add(intent);
+  }
+
+  const wantsOffbeat = detectedIntents.has('offbeat');
+
+  // ── STEP 3: Filter scope matches by intent ──
+  let matchedInsights = scopeMatches;
+
+  if (detectedIntents.has('camping'))  matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'camp') || e.tags?.includes('camping'));
+  if (detectedIntents.has('homestay')) matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'homestay'));
+  if (detectedIntents.has('nopermit')) matchedInsights = matchedInsights.filter(e => (e.permit_needed ?? e.local_intel?.permit_needed) === false);
+  if (detectedIntents.has('detox'))    matchedInsights = matchedInsights.filter(e => e.connectivity?.mobile_signal === 'none');
+  if (detectedIntents.has('cultural')) matchedInsights = matchedInsights.filter(e => e.type === 'cultural' || e.tags?.some(t => ['tribe','culture','heritage'].includes(t)));
+  if (wantsOffbeat)                    matchedInsights = matchedInsights.filter(e => (e.hidden_score || 0) >= 7);
+
+  // If intent filters wiped everything out, fall back to all scope matches
+  // Better to show geographically correct entries than nothing
+  if (matchedInsights.length === 0 && scopeMatches.length > 0) {
+    matchedInsights = scopeMatches;
+  }
+
+  // ── STEP 4: GEOGRAPHIC GUARD ──
+  // If zero scope matches — we have no verified data for this area.
+  // Do NOT inject. Tell the truth.
+  if (scopeMatches.length === 0) {
+    return { filters: {}, matchedInsights: [], contextBlock: '' };
+  }
+
+  // Sort by hidden_score desc, take top 4
+  matchedInsights = matchedInsights
+    .sort((a, b) => (b.hidden_score || 0) - (a.hidden_score || 0))
+    .slice(0, 4);
+
+  // ── STEP 5: Build context block for Groq prompt ──
+  const contextBlock = `
+VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
+The following have been verified on the ground by the Incitetales team.
+Use this data exactly as provided. Do not substitute with generic information.
+If a location is listed here, include it in the itinerary by name.
+
+${matchedInsights.map((ins, i) => `
+[${i + 1}] ${ins.title}
+Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
+${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
+${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
+${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
+${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
+${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
+${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
+${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
+${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
+${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
+${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
+`).join('\n---\n')}
+
+INSTRUCTIONS:
+- Include these exact locations in the itinerary where geographically logical
+- Use the "what most people miss" detail as the local tip for that day
+- Use recommended stays if available — do not replace with generic hotel names
+- Mention permit requirements explicitly in the permits section
+- The local angle quotes are field notes — reference them naturally, not verbatim
+`;
+
+  return { filters: {}, matchedInsights, contextBlock };
+}
+// ── Selected insights (user-chosen) ──
+let selectedInsightIds = new Set();
+
+// ── Render insight selector panel ──
+function updateInsightSelector(matchedInsights) {
+  const selector  = document.getElementById('insight-selector');
+  const optionsEl = document.getElementById('insight-selector-options');
+  const countEl   = document.getElementById('insight-selector-count');
+  const skipLink  = document.getElementById('insight-skip-link');
+
+  if (!matchedInsights.length) {
+    selector.classList.remove('visible');
+    selectedInsightIds = new Set();
+    return;
+  }
+
+  // Default: all selected
+  selectedInsightIds = new Set(matchedInsights.map(i => i.id));
+  optionsEl.innerHTML = '';
+
+  matchedInsights.forEach(ins => {
+    const opt = document.createElement('div');
+    opt.className = 'insight-option selected';
+    opt.dataset.id = ins.id;
+
+    const bestMonths = ins.season?.best?.slice(0,3).join(', ') || '';
+    const stayInfo = ins.stays?.length ? `· ${ins.stays[0].name}` : '';
+    const detail = [ins.region, bestMonths ? `Best: ${bestMonths}` : '', stayInfo]
+      .filter(Boolean).join(' · ');
+
+    opt.innerHTML = `
+      <div class="insight-option-check">✓</div>
+      <div class="insight-option-body">
+        <div class="insight-option-type">${ins.type.replace('-',' ')}</div>
+        <div class="insight-option-title">${ins.title}</div>
+        <div class="insight-option-detail">${detail}</div>
+      </div>
+      <div class="insight-option-score">${ins.hidden_score}</div>
+    `;
+
+    opt.addEventListener('click', () => {
+      const id = opt.dataset.id;
+      if (selectedInsightIds.has(id)) {
+        selectedInsightIds.delete(id);
+        opt.classList.remove('selected');
+        opt.querySelector('.insight-option-check').textContent = '';
+      } else {
+        selectedInsightIds.add(id);
+        opt.classList.add('selected');
+        opt.querySelector('.insight-option-check').textContent = '✓';
+      }
+      updateSelectorCount();
+    });
+
+    optionsEl.appendChild(opt);
+  });
+
+  updateSelectorCount();
+
+  // Skip link — deselect all and proceed
+  skipLink.onclick = () => {
+    selectedInsightIds = new Set();
+    document.querySelectorAll('.insight-option').forEach(o => {
+      o.classList.remove('selected');
+      o.querySelector('.insight-option-check').textContent = '';
+    });
+    updateSelectorCount();
+  };
+
+  selector.classList.add('visible');
+}
+
+function updateSelectorCount() {
+  const countEl = document.getElementById('insight-selector-count');
+  const n = selectedInsightIds.size;
+  countEl.textContent = n > 0
+    ? `${n} spot${n > 1 ? 's' : ''} selected — will anchor the itinerary`
+    : 'None selected — Groq generates freely';
+}
+
+// ── Build context block from SELECTED insights only ──
+function buildContextFromSelected(allInsights) {
+  const selected = allInsights.filter(i => selectedInsightIds.has(i.id));
+  if (!selected.length) return '';
+
+  return `
+VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
+The following have been verified on the ground by the Incitetales team.
+The user has specifically chosen to include these in their itinerary.
+Use this data exactly as provided. Include these locations by name.
+
+${selected.map((ins, i) => `
+[${i + 1}] ${ins.title}
+Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
+${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
+${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
+${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
+${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
+${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
+${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
+${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
+${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
+${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
+${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
+`).join('\n---\n')}
+
+INSTRUCTIONS:
+- Include these exact locations in the itinerary where geographically logical
+- Use the "what most people miss" detail as the local tip for that day
+- Use recommended stays if available — do not replace with generic hotel names
+- Mention permit requirements explicitly in the permits section
+- The local angle quotes are field notes — reference them naturally, not verbatim
+`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// EXISTING CODE (unchanged except generateItinerary injection)
+// ─────────────────────────────────────────────────────────────
+
+const BREVO_API_KEY = 'YOUR_BREVO_API_KEY_HERE';
+
+const loadingMessages = [
+  'Researching the best routes...',
+  'Checking permit requirements...',
+  'Finding hidden local spots...',
+  'Calculating your budget...',
+  'Building your day-by-day plan...',
+  'Adding local tips and tricks...',
+  'Almost ready...'
+];
+
+const placeImageMap = {
+  Shillong: ["shillong city hills","umiam lake sunrise","police bazaar night"],
+  Cherrapunji: ["nohkalikai falls meghalaya","living root bridge cherrapunji","seven sisters falls"],
+  Dawki: ["umngot river crystal clear boat","dawki river boating","indo bangladesh border river"],
+  Kaziranga: ["kaziranga national park safari","one horned rhino kaziranga","jeep safari assam"],
+  Tawang: ["tawang monastery snow","sela pass arunachal","madhuri lake tawang"],
+  Ziro: ["ziro valley landscape","apatani tribe ziro","ziro rice fields"]
+};
+
+const fallbackImages = ["northeast india mountains","northeast india waterfalls","northeast india scenic landscape"];
+
+function getImagesForPlace(place) {
+  if (!place) return fallbackImages;
+  return placeImageMap[place] || fallbackImages;
+}
+
+function getBestImages(title) {
+  const keys = Object.keys(placeImageMap);
+  for (let key of keys) {
+    if (title.toLowerCase().includes(key.toLowerCase())) return placeImageMap[key];
+  }
+  return fallbackImages;
+}
+
+function escapeSvgText(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function buildImageUrl(query, width = 1200, height = 800) {
+  const label = query || 'Northeast India';
+  const safeLabel = escapeSvgText(label);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1c1814" /><stop offset="45%" stop-color="#2a5c48" /><stop offset="100%" stop-color="#8b4a2a" /></linearGradient></defs><rect width="100%" height="100%" fill="url(#bg)" /><circle cx="${Math.round(width*0.82)}" cy="${Math.round(height*0.22)}" r="${Math.round(Math.min(width,height)*0.12)}" fill="rgba(245,200,66,0.22)" /><circle cx="${Math.round(width*0.18)}" cy="${Math.round(height*0.78)}" r="${Math.round(Math.min(width,height)*0.16)}" fill="rgba(255,255,255,0.08)" /><text x="${Math.round(width*0.08)}" y="${Math.round(height*0.16)}" fill="#f5c842" font-family="Georgia, serif" font-size="${Math.max(18,Math.round(width*0.028))}" letter-spacing="4">INCITETALES</text><text x="${Math.round(width*0.08)}" y="${Math.round(height*0.70)}" fill="#ffffff" font-family="Georgia, serif" font-size="${Math.max(28,Math.round(width*0.055))}" font-weight="600">${safeLabel}</text></svg>`.trim();
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function buildFallbackPlaceholder(width = 1200, height = 800, label = 'Northeast India') {
+  return buildImageUrl(label, width, height);
+}
+
+const destinationGroups = [
+  { label: "✨ Quick Picks", options: [{ value: "meghalaya_3_5", name: "Meghalaya Escape (3–5 days)" },{ value: "tawang_5_7", name: "Tawang Adventure (5–7 days)" },{ value: "kaziranga_majuli", name: "Kaziranga + Majuli (4–6 days)" },{ value: "shillong_cherrapunji", name: "Shillong + Cherrapunji (3 days)" }] },
+  { label: "🎯 By Experience", options: [{ value: "peaceful", name: "Peaceful & Scenic" },{ value: "adventure", name: "Adventure & Trek" },{ value: "waterfalls", name: "Waterfalls & Nature" },{ value: "culture", name: "Culture & Heritage" }] },
+  { label: "📍 By State", options: [{ value: "assam", name: "Assam" },{ value: "meghalaya", name: "Meghalaya" },{ value: "arunachal", name: "Arunachal Pradesh" },{ value: "nagaland", name: "Nagaland" }] },
+  { label: "🌿 Offbeat Picks", options: [{ value: "ziro", name: "Ziro Valley" },{ value: "mechuka", name: "Mechuka" },{ value: "dzukou", name: "Dzukou Valley" },{ value: "majuli", name: "Majuli" }] },
+  { label: "🧭 Combo Trips", options: [{ value: "assam_meghalaya", name: "Assam + Meghalaya" },{ value: "arunachal_assam", name: "Arunachal + Assam" },{ value: "meghalaya_kaziranga", name: "Meghalaya + Kaziranga" }] }
+];
+
+let loadingInterval;
+let currentItinerary = '';
+let ideaRequestInFlight = false;
+let interpretedIdea = null;
+
+function populateDestinationDropdown() {
+  const select = document.getElementById('destination');
+  select.innerHTML = '<option value="">Select destination</option>';
+  destinationGroups.forEach((group) => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = group.label;
+    group.options.forEach((optionData) => {
+      const option = document.createElement('option');
+      option.value = optionData.value;
+      option.textContent = optionData.name;
+      option.dataset.name = optionData.name;
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
+  });
+}
+
+function getSelectedDestinationLabel() {
+  const select = document.getElementById('destination');
+  const selectedOption = select.options[select.selectedIndex];
+  return selectedOption ? (selectedOption.dataset.name || selectedOption.textContent || '').trim() : '';
+}
+
+function quickFill(dest, days, group, budget, interests) {
+  const destinationSelect = document.getElementById('destination');
+  destinationSelect.value = '';
+  document.getElementById('custom-destination').value = dest;
+  document.getElementById('days').value = days;
+  document.getElementById('group').value = group;
+  document.getElementById('budget').value = budget;
+  document.getElementById('interests').value = interests;
+  document.getElementById('custom-focus').value = interests;
+}
+
+function titleCase(text) {
+  return text.split(' ').filter(Boolean).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function resetInterpretation() {
+  interpretedIdea = null;
+  document.getElementById('interpretation-card').style.display = 'none';
+  document.getElementById('interpretation-suggestions').style.display = 'none';
+  document.getElementById('interpretation-suggestion-list').innerHTML = '';
+  document.getElementById('insight-selector').classList.remove('visible'); selectedInsightIds = new Set();
+}
+
+function showInterpretation(result, originalIdea) {
+  interpretedIdea = result;
+  const interpretationContent = document.getElementById('interpretation-copy');
+  const suggestionsWrap = document.getElementById('interpretation-suggestions');
+  const suggestionList = document.getElementById('interpretation-suggestion-list');
+  document.getElementById('interpretation-title').textContent = 'Here is what I understood';
+  interpretationContent.innerHTML = `
+    <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;">Suggested destination</div>
+    <div style="font-family:'Playfair Display'; font-size:20px; margin-bottom:14px;">${result.destination}</div>
+    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
+    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
+    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
+    <div style="margin-top:10px; font-size:12px; color:var(--forest);">✓ Strong match based on your preferences</div>
+  `;
+  suggestionList.innerHTML = '';
+  if (Array.isArray(result.locationSuggestions) && result.locationSuggestions.length) {
+    result.locationSuggestions.filter((l) => l.name && l.name !== result.destination).slice(0, 4).forEach((location) => {
+      const item = document.createElement('div');
+      item.className = 'interpretation-suggestion-item';
+      item.innerHTML = `<div class="interpretation-suggestion-name">${location.name}</div><div class="interpretation-suggestion-why">${location.why}</div>`;
+      suggestionList.appendChild(item);
+    });
+    suggestionsWrap.style.display = suggestionList.children.length ? 'block' : 'none';
+  } else {
+    suggestionsWrap.style.display = 'none';
+  }
+  document.getElementById('interpretation-destination').textContent = result.destination;
+  document.getElementById('interpretation-days').textContent = `${result.days} days`;
+  document.getElementById('interpretation-group').textContent = titleCase(result.group);
+  document.getElementById('interpretation-budget').textContent = titleCase(result.budget);
+  document.getElementById('interpretation-interests').textContent = titleCase(result.interests);
+  document.getElementById('interpretation-card').style.display = 'block';
+}
+
+async function generateFromIdea() {
+  const ideaInput = document.getElementById('idea-input');
+  const idea = ideaInput.value.trim();
+  const btn = document.getElementById('idea-generate-btn');
+
+  if (!idea) { alert('Tell us a little about the trip you want first.'); ideaInput.focus(); return; }
+  if (ideaRequestInFlight) return;
+
+  ideaRequestInFlight = true;
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Turning idea into trip...';
+
+  // Run InsightEngine intent parse immediately on idea text
+  const { matchedInsights } = parseIntent(idea, '');
+  updateInsightSelector(matchedInsights);
+  currentInsights = matchedInsights;
+
+  const planningPrompt = `You are a Northeast India travel expert.
+
+User idea: "${idea}"
+
+Convert this into structured travel inputs and summarize your interpretation.
+
+Return ONLY JSON:
+
+{
+  "destination": "",
+  "days": "5 or 7 or 10 or 14",
+  "group": "solo traveller / couple / friend group of 3-5 people / family with children",
+  "budget": "budget (under ₹10,000) / mid-range (₹10,000–₹20,000) / comfortable (₹20,000–₹35,000) / premium (₹35,000+)",
+  "interests": "short phrase describing the real trip focus",
+  "summary": "1 short sentence explaining what you understood",
+  "locationSuggestions": [
+    { "name": "Different destination name", "why": "Why this place fits the user's idea and vibe" }
+  ]
+}
+
+Rules:
+- Destination MUST be specific (e.g. Ziro Valley, Mechuka, Majuli, Dawki)
+- DO NOT limit to dropdown list
+- Interests SHOULD be natural and specific
+- Pick best Northeast location based on idea
+- Default days = 5–7 if not mentioned. For remote destinations (Mechuka, Dibang, Stilwell Road, Tawang) minimum 5 days — travel days count.
+- Return 3 or 4 different locationSuggestions only
+- Each locationSuggestions.why should be practical and specific
+- NEVER suggest combining a remote mountain destination with river camping unless they are geographically adjacent
+- Return raw JSON only`;
+
+  try {
+    const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'generate', prompt: planningPrompt })
+    });
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content;
+    if (!text) throw new Error('No text in response');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+
+    document.getElementById('custom-destination').value = result.destination;
+
+    const dropdown = document.getElementById('destination');
+    let matched = false;
+    for (let i = 0; i < dropdown.options.length; i++) {
+      const optionText = (dropdown.options[i].dataset.name || dropdown.options[i].textContent || '').toLowerCase();
+      if (optionText.includes(result.destination.toLowerCase())) {
+        dropdown.value = dropdown.options[i].value;
+        document.getElementById('custom-destination').value = dropdown.options[i].dataset.name || result.destination;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) dropdown.value = '';
+
+    document.getElementById('custom-focus').value = result.interests;
+    const focusDropdown = document.getElementById('interests');
+    let focusMatched = false;
+    for (let i = 0; i < focusDropdown.options.length; i++) {
+      if (focusDropdown.options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
+        focusDropdown.value = focusDropdown.options[i].value;
+        focusMatched = true;
+        break;
+      }
+    }
+    if (!focusMatched) focusDropdown.value = '';
+
+    document.getElementById('days').value = String(result.days);
+    document.getElementById('group').value = result.group;
+    document.getElementById('budget').value = result.budget;
+
+    // Re-run intent parse now that we have the AI destination too
+    const refined = parseIntent(idea, result.destination);
+    currentInsights = refined.matchedInsights;
+    updateInsightSelector(refined.matchedInsights);
+
+    showInterpretation(result, idea);
+  } catch (error) {
+    alert('Could not turn that idea into a trip right now. Please try again.');
+    console.error(error);
+  } finally {
+    ideaRequestInFlight = false;
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Turn this into a trip';
+  }
+}
+
+function showLoading() {
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('itinerary-output').style.display = 'none';
+  document.getElementById('loading-state').style.display = 'block';
+  let i = 0;
+  loadingInterval = setInterval(() => {
+    document.getElementById('loading-msg').textContent = loadingMessages[i % loadingMessages.length];
+    i++;
+  }, 2500);
+}
+
+function hideLoading() {
+  clearInterval(loadingInterval);
+  document.getElementById('loading-state').style.display = 'none';
+}
+
+async function generateItinerary() {
+  const dropdownDestination = getSelectedDestinationLabel();
+  const customDestination = document.getElementById('custom-destination').value.trim();
+  const destination = customDestination || dropdownDestination;
+  const days = document.getElementById('days').value;
+  const group = document.getElementById('group').value;
+  const budget = document.getElementById('budget').value;
+  const selectedFocus = document.getElementById('interests').value;
+  const customFocus = document.getElementById('custom-focus').value.trim();
+  const interests = customFocus || selectedFocus;
+  const ideaText = document.getElementById('idea-input').value.trim();
+
+  if (!destination) { alert('Tell us where you want to go.'); return; }
+
+  // ── Run InsightEngine if not already run ──
+  if (currentInsights.length === 0 && engineReady) {
+    const parsed = parseIntent(ideaText, destination);
+    currentInsights = parsed.matchedInsights;
+  }
+
+  // ── Build context block from USER-SELECTED insights only ──
+  // If user deselected all (or skipped), contextBlock is empty → Groq generates freely
+  const contextBlock = buildContextFromSelected(currentInsights);
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').textContent = 'Building...';
+  showLoading();
+
+  const itineraryPrompt = `You are a Northeast India travel expert trained on real local experiences.
+
+${contextBlock}
+
+Generate a detailed travel itinerary for:
+- Destination: ${destination}
+- Duration: ${days} days
+- Group type: ${group}
+- Budget: ${budget} per person (excluding flights)
+- Primary interest: ${interests}
+
+Tone rules:
+- Sound like a local expert who has actually been there
+- Be specific — name real places, real transport, real costs
+- Every insider tip should be genuinely useful
+- Do NOT start the overview with "I" — vary your sentence openings
+
+Return JSON only in this exact format:
+
+{
+  "destination": "Short destination name",
+  "title": "Evocative trip title",
+  "overview": "2-3 sentences on why this destination and what makes it special. Write as someone who has been there.",
+  "days": [
+    {
+      "number": 1,
+      "theme": "Arrival and first impressions",
+      "route": "Starting point → Ending point",
+      "morning": "Specific activity with local detail",
+      "afternoon": "Specific activity with local detail",
+      "evening": "Specific activity + meal suggestion with approximate cost",
+      "stay": "Specific stay recommendation + price range per night",
+      "transport": "Exact transport option with cost",
+      "tip": "One genuine insider tip only locals would know"
+    }
+  ],
+  "permits": "Detailed permit information if required. Include process, cost, time, where to apply. If none needed write null.",
+  "budget": [
+    {"label": "Accommodation (total)", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Local transport", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Food and meals", "value": "₹X,XXX – ₹X,XXX"},
+    {"label": "Entry fees and activities", "value": "₹XXX – ₹X,XXX"},
+    {"label": "Permits (if applicable)", "value": "₹XXX"},
+    {"label": "Miscellaneous", "value": "₹XXX – ₹XXX"},
+    {"label": "Total per person (ex-flights)", "value": "₹X,XXX – ₹XX,XXX", "isTotal": true}
+  ],
+  "packing": [
+    "Item 1 — specific to this destination and season",
+    "Item 2", "Item 3", "Item 4", "Item 5",
+    "Item 6", "Item 7", "Item 8", "Item 9", "Item 10"
+  ]
+}
+
+Rules:
+- Generate exactly ${days} day objects
+- Budget must match the ${budget} tier
+- Packing list must be specific to this destination
+- No generic filler — every line must be genuinely useful
+
+GEOGRAPHIC AND LOGISTICAL RULES — NON-NEGOTIABLE:
+- Every day must be geographically coherent. If a location takes 8+ hours to reach, that entire day is travel — no activities.
+- NEVER combine a long travel day (4+ hours driving) with full activities in the same day. Pick one.
+- Mechuka, Tawang, Dzukou, Stilwell Road, Ziro — these are remote. Travel days are real days.
+- A "return journey" day means travel only — not travel + sightseeing + river camping.
+- Do NOT invent activities at stopover towns unless those towns are explicitly part of the itinerary.
+- If the user mentioned river camping but the destination is remote mountains, DO NOT add river camping as a last-day activity near Guwahati unless a dedicated day exists for it.
+- Each day's "route" field must reflect actual distance. Mechuka → Guwahati is 600km+ through mountain roads — that is a 2-day journey minimum, not a morning drive.
+- Stays must be in the town where the traveller actually ends that day — not the next destination.
+- Local tip must be specific to that day's actual location — not a generic tip about a different place.`;
+
+  try {
+    const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'generate', prompt: itineraryPrompt })
+    });
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content;
+    if (!text) throw new Error('No text in response: ' + JSON.stringify(data));
+    const clean = text.replace(/```json|```/g, '').trim();
+    const itinerary = JSON.parse(clean);
+    currentItinerary = JSON.stringify(itinerary);
+
+    // Save to sessionStorage and redirect to result page
+    sessionStorage.setItem('incitetales_itinerary', JSON.stringify({
+      itinerary,
+      meta: { destination, days, group, budget }
+    }));
+    hideLoading();
+    window.location.href = '/itinerary-result/';
+  } catch (error) {
+    hideLoading();
+    document.getElementById('empty-state').style.display = 'block';
+    alert('Something went wrong generating your itinerary. Please try again.');
+    console.error(error);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('btn-text').textContent = 'Generate My Itinerary';
+  }
+}
+
+function renderItinerary(data, destination, days, group, budget) {
+  document.getElementById('out-destination').textContent = '◆  ' + destination.toUpperCase();
+  document.getElementById('out-title').textContent = data.title;
+  document.getElementById('out-meta').innerHTML = `
+    <span class="meta-chip">${days} days</span>
+    <span class="meta-chip">${group}</span>
+    <span class="meta-chip">${budget}</span>
+  `;
+
+  const overviewEl = document.getElementById('out-overview');
+  const destinationImageQuery = getImagesForPlace(data.destination || destination)[0];
+  overviewEl.innerHTML = `
+    <img class="itinerary-hero-image" src="${buildImageUrl(destinationImageQuery, 1400, 700)}" alt="${destination}"
+      onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(1400, 700, destination)}';" loading="lazy">
+    <div style="padding-top:18px;">${data.overview}</div>
+  `;
+
+  // ── Render local insights strip ──
+  const insightsSection = document.getElementById('local-insights-section');
+  const insightsRow = document.getElementById('insight-cards-row');
+  insightsRow.innerHTML = '';
+
+  if (currentInsights.length > 0) {
+    currentInsights.forEach(ins => {
+      const card = document.createElement('div');
+      card.className = 'insight-card-mini';
+      card.innerHTML = `
+        <div class="insight-card-mini-type">${ins.type.replace('-', ' ')}</div>
+        <div class="insight-card-mini-title">${ins.title}</div>
+        <div class="insight-card-mini-score">Hidden score ${ins.hidden_score}/10 · ${ins.region || ins.state}</div>
+      `;
+      insightsRow.appendChild(card);
+    });
+    insightsSection.classList.add('visible');
+  } else {
+    insightsSection.classList.remove('visible');
+  }
+
+  // Days
+  const daysContainer = document.getElementById('out-days');
+  daysContainer.innerHTML = '';
+  data.days.forEach((day, idx) => {
+    const dayImageQueries = getBestImages(`${day.route || ''} ${day.theme || ''}`).slice(0, 3);
+    const dayImagesHtml = dayImageQueries.map((query) => `
+      <img class="day-image" src="${buildImageUrl(query, 900, 600)}" alt="${day.theme}"
+        onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(900, 600, day.theme)}';" loading="lazy">
+    `).join('');
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `
+      <div class="day-header ${idx === 0 ? 'active' : ''}">
+        <div class="day-number">0${day.number}</div>
+        <div class="day-info">
+          <div class="day-title">${day.theme}</div>
+          <div class="day-route">${day.route}</div>
+        </div>
+        <div class="day-toggle">▾</div>
+      </div>
+      <div class="day-content ${idx === 0 ? 'visible' : ''}">
+        <div class="day-images">${dayImagesHtml}</div>
+        <div class="time-block"><div class="time-label">Morning</div><div class="time-text">${day.morning}</div></div>
+        <div class="time-block"><div class="time-label">Afternoon</div><div class="time-text">${day.afternoon}</div></div>
+        <div class="time-block"><div class="time-label">Evening</div><div class="time-text">${day.evening}</div></div>
+        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${day.stay}</strong></div></div>
+        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${day.transport}</div></div>
+        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${day.tip}</div></div>
+      </div>
+    `;
+    daysContainer.appendChild(card);
+    card.querySelector('.day-header').addEventListener('click', (event) => toggleDay(event.currentTarget));
+  });
+
+  // Info grid
+  const infoGrid = document.getElementById('out-info');
+  infoGrid.innerHTML = '';
+  if (data.permits) {
+    const permitsCard = document.createElement('div');
+    permitsCard.className = 'info-card full';
+    permitsCard.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${data.permits}</div>`;
+    infoGrid.appendChild(permitsCard);
+  }
+  const budgetCard = document.createElement('div');
+  budgetCard.className = 'info-card';
+  let budgetHTML = '<div class="info-title">Budget breakdown</div>';
+  data.budget.forEach(item => {
+    budgetHTML += `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${item.label}</span><span class="budget-value">${item.value}</span></div>`;
+  });
+  budgetCard.innerHTML = budgetHTML;
+  infoGrid.appendChild(budgetCard);
+  const packingCard = document.createElement('div');
+  packingCard.className = 'info-card';
+  let packingHTML = '<div class="info-title">Packing list</div><div class="packing-grid">';
+  data.packing.forEach(item => { packingHTML += `<div class="packing-item">${item}</div>`; });
+  packingHTML += '</div>';
+  packingCard.innerHTML = packingHTML;
+  infoGrid.appendChild(packingCard);
+
+  const output = document.getElementById('itinerary-output');
+  output.style.display = 'block';
+  output.classList.add('fade-in');
+  document.getElementById('email-capture').style.display = 'block';
+  document.getElementById('book-cta').style.display = 'flex';
+
+  // Reset insights for next generation
+  currentInsights = [];
+
+  setTimeout(() => { output.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+}
+
+function toggleDay(header) {
+  const content = header.nextElementSibling;
+  const isActive = header.classList.contains('active');
+  document.querySelectorAll('.day-header').forEach(h => h.classList.remove('active'));
+  document.querySelectorAll('.day-content').forEach(c => c.classList.remove('visible'));
+  if (!isActive) { header.classList.add('active'); content.classList.add('visible'); }
+}
+
+async function saveItinerary() {
+  const email = document.getElementById('capture-email').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  const btn = document.querySelector('.email-capture-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'email',
+        itineraryData: JSON.parse(currentItinerary),
+        email: email,
+        itineraryTitle: JSON.parse(currentItinerary).title,
+        itineraryOverview: JSON.parse(currentItinerary).overview,
+        to: [{ email: email }],
+        subject: 'Your Incitetales itinerary is here',
+        htmlContent: `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;color:#1c1814;"><h1 style="font-size:28px;font-weight:400;margin-bottom:8px;">Your itinerary is ready</h1><p style="color:#6a6058;font-style:italic;margin-bottom:32px;">From Incitetales — The Untold Northeast</p><pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;line-height:1.8;color:#3a342c;">${JSON.parse(currentItinerary).title}\n\n${JSON.parse(currentItinerary).overview}\n\nFor the complete interactive itinerary, visit:\nhttps://incitetales.com/itinerary-builder/</pre><hr style="border:none;border-top:1px solid #ede8d8;margin:32px 0;"><p style="font-size:13px;color:#6a6058;">Want us to book this for you? Reply to this email or WhatsApp us.</p><p style="font-size:13px;color:#8b4a2a;font-weight:500;">incitetales.com · @incitetales</p></div>`
+      })
+    });
+    if (response.ok) {
+      document.getElementById('email-success').style.display = 'block';
+      document.querySelector('.email-capture-form').style.display = 'none';
+    } else { throw new Error('Email failed'); }
+  } catch (error) {
+    alert('Could not send email right now. Please try again.');
+    btn.textContent = 'Send to my inbox';
+    btn.disabled = false;
+  }
+}
+
+// ── URL parameter prefill (from recommendation layer) ──
+function prefillFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const dest = params.get('destination');
+  if (dest) {
+    document.getElementById('custom-destination').value = decodeURIComponent(dest);
+    document.getElementById('idea-input').value = decodeURIComponent(dest);
+    // Auto-run intent parse so badge shows immediately
+    if (engineReady) {
+      const parsed = parseIntent(decodeURIComponent(dest), decodeURIComponent(dest));
+      currentInsights = parsed.matchedInsights;
+      updateInsightSelector(parsed.matchedInsights);
+    } else {
+      // Engine still loading — try again in 1s
+      setTimeout(() => prefillFromUrl(), 1000);
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateDestinationDropdown();
+  prefillFromUrl();
+  document.getElementById('idea-generate-btn').addEventListener('click', generateFromIdea);
+  document.getElementById('generate-btn').addEventListener('click', generateItinerary);
+  document.getElementById('save-itinerary-btn').addEventListener('click', saveItinerary);
+  document.getElementById('confirm-interpretation-btn').addEventListener('click', generateItinerary);
+  document.getElementById('reset-interpretation-btn').addEventListener('click', () => {
+    resetInterpretation();
+    const ideaInput = document.getElementById('idea-input');
+    ideaInput.focus();
+    ideaInput.setSelectionRange(ideaInput.value.length, ideaInput.value.length);
+  });
+  document.getElementById('destination').addEventListener('change', (event) => {
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || '') : '';
+    resetInterpretation();
+  });
+  document.getElementById('interests').addEventListener('change', (event) => {
+    document.getElementById('custom-focus').value = event.target.value;
+    resetInterpretation();
+  });
+  document.getElementById('idea-input').addEventListener('input', () => {
+    resetInterpretation();
+    // Live intent parsing as user types (debounced)
+    clearTimeout(window._intentDebounce);
+    window._intentDebounce = setTimeout(() => {
+      const idea = document.getElementById('idea-input').value.trim();
+      if (idea.length > 10 && engineReady) {
+        const parsed = parseIntent(idea, '');
+        currentInsights = parsed.matchedInsights;
+        updateInsightSelector(parsed.matchedInsights);
+      }
+    }, 500);
+  });
+  document.getElementById('days').addEventListener('change', resetInterpretation);
+  document.getElementById('group').addEventListener('change', resetInterpretation);
+  document.getElementById('budget').addEventListener('change', resetInterpretation);
+  document.querySelectorAll('.sample-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      quickFill(pill.dataset.destination, pill.dataset.days, pill.dataset.group, pill.dataset.budget, pill.dataset.interests);
+      resetInterpretation();
+    });
+  });
+});
+</script>
+
+</body>
+</html>
