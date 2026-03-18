@@ -1,0 +1,94 @@
+{
+  "id": "stilwell-road-offbeat",
+  "type": "offbeat",
+  "title": "Stilwell Road — The Road the World Forgot",
+  "slug": "stilwell-road",
+  "region": "Eastern Arunachal Pradesh",
+  "district": "Changlang",
+  "state": "Arunachal Pradesh",
+  "coordinates": {
+    "lat": 27.05,
+    "lng": 96.4
+  },
+  "tags": [
+    "history",
+    "ww2",
+    "jungle road",
+    "arunachal",
+    "changlang",
+    "offbeat",
+    "permit required",
+    "4wd"
+  ],
+  "description": "A 1,736km road built by the Allied forces in 1942–1945 connecting Ledo in Assam through Arunachal Pradesh, Myanmar, and into Yunnan, China. Built to supply Nationalist China after Japan cut the Burma Road. General Joseph Stilwell commanded its construction. Most of it has been reclaimed by jungle.",
+  "why_its_underrated": "This is one of the greatest infrastructure stories of World War II — tens of thousands of lives, extraordinary engineering through some of the most hostile terrain on earth. And almost no one in India knows it exists. The Indian portion through Changlang district is driveable (barely) and passes through forests that haven't changed since 1945. You can find WWII-era bridges, abandoned equipment, and mile markers still standing.",
+  "incitetales_angle": "1,736 kilometres of jungle, monsoon, and will. 40,000 men. Most of it swallowed back by the forest. The mile markers are still there if you know where to look.",
+  "season": {
+    "best": [
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august",
+      "september"
+    ],
+    "notes": "Road becomes completely impassable in monsoon. The jungle closes in fast. November–March is the only viable window."
+  },
+  "local_intel": {
+    "how_to_get": "Base at Miao town in Changlang district. From Dibrugarh: cross into Arunachal at Tinsukia–Margherita, then onward to Miao (approx 6–7 hours). 4WD mandatory beyond Miao.",
+    "entry_fee": null,
+    "permit_needed": true,
+    "permit_notes": "Inner Line Permit (ILP) mandatory for all non-Arunachal residents. Apply at Arunachal House in Guwahati, Dibrugarh, or online at arunachalilp.com. Takes 1–2 days. ₹100 fee. Additionally, Changlang district has restricted areas — check current status before visiting as rules change.",
+    "crowd_level": "very low",
+    "best_time_of_day": "Start early — roads are difficult and distances are long",
+    "duration": "Minimum 3 days to do justice to the area",
+    "physical_level": "challenging",
+    "vehicle": "4WD essential. Inform someone of your route.",
+    "operator": {
+      "name": null,
+      "contact": null,
+      "verified": false,
+      "notes": "Local jeep drivers in Miao know the road well. Hiring one is strongly recommended over self-driving if unfamiliar with the terrain."
+    }
+  },
+  "what_most_people_miss": [
+    "Mile marker 0 in Ledo — the official start of the road, marked by a small monument that almost no one visits",
+    "The WWII cemetery at Digboi — nearby and deeply moving",
+    "Namdapha National Park entrance is en route — one of the most biodiverse parks in Asia, almost entirely unvisited"
+  ],
+  "historical_context": {
+    "built_by": "US Army Corps of Engineers + Indian Labour Corps",
+    "years": "1942–1945",
+    "total_length_km": 1736,
+    "purpose": "Supply route to Nationalist China after Japan cut the Burma Road",
+    "casualties": "Thousands — exact numbers disputed. Malaria, accidents, Japanese attacks.",
+    "current_status": "Indian portion functional (barely). Myanmar portion largely impassable. China portion absorbed into highway network."
+  },
+  "cultural_notes": "Changlang district is home to Tangsa, Tutsa, and Nocte tribes. The area near Myanmar border is sensitive — follow local guidance and do not attempt to cross into Myanmar.",
+  "nearby": [
+    "namdapha-national-park",
+    "miao-town",
+    "digboi-wwii-cemetery",
+    "ledo-mile-marker-zero"
+  ],
+  "hidden_score": 9,
+  "last_updated": "2026-03",
+  "source": "research + partial personal",
+  "verified": false,
+  "story_published": false,
+  "story_url": null,
+  "geographic_scope": [
+    "changlang",
+    "miao",
+    "stilwell road",
+    "ledo",
+    "nampong",
+    "namdapha",
+    "eastern arunachal"
+  ]
+}

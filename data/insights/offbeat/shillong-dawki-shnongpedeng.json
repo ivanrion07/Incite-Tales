@@ -6,20 +6,40 @@
   "region": "South Meghalaya / Bangladesh Border",
   "district": "West Jaintia Hills / East Khasi Hills",
   "state": "Meghalaya",
-  "coordinates": { "lat": 25.20, "lng": 92.01 },
-
-  "tags": ["meghalaya", "dawki", "shnongpedeng", "crystal river", "camping", "kayaking", "mawlynnong", "living root bridge", "border", "umngot river"],
-
+  "coordinates": {
+    "lat": 25.2,
+    "lng": 92.01
+  },
+  "tags": [
+    "meghalaya",
+    "dawki",
+    "shnongpedeng",
+    "crystal river",
+    "camping",
+    "kayaking",
+    "mawlynnong",
+    "living root bridge",
+    "border",
+    "umngot river"
+  ],
   "description": "The Umngot River at Dawki/Shnongpedeng is famous for being so clear that boats appear to float on air. But the route there from Shillong is full of stops that most people completely miss. This is the most complete version of that drive.",
-
   "incitetales_angle": "The Dawki photo is everywhere on Instagram — the floating boat. What nobody shows you is Shnongpedeng, 3km upstream, where you can camp on the riverbank and wake up to that same water at sunrise with no one around. Do that instead.",
-
   "season": {
-    "best": ["october", "november", "december", "january", "february", "march"],
-    "avoid": ["june", "july", "august"],
+    "best": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
     "notes": "Monsoon floods the Umngot and turns it brown. The famous crystal clarity only exists in dry season. Peak clarity is December–February. Shnongpedeng camping is only possible in dry season."
   },
-
   "route_overview": {
     "start": "Shillong",
     "end": "Shnongpedeng / Dawki",
@@ -28,12 +48,10 @@
     "road_condition": "Good tarmac till Dawki. Side roads to offbeat stops require care.",
     "pro_tip": "Do not rush this as a day trip from Shillong. Staying overnight at Shnongpedeng changes the entire experience."
   },
-
   "connectivity": {
     "mobile_signal": "limited near border areas",
     "notes": "Airtel/Jio available in Shillong. Signal weakens past Pynursla. Near Dawki/Shnongpedeng: patchy. Shnongpedeng camp areas have intermittent signal. Download offline maps before leaving Shillong."
   },
-
   "key_stops": [
     {
       "name": "Umkhoi Canyon (Umkhoi Village)",
@@ -76,7 +94,6 @@
       "type": "riverside village + camping"
     }
   ],
-
   "stays": [
     {
       "name": "Brightstar Camp",
@@ -97,7 +114,6 @@
       "verified": true
     }
   ],
-
   "activities": [
     {
       "name": "Kayaking / Coracle ride",
@@ -111,15 +127,29 @@
       "notes": "Ask locals for the best swimming spots — not the same location as the tourist coracle area."
     }
   ],
-
   "what_most_people_miss": "Umkhoi Canyon. Everyone stops at Mawlynnong and Dawki. Umkhoi is 2 hours from the main route and has almost no visitors. If you have an extra day and a local contact, it's the best thing in this entire corridor.",
-
   "cultural_notes": "Dawki is a border town — India-Bangladesh border crossing is here. The area has a different feel because of this. Shnongpedeng is Khasi territory. The Khasi people are matrilineal — property and family names pass through the mother. Interesting to ask about if you're staying in a homestay.",
-
   "hidden_score": 7,
   "last_updated": "2026-03",
   "source": "personal",
   "verified": true,
   "story_published": false,
-  "story_url": null
+  "story_url": null,
+  "geographic_scope": [
+    "dawki",
+    "shnongpedeng",
+    "umngot",
+    "mawlynnong",
+    "west jaintia hills",
+    "pynursla",
+    "umkhoi",
+    "kolington",
+    "double decker bridge",
+    "nongriat",
+    "south meghalaya",
+    "meghalaya",
+    "khasi hills",
+    "jaintia hills",
+    "garo hills"
+  ]
 }

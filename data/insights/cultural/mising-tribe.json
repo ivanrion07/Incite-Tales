@@ -7,17 +7,31 @@
   "district": "Dhemaji, Lakhimpur, Dibrugarh",
   "state": "Assam",
   "coordinates": null,
-
-  "tags": ["tribe", "mising", "river culture", "weaving", "stilted houses", "assam", "cultural immersion"],
-
+  "tags": [
+    "tribe",
+    "mising",
+    "river culture",
+    "weaving",
+    "stilted houses",
+    "assam",
+    "cultural immersion"
+  ],
   "about": "The Mising (also written Mishing) are the second largest plains tribe of Assam. They live primarily along the Brahmaputra and its tributaries in stilted bamboo houses (chang ghar). Known for their weaving tradition, rice beer (apong), and close relationship with the river.",
-
   "season": {
-    "best": ["november", "december", "january", "february", "march"],
-    "avoid": ["june", "july", "august"],
+    "best": [
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
     "notes": "Monsoon floods many Mising villages — roads become inaccessible. Ali Aye Ligang festival (February/March) is an excellent time to visit — rice sowing festival with traditional dance and apong."
   },
-
   "cultural_dos": [
     "Remove footwear before entering a chang ghar (stilted home)",
     "Accept apong (rice beer) when offered — refusing is considered rude",
@@ -26,7 +40,6 @@
     "Learn 2–3 words of Mising — 'Namaskar' works but 'Oi Nitom?' (how are you?) will delight people",
     "Buy directly from weavers when purchasing Mising textiles — avoid middlemen in Guwahati shops"
   ],
-
   "cultural_donts": [
     "Do not touch the loom without being invited",
     "Do not photograph religious ceremonies or rituals without explicit permission",
@@ -34,16 +47,13 @@
     "Do not refer to them as 'Mishing' — they prefer 'Mising'",
     "Avoid entering the kitchen area unless invited — it has ritual significance in many homes"
   ],
-
   "what_to_look_for": {
     "architecture": "Chang ghars — houses on stilts 4–6 feet off the ground. Built to survive annual floods. The construction technique is entirely traditional bamboo joinery.",
     "weaving": "Mising women weave on backstrap looms. The fabric (Mibu Gasor / Namsai) has distinctive geometric patterns. Each pattern has meaning — not just decoration.",
     "food": "Apong rice beer (two types — nogin apong and po:ro apong). Pork dishes. River fish cooked in banana leaf. Do not miss if invited for a meal.",
     "festivals": "Ali Aye Ligang (Feb/March) — agriculture and spring festival. Po:Rang Po:Lok — another important celebration."
   },
-
   "incitetales_angle": "Mising culture is one of the most visually rich and least documented in Northeast India. Their chang ghars are masterpieces of flood-adaptive architecture. Yet you'll find almost nothing about them in mainstream travel media. They are not a 'tribe to visit' — they are neighbours.",
-
   "local_intel": {
     "how_to_get": "Jonai town in Dhemaji district is the main Mising cultural hub. 4 hours from Dibrugarh. Ask locally for village homestays — formal tourism infrastructure is minimal.",
     "permit_needed": false,
@@ -56,20 +66,30 @@
       "notes": "No formal operators. Best accessed through local contacts or Mising Agom Kebang (cultural organization) in Dhemaji."
     }
   },
-
   "language_tips": {
     "hello": "Oi Nitom? (How are you?)",
     "thank_you": "Thunam",
     "good": "Nambo",
     "rice_beer": "Apong"
   },
-
-  "nearby": ["majuli-island", "dibru-saikhowa", "jonai-town"],
-
+  "nearby": [
+    "majuli-island",
+    "dibru-saikhowa",
+    "jonai-town"
+  ],
   "hidden_score": 9,
   "last_updated": "2026-03",
   "source": "personal",
   "verified": true,
   "story_published": false,
-  "story_url": null
+  "story_url": null,
+  "geographic_scope": [
+    "dhemaji",
+    "lakhimpur",
+    "jonai",
+    "mising",
+    "mishing",
+    "subansiri",
+    "north lakhimpur"
+  ]
 }

@@ -4,37 +4,70 @@
   "title": "The Tawang Corridor — Guwahati to Tawang via Shergaon & Bomdila",
   "slug": "tawang-corridor",
   "region": "West Arunachal Pradesh",
-  "districts": ["Kamrup", "Barpeta", "Bongaigaon", "West Kameng", "Tawang"],
+  "districts": [
+    "Kamrup",
+    "Barpeta",
+    "Bongaigaon",
+    "West Kameng",
+    "Tawang"
+  ],
   "state": "Arunachal Pradesh",
-  "coordinates": { "lat": 27.58, "lng": 91.86 },
-
-  "tags": ["road trip", "tawang", "monastery", "mountains", "arunachal", "permit required", "apple orchards", "shergaon", "bomdila", "sela pass"],
-
+  "coordinates": {
+    "lat": 27.58,
+    "lng": 91.86
+  },
+  "tags": [
+    "road trip",
+    "tawang",
+    "monastery",
+    "mountains",
+    "arunachal",
+    "permit required",
+    "apple orchards",
+    "shergaon",
+    "bomdila",
+    "sela pass"
+  ],
   "description": "The classic overland route to Tawang — one of the most dramatic drives in India. From the Assam plains you climb rapidly through dense forest, apple country, and mountain passes. Sela Pass (4,170m) is the high point. The journey is as important as the destination.",
-
   "incitetales_angle": "Everyone talks about Tawang monastery. Nobody tells you that Shergaon is a village of 200 people with apple orchards, a 16th century monastery, and one of the finest small homestays in the Northeast. Stop there.",
-
   "season": {
-    "best": ["march", "april", "may", "october", "november"],
-    "avoid": ["january", "february"],
-    "monsoon": ["june", "july", "august"],
+    "best": [
+      "march",
+      "april",
+      "may",
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "january",
+      "february"
+    ],
+    "monsoon": [
+      "june",
+      "july",
+      "august"
+    ],
     "notes": "January–February: Sela Pass often snowed shut. March brings rhododendrons. October–November is crisp and clear — the best window. Monsoon brings landslides on this route — check road status daily."
   },
-
   "route_overview": {
     "start": "Guwahati or Tezpur",
     "end": "Tawang",
     "total_distance_km": "540 from Guwahati / 320 from Tezpur",
-    "recommended_stops": ["Bhalukpong", "Shergaon", "Bomdila", "Dirang", "Sela Pass", "Tawang"],
+    "recommended_stops": [
+      "Bhalukpong",
+      "Shergaon",
+      "Bomdila",
+      "Dirang",
+      "Sela Pass",
+      "Tawang"
+    ],
     "recommended_days": 4,
     "road_condition": "Mix of good highway and mountain road. 4WD recommended but not mandatory in dry season."
   },
-
   "connectivity": {
     "mobile_signal": "limited",
     "notes": "BSNL works best throughout. Jio/Airtel available in main towns (Bomdila, Dirang, Tawang) but patchy on the road, especially near Sela Pass. Expect no signal for stretches of 1–2 hours while driving."
   },
-
   "stays": [
     {
       "name": "Red Berry Home Stay",
@@ -67,7 +100,6 @@
       "verified": true
     }
   ],
-
   "key_stops": [
     {
       "name": "Shergaon",
@@ -90,18 +122,32 @@
       "hidden_score": 3
     }
   ],
-
   "permit_needed": true,
   "permit_notes": "Inner Line Permit (ILP) mandatory for all non-Arunachal residents. Apply at Arunachal House in Guwahati or online at arunachalilp.com. ₹100. Takes 1 day. Additionally, Tawang requires a Protected Area Permit (PAP) — apply simultaneously.",
-
   "what_most_people_miss": "Shergaon. Ninety percent of tourists drive straight from Bhalukpong to Bomdila without stopping. Shergaon is 13km off the main road and worth every minute.",
-
-  "nearby": ["tawang-monastery", "madhuri-lake", "bum-la-pass", "nuranang-falls"],
-
+  "nearby": [
+    "tawang-monastery",
+    "madhuri-lake",
+    "bum-la-pass",
+    "nuranang-falls"
+  ],
   "hidden_score": 6,
   "last_updated": "2026-03",
   "source": "personal",
   "verified": true,
   "story_published": false,
-  "story_url": null
+  "story_url": null,
+  "geographic_scope": [
+    "tawang",
+    "bomdila",
+    "dirang",
+    "shergaon",
+    "sela",
+    "bhalukpong",
+    "west kameng",
+    "tawang district",
+    "kameng",
+    "rupa",
+    "tenga"
+  ]
 }

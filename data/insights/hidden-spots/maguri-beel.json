@@ -6,21 +6,38 @@
   "region": "Upper Assam",
   "district": "Tinsukia",
   "state": "Assam",
-  "coordinates": { "lat": 27.48, "lng": 95.35 },
-
-  "tags": ["wetland", "birdwatching", "river dolphins", "offseason gem", "boat ride", "wildlife"],
-
+  "coordinates": {
+    "lat": 27.48,
+    "lng": 95.35
+  },
+  "tags": [
+    "wetland",
+    "birdwatching",
+    "river dolphins",
+    "offseason gem",
+    "boat ride",
+    "wildlife"
+  ],
   "season": {
-    "best": ["november", "december", "january", "february"],
-    "avoid": ["june", "july", "august"],
-    "shoulder": ["march", "october"],
+    "best": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "shoulder": [
+      "march",
+      "october"
+    ],
     "notes": "Floods completely during monsoon — the beel merges with surrounding fields. Irrawaddy dolphins are most visible between November and February when water levels drop and fish concentrate."
   },
-
   "description": "A oxbow lake on the edge of Dibru-Saikhowa biosphere. One of the few places in India where you can spot Irrawaddy river dolphins, Gangetic dolphins, and migratory birds in the same morning.",
-
   "incitetales_angle": "Growing up in Bordoloi Nagar, I didn't know the word wetland. I just knew there was a place ten minutes from home where the world went quiet. It took a foreign birder visiting from the Netherlands to tell me this was world-class.",
-
   "local_intel": {
     "how_to_get": "Drive to Guijan Ghat from Tinsukia (approx 35km). Hire a local wooden boat from the ghat — no formal booking system, just show up before 7am. No signage on the main road, ask locals for 'Guijan Ghat'.",
     "entry_fee": "Boat hire approx ₹300–500 for 2 hours. No official entry fee.",
@@ -37,17 +54,25 @@
       "notes": "Local boatmen at Guijan Ghat are knowledgeable. No formal operators as of 2026."
     }
   },
-
   "what_most_people_miss": "The back channel behind the main beel. Most tourists stay near the ghat. Ask the boatman to take you through the narrow channel on the east side — that's where dolphins surface most frequently.",
-
   "cultural_notes": "Area is close to Mising tribal villages. Respectful behaviour expected. Do not photograph locals without asking.",
-
-  "nearby": ["dibru-saikhowa-national-park", "tinsukia-town", "guijan-ghat"],
-
+  "nearby": [
+    "dibru-saikhowa-national-park",
+    "tinsukia-town",
+    "guijan-ghat"
+  ],
   "hidden_score": 8,
   "last_updated": "2026-03",
   "source": "personal",
   "verified": true,
   "story_published": true,
-  "story_url": "https://incitetales.com/maguri-beel/"
+  "story_url": "https://incitetales.com/maguri-beel/",
+  "geographic_scope": [
+    "tinsukia",
+    "guijan",
+    "maguri beel",
+    "dibru saikhowa",
+    "upper assam",
+    "bordoloi nagar"
+  ]
 }
