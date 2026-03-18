@@ -1850,15 +1850,38 @@ Rules:
 - No generic filler — every line must be genuinely useful
 
 GEOGRAPHIC AND LOGISTICAL RULES — NON-NEGOTIABLE:
-- Every day must be geographically coherent. If a location takes 8+ hours to reach, that entire day is travel — no activities.
-- NEVER combine a long travel day (4+ hours driving) with full activities in the same day. Pick one.
-- Mechuka, Tawang, Dzukou, Stilwell Road, Ziro — these are remote. Travel days are real days.
-- A "return journey" day means travel only — not travel + sightseeing + river camping.
-- Do NOT invent activities at stopover towns unless those towns are explicitly part of the itinerary.
-- If the user mentioned river camping but the destination is remote mountains, DO NOT add river camping as a last-day activity near Guwahati unless a dedicated day exists for it.
-- Each day's "route" field must reflect actual distance. Mechuka → Guwahati is 600km+ through mountain roads — that is a 2-day journey minimum, not a morning drive.
-- Stays must be in the town where the traveller actually ends that day — not the next destination.
-- Local tip must be specific to that day's actual location — not a generic tip about a different place.`;
+
+RULE 1 — TRAVEL DAYS ARE FULL DAYS:
+- Any journey over 4 hours = that entire day is travel. No activities, no sightseeing.
+- Any journey over 8 hours = minimum 2 days of travel.
+- Stays must be in the town where the traveller actually ends that day.
+
+RULE 2 — NORTHEAST INDIA ACTUAL ROAD TIMES (use these exactly):
+- Dibrugarh → Anini (Upper Dibang Valley): 450km mountain road = 2 full travel days minimum. Day 1 stay in Roing or Hunli. Day 2 reach Anini.
+- Dibrugarh → Roing: 180km = 5-6 hours. One travel day.
+- Anini → Dibrugarh (return): same as above — 2 full travel days.
+- Guwahati → Tawang: 500km = 2 full travel days. Day 1 stay Bhalukpong or Bomdila. Day 2 reach Tawang.
+- Guwahati → Mechuka: 550km = 2 full travel days. Day 1 stay Pasighat. Day 2 reach Mechuka.
+- Guwahati → Ziro: 500km = 2 full travel days.
+- Kohima → Dzukou Valley: base at Viswema, 5km trek = 4-5 hours walk. One trekking day.
+- Shillong → Dawki: 95km = 2.5-3 hours. Half travel day, activities possible same day.
+- Shillong → Cherrapunji: 55km = 1.5 hours. Activities same day fine.
+
+RULE 3 — GEOGRAPHIC ACCURACY:
+- Mayodia Pass is near Roing/Hunli (Lower Dibang Valley district) — NOT near Anini. Do not route Anini → Mayodia Pass as a day trek. They are 100km apart on mountain roads.
+- Tawang and Bomdila are in West Kameng district. Ziro is in Lower Subansiri. Mechuka is in Shi Yomi. Anini is in Upper Dibang Valley. These are all different districts — do not mix activities across them in one day.
+- Stilwell Road is in Changlang district — far east Arunachal. Cannot be combined with Tawang (far west) in the same trip without dedicated travel days.
+- Upper Dibang Valley (Anini) has no tourist infrastructure beyond basic government guesthouses. Do not suggest luxury stays or restaurants.
+
+RULE 4 — RETURN JOURNEYS:
+- A return journey day is travel only. No activities, no sightseeing at new places.
+- If destination requires 2 days to reach, return also requires 2 days.
+- Budget these days explicitly in the itinerary.
+
+RULE 5 — GENERAL:
+- Never invent activities at stopover towns unless those towns are part of the core itinerary.
+- Local tip must be specific to that day's actual location.
+- No generic filler — every line must reflect real conditions on the ground.`;
 
   try {
     const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
