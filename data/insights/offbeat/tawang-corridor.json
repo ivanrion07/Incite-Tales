@@ -1,0 +1,107 @@
+{
+  "id": "tawang-corridor-route",
+  "type": "route",
+  "title": "The Tawang Corridor — Guwahati to Tawang via Shergaon & Bomdila",
+  "slug": "tawang-corridor",
+  "region": "West Arunachal Pradesh",
+  "districts": ["Kamrup", "Barpeta", "Bongaigaon", "West Kameng", "Tawang"],
+  "state": "Arunachal Pradesh",
+  "coordinates": { "lat": 27.58, "lng": 91.86 },
+
+  "tags": ["road trip", "tawang", "monastery", "mountains", "arunachal", "permit required", "apple orchards", "shergaon", "bomdila", "sela pass"],
+
+  "description": "The classic overland route to Tawang — one of the most dramatic drives in India. From the Assam plains you climb rapidly through dense forest, apple country, and mountain passes. Sela Pass (4,170m) is the high point. The journey is as important as the destination.",
+
+  "incitetales_angle": "Everyone talks about Tawang monastery. Nobody tells you that Shergaon is a village of 200 people with apple orchards, a 16th century monastery, and one of the finest small homestays in the Northeast. Stop there.",
+
+  "season": {
+    "best": ["march", "april", "may", "october", "november"],
+    "avoid": ["january", "february"],
+    "monsoon": ["june", "july", "august"],
+    "notes": "January–February: Sela Pass often snowed shut. March brings rhododendrons. October–November is crisp and clear — the best window. Monsoon brings landslides on this route — check road status daily."
+  },
+
+  "route_overview": {
+    "start": "Guwahati or Tezpur",
+    "end": "Tawang",
+    "total_distance_km": "540 from Guwahati / 320 from Tezpur",
+    "recommended_stops": ["Bhalukpong", "Shergaon", "Bomdila", "Dirang", "Sela Pass", "Tawang"],
+    "recommended_days": 4,
+    "road_condition": "Mix of good highway and mountain road. 4WD recommended but not mandatory in dry season."
+  },
+
+  "connectivity": {
+    "mobile_signal": "limited",
+    "notes": "BSNL works best throughout. Jio/Airtel available in main towns (Bomdila, Dirang, Tawang) but patchy on the road, especially near Sela Pass. Expect no signal for stretches of 1–2 hours while driving."
+  },
+
+  "stays": [
+    {
+      "name": "Red Berry Home Stay",
+      "location": "Shergaon village",
+      "district": "West Kameng",
+      "type": "homestay",
+      "why_recommended": "Family-run. Surrounded by apple orchards. Home-cooked Arunachali food. The kind of place you plan to stay one night and end up staying three. One of the best small stays in the Northeast.",
+      "price_range": "₹800–1,500 per night including meals",
+      "booking": "Advance booking essential — only a few rooms. Ask locally or search Facebook",
+      "verified": true
+    },
+    {
+      "name": "Kameng Residency",
+      "location": "Bomdila town",
+      "district": "West Kameng",
+      "type": "hotel",
+      "why_recommended": "Clean, reliable, good location in Bomdila. Solid base for exploring the town and nearby monastery. Decent restaurant.",
+      "price_range": "₹1,200–2,500 per night",
+      "booking": "Walk-in usually available except peak season",
+      "verified": true
+    },
+    {
+      "name": "Hotel Bonsai",
+      "location": "Bomdila town",
+      "district": "West Kameng",
+      "type": "hotel",
+      "why_recommended": "Budget-friendly option in Bomdila. Clean rooms, central location. Good if Kameng Residency is full.",
+      "price_range": "₹700–1,500 per night",
+      "booking": "Walk-in",
+      "verified": true
+    }
+  ],
+
+  "key_stops": [
+    {
+      "name": "Shergaon",
+      "why": "Tiny village, apple orchards, 16th century monastery, completely off the tourist radar. Stay at Red Berry.",
+      "hidden_score": 9
+    },
+    {
+      "name": "Bomdila",
+      "why": "Good acclimatization stop. Bomdila monastery has great views. Buy local apple products here.",
+      "hidden_score": 4
+    },
+    {
+      "name": "Dirang",
+      "why": "Hot springs, Kiwi orchards, old Dirang village. Often skipped — shouldn't be.",
+      "hidden_score": 6
+    },
+    {
+      "name": "Sela Pass",
+      "why": "4,170m. Frozen lake. Buddhist shrine. Often snow-covered. Drive through early to avoid afternoon cloud.",
+      "hidden_score": 3
+    }
+  ],
+
+  "permit_needed": true,
+  "permit_notes": "Inner Line Permit (ILP) mandatory for all non-Arunachal residents. Apply at Arunachal House in Guwahati or online at arunachalilp.com. ₹100. Takes 1 day. Additionally, Tawang requires a Protected Area Permit (PAP) — apply simultaneously.",
+
+  "what_most_people_miss": "Shergaon. Ninety percent of tourists drive straight from Bhalukpong to Bomdila without stopping. Shergaon is 13km off the main road and worth every minute.",
+
+  "nearby": ["tawang-monastery", "madhuri-lake", "bum-la-pass", "nuranang-falls"],
+
+  "hidden_score": 6,
+  "last_updated": "2026-03",
+  "source": "personal",
+  "verified": true,
+  "story_published": false,
+  "story_url": null
+}

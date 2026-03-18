@@ -1,0 +1,125 @@
+{
+  "id": "shillong-dawki-shnongpedeng",
+  "type": "route",
+  "title": "Shillong to Dawki & Shnongpedeng — The Crystal River Route",
+  "slug": "shillong-dawki-shnongpedeng",
+  "region": "South Meghalaya / Bangladesh Border",
+  "district": "West Jaintia Hills / East Khasi Hills",
+  "state": "Meghalaya",
+  "coordinates": { "lat": 25.20, "lng": 92.01 },
+
+  "tags": ["meghalaya", "dawki", "shnongpedeng", "crystal river", "camping", "kayaking", "mawlynnong", "living root bridge", "border", "umngot river"],
+
+  "description": "The Umngot River at Dawki/Shnongpedeng is famous for being so clear that boats appear to float on air. But the route there from Shillong is full of stops that most people completely miss. This is the most complete version of that drive.",
+
+  "incitetales_angle": "The Dawki photo is everywhere on Instagram — the floating boat. What nobody shows you is Shnongpedeng, 3km upstream, where you can camp on the riverbank and wake up to that same water at sunrise with no one around. Do that instead.",
+
+  "season": {
+    "best": ["october", "november", "december", "january", "february", "march"],
+    "avoid": ["june", "july", "august"],
+    "notes": "Monsoon floods the Umngot and turns it brown. The famous crystal clarity only exists in dry season. Peak clarity is December–February. Shnongpedeng camping is only possible in dry season."
+  },
+
+  "route_overview": {
+    "start": "Shillong",
+    "end": "Shnongpedeng / Dawki",
+    "distance_km": "95–100",
+    "recommended_days": 2,
+    "road_condition": "Good tarmac till Dawki. Side roads to offbeat stops require care.",
+    "pro_tip": "Do not rush this as a day trip from Shillong. Staying overnight at Shnongpedeng changes the entire experience."
+  },
+
+  "connectivity": {
+    "mobile_signal": "limited near border areas",
+    "notes": "Airtel/Jio available in Shillong. Signal weakens past Pynursla. Near Dawki/Shnongpedeng: patchy. Shnongpedeng camp areas have intermittent signal. Download offline maps before leaving Shillong."
+  },
+
+  "key_stops": [
+    {
+      "name": "Umkhoi Canyon (Umkhoi Village)",
+      "why": "A narrow limestone canyon with a river running through it. Almost zero tourist infrastructure. Requires a local guide. One of the most dramatic geological features in Meghalaya that almost no one knows about.",
+      "hidden_score": 10,
+      "type": "canyon + trekking",
+      "access": "Ask in Pynursla for directions to Umkhoi village. Local guide strongly recommended."
+    },
+    {
+      "name": "Kolington Lake",
+      "why": "A hidden lake off the main route. Serene, often completely empty. Not on most travel itineraries.",
+      "hidden_score": 9,
+      "type": "lake",
+      "access": "Dirt road off main highway. Ask locals."
+    },
+    {
+      "name": "Umsong River — Weikhen",
+      "why": "A tributary river with beautiful swimming spots, much less visited than the Umngot. Local Khasi families come here on weekends but tourists virtually never do.",
+      "hidden_score": 8,
+      "type": "river + swimming"
+    },
+    {
+      "name": "Mawlynnong — Cleanest Village in Asia",
+      "why": "The title is real and earned — the village community takes cleanliness seriously as a cultural practice, not a tourist gimmick. The living skywalk (bamboo) gives views to Bangladesh. Worth the detour.",
+      "hidden_score": 4,
+      "type": "village + viewpoint",
+      "note": "Gets crowded on weekends. Go on a weekday morning."
+    },
+    {
+      "name": "Double Decker Living Root Bridge",
+      "why": "The most famous living root bridge in Meghalaya — two levels of ancient Ficus elastica roots woven into a bridge by Khasi villagers over hundreds of years. Near Nongriat village. Requires a 3,000-step descent.",
+      "hidden_score": 3,
+      "type": "natural + cultural",
+      "access": "Trek from Tyrna village (45 minutes down, 60 minutes up). Non-negotiable footwear: proper shoes, not sandals."
+    },
+    {
+      "name": "Shnongpedeng",
+      "why": "The village just upstream from Dawki. The river is the same Umngot — equally clear — but the atmosphere is completely different. Riverside camping, kayaking, and almost no tour buses.",
+      "hidden_score": 6,
+      "type": "riverside village + camping"
+    }
+  ],
+
+  "stays": [
+    {
+      "name": "Brightstar Camp",
+      "location": "Shnongpedeng riverside",
+      "type": "riverside camp",
+      "why_recommended": "Tents right on the Umngot riverbank. Fall asleep to the sound of the river. Wake up to crystal water and mist. The best way to experience Shnongpedeng. Gets fully booked in peak season.",
+      "price_range": "₹1,000–2,000 per night per tent",
+      "booking": "Book 1–2 weeks ahead in December–February",
+      "verified": true
+    },
+    {
+      "name": "Betelnut Resort",
+      "location": "Shnongpedeng",
+      "type": "resort",
+      "why_recommended": "More comfortable option with proper rooms near the river. Good for those who want riverside access without tents. Local food on-site.",
+      "price_range": "₹2,000–3,500 per night",
+      "booking": "Advance booking recommended in peak season",
+      "verified": true
+    }
+  ],
+
+  "activities": [
+    {
+      "name": "Kayaking / Coracle ride",
+      "where": "Shnongpedeng / Dawki",
+      "cost": "₹200–500 per ride",
+      "notes": "Coracle (round boat) rides are iconic. Kayaking available at Shnongpedeng through local operators."
+    },
+    {
+      "name": "River swimming",
+      "where": "Shnongpedeng upstream",
+      "notes": "Ask locals for the best swimming spots — not the same location as the tourist coracle area."
+    }
+  ],
+
+  "what_most_people_miss": "Umkhoi Canyon. Everyone stops at Mawlynnong and Dawki. Umkhoi is 2 hours from the main route and has almost no visitors. If you have an extra day and a local contact, it's the best thing in this entire corridor.",
+
+  "cultural_notes": "Dawki is a border town — India-Bangladesh border crossing is here. The area has a different feel because of this. Shnongpedeng is Khasi territory. The Khasi people are matrilineal — property and family names pass through the mother. Interesting to ask about if you're staying in a homestay.",
+
+  "hidden_score": 7,
+  "last_updated": "2026-03",
+  "source": "personal",
+  "verified": true,
+  "story_published": false,
+  "story_url": null
+}

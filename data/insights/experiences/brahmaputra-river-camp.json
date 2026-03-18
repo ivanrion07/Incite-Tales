@@ -1,0 +1,62 @@
+{
+  "id": "brahmaputra-river-camp-experience",
+  "type": "experience",
+  "title": "River Camping on the Brahmaputra Sand Bars",
+  "slug": "brahmaputra-river-camp",
+  "region": "Central Assam",
+  "district": "Kamrup / Morigaon",
+  "state": "Assam",
+  "coordinates": { "lat": 26.18, "lng": 91.75 },
+
+  "tags": ["camping", "brahmaputra", "river", "sandbar", "sunrise", "boat", "unique stay", "assam"],
+
+  "description": "Between November and April, the Brahmaputra's water level drops to reveal massive sandbars (chars) in the middle of the river. These chars become temporary camping sites — you arrive by boat at sunset, camp overnight, and wake up surrounded by water with nothing on the horizon but river and sky.",
+
+  "why_its_special": "The Brahmaputra at this point is 10–15km wide. Camping on a char puts you genuinely in the middle of one of Asia's greatest rivers. There is no road, no village, no noise. Just the river. Migratory birds use the same chars — you'll share the sandbar with skimmers, terns, and sometimes bar-headed geese.",
+
+  "incitetales_angle": "People fly to the Maldives for 'surrounded by water.' This is better. And it costs ₹2,000.",
+
+  "season": {
+    "best": ["december", "january", "february", "march"],
+    "avoid": ["june", "july", "august", "september", "october"],
+    "notes": "Chars only exist in dry season. By June the entire riverbed is submerged. November is early — some chars may still be forming. December–February is the sweet spot."
+  },
+
+  "local_intel": {
+    "how_to_get": "Arrange through local boat operators at Fancy Bazar Ghat (Guwahati) or Tezpur riverfront. No walk-in service — requires advance booking 2–3 days ahead.",
+    "entry_fee": "Approx ₹1,500–3,000 per person including boat, tent, basic meals. Varies by operator.",
+    "permit_needed": false,
+    "permit_notes": "No formal permit but inform local authorities if camping near border-sensitive areas.",
+    "crowd_level": "very low",
+    "best_time_of_day": "Arrive at char by 4pm. Sunset on the river is the main event.",
+    "duration": "Overnight — arrive evening, depart next morning",
+    "physical_level": "easy",
+    "operator": {
+      "name": "Brahmaputra River Experience (BRE)",
+      "contact": "Ask at Fancy Bazar Ghat or search locally",
+      "verified": false,
+      "notes": "Several informal operators run this. Quality varies. Ask specifically for char camping — some will offer just a boat ride. Verify they provide proper tents and life jackets."
+    }
+  },
+
+  "what_to_bring": [
+    "Warm layers — river nights are cold even in December",
+    "Headlamp",
+    "Camera (tripod if you have one — Milky Way from a char is exceptional)",
+    "Earplugs optional — the river is surprisingly loud at night",
+    "Any personal medication — you are far from help once on the char"
+  ],
+
+  "what_most_people_miss": "Dawn is better than sunset. Most people photograph sunset and sleep through the 5:30am light. The river turns gold and the birds are most active. Wake up early.",
+
+  "cultural_notes": "Char communities (people who live on sandbars year-round) are one of the most vulnerable populations in Assam. Be respectful if you encounter them. Do not treat them as a 'photo opportunity.'",
+
+  "nearby": ["pobitora-wildlife-sanctuary", "umananda-island", "guwahati-city"],
+
+  "hidden_score": 7,
+  "last_updated": "2026-03",
+  "source": "personal",
+  "verified": true,
+  "story_published": false,
+  "story_url": null
+}

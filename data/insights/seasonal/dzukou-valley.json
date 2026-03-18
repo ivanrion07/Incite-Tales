@@ -1,0 +1,73 @@
+{
+  "id": "dzukou-valley-seasonal",
+  "type": "seasonal",
+  "title": "Dzukou Valley — The Valley of Flowers of the Northeast",
+  "slug": "dzukou-valley",
+  "region": "Nagaland / Manipur border",
+  "district": "Kohima",
+  "state": "Nagaland",
+  "coordinates": { "lat": 25.46, "lng": 94.07 },
+
+  "tags": ["trekking", "wildflowers", "camping", "high altitude", "nagaland", "border region"],
+
+  "season": {
+    "best": ["june", "july", "august"],
+    "also_good": ["december", "january"],
+    "avoid": ["april", "may"],
+    "notes": "June–August is the Dzukou lily season — the valley floor turns completely white and pink. Counterintuitively this is also monsoon season, so expect rain. December–January offers snow and no crowds but biting cold (-5°C nights). April–May is dry and brown — nothing to see.",
+    "month_by_month": {
+      "january": "Snow possible. Very cold. Stunning but demanding. Few trekkers.",
+      "february": "Cold but clearing. Early wildflowers starting.",
+      "march": "Pleasant. Wildflowers beginning.",
+      "april": "Dry season. Valley looks parched. Not recommended.",
+      "may": "Hot and dry. Avoid.",
+      "june": "Dzukou lilies begin blooming. Rain starts. Peak season begins.",
+      "july": "Peak bloom. Valley completely covered. Rain daily but worth it.",
+      "august": "Lilies still strong. Less rain than July.",
+      "september": "Post-bloom. Green and lush. Underrated month.",
+      "october": "Autumn colours. Quiet. Good trekking conditions.",
+      "november": "Cool and clear. Last good window before winter.",
+      "december": "Snow possible. Very cold. Adventurous option."
+    }
+  },
+
+  "description": "A high-altitude valley at 2,438m straddling Nagaland and Manipur. Famous for the Dzukou lily (Lilium mackliniae) which blankets the valley floor every monsoon. Accessible by two routes — from Nagaland side (Viswema village) or Manipur side (Mao).",
+
+  "incitetales_angle": "Everyone says 'Valley of Flowers' and pictures Uttarakhand. Nobody talks about Dzukou. In July, this valley is more dramatic — and you'll share it with roughly zero tourists from outside the Northeast.",
+
+  "local_intel": {
+    "how_to_get": "Base camp is Viswema village, 20km from Kohima. Trek is 5km uphill, approximately 3–4 hours. Alternatively the Manipur side via Mao Gate is longer but less steep.",
+    "entry_fee": "₹100 per person (Nagaland side). Additional ₹50 camera fee.",
+    "permit_needed": true,
+    "permit_notes": "Inner Line Permit (ILP) required for non-Nagaland residents. Get it in Kohima DC office or online at nagaland.gov.in. Takes 1 day. Free of cost.",
+    "crowd_level": "medium (July peak), low (all other months)",
+    "best_time_of_day": "Start trek by 6am to reach valley before afternoon cloud cover",
+    "duration": "1 night minimum recommended. Day trek possible but not ideal.",
+    "trek_duration": "4–5 hours to reach the valley camp from Viswema base",
+    "physical_level": "moderate",
+    "connectivity": {
+      "mobile_signal": "none",
+      "notes": "No mobile network inside the valley. Inform someone before you go. Last signal is at Viswema village base."
+    },
+    "food_cost_note": "Food at the valley camp is slightly higher than normal — everything has to be carried up. Budget ₹200–350 per meal. Worth it, but don't be surprised.",
+    "operator": {
+      "name": "Dzukou Valley Trek Operators Association",
+      "contact": null,
+      "verified": false,
+      "notes": "Local guides available at Viswema village base. Recommended for first-timers. Basic guesthouse at valley top — book ahead in July."
+    }
+  },
+
+  "what_most_people_miss": "The ridge walk on day 2 toward Japfu Peak. Most people just do the valley floor and leave. The ridge offers a 360° view of both Nagaland and Manipur on a clear morning.",
+
+  "cultural_notes": "Viswema is an Angami Naga village. The community manages the trek. Buy supplies from local shops — it directly supports them. Do not litter. The Nagas take this extremely seriously.",
+
+  "nearby": ["kohima-war-cemetery", "japfu-peak", "kisama-heritage-village"],
+
+  "hidden_score": 5,
+  "last_updated": "2026-03",
+  "source": "personal",
+  "verified": true,
+  "story_published": false,
+  "story_url": null
+}

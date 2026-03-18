@@ -1,0 +1,102 @@
+{
+  "id": "shillong-cherrapunji-offbeat",
+  "type": "route",
+  "title": "Shillong to Cherrapunji — The Sa-i-Mika Road (Offbeat Route)",
+  "slug": "shillong-cherrapunji-offbeat",
+  "region": "Meghalaya Plateau",
+  "district": "East Khasi Hills",
+  "state": "Meghalaya",
+  "coordinates": { "lat": 25.27, "lng": 91.73 },
+
+  "tags": ["meghalaya", "cherrapunji", "waterfalls", "offroad", "khasi hills", "sohra", "road trip", "monsoon", "offbeat"],
+
+  "description": "Most people drive Shillong to Cherrapunji on NH6 — straight, fast, and utterly forgettable. The Sa-i-Mika road is the alternative: a narrow, off-road route through villages, canyon viewpoints, and waterfalls that almost nobody uses. Takes longer. Completely worth it.",
+
+  "incitetales_angle": "Cherrapunji (Sohra) has been so over-touristed that people now say it's 'not worth it.' They're driving the wrong road. Take the Sa-i-Mika road and suddenly you remember why this plateau is one of the wettest and most dramatic places on earth.",
+
+  "season": {
+    "best": ["june", "july", "august", "september"],
+    "also_good": ["october", "november"],
+    "avoid": ["january", "february"],
+    "notes": "Counterintuitive for most of India — Cherrapunji is best in monsoon. Waterfalls are at full force. Yes, it rains. Bring good rain gear and embrace it. Winter is dry and the falls shrink to trickles."
+  },
+
+  "route_overview": {
+    "start": "Shillong",
+    "end": "Cherrapunji (Sohra)",
+    "distance_km": "55 via NH6 (fast) / approx 65–70 via Sa-i-Mika road (slow, offbeat)",
+    "recommended_days": 2,
+    "road_condition": "Sa-i-Mika road is narrow and rough in sections. 4WD recommended. Not suitable for large vehicles.",
+    "pro_tip": "Take Sa-i-Mika road one way (Shillong → Cherrapunji). Return on NH6 if pressed for time."
+  },
+
+  "connectivity": {
+    "mobile_signal": "patchy",
+    "notes": "Airtel/Jio available in Shillong and Cherrapunji town. The Sa-i-Mika road has dead zones. BSNL most reliable."
+  },
+
+  "key_stops": [
+    {
+      "name": "Kyrdemkhla",
+      "why": "A village viewpoint on the Sa-i-Mika road that overlooks the Bangladesh plains far below. On a clear monsoon day the view is disorienting — you're above the clouds. Almost no tourists stop here.",
+      "hidden_score": 9,
+      "type": "viewpoint + village"
+    },
+    {
+      "name": "Nohkalikai Falls",
+      "why": "India's tallest plunge waterfall (340m). Dramatic in monsoon. The story behind the name (local legend) is as powerful as the falls itself. Don't skip the legend.",
+      "hidden_score": 3,
+      "type": "waterfall"
+    },
+    {
+      "name": "Dainthlen Falls",
+      "why": "Less visited than Nohkalikai. Named after a giant serpent killed here in Khasi legend. The gorge around it is spectacular. Access requires a short walk.",
+      "hidden_score": 7,
+      "type": "waterfall + gorge"
+    },
+    {
+      "name": "Wei Sawdong Falls",
+      "why": "Three-tier waterfall you can actually swim in. Hidden below the plateau. Requires a steep 30–45 minute descent. One of the best natural pools in Meghalaya. Almost no one goes here.",
+      "hidden_score": 8,
+      "type": "waterfall + swimming"
+    }
+  ],
+
+  "stays": [
+    {
+      "name": "Sa-i-Mika Resort",
+      "location": "En route, Cherrapunji area",
+      "type": "resort",
+      "why_recommended": "On the Sa-i-Mika road itself. Good base for exploring the offbeat route. Views of the Bangladesh plains.",
+      "price_range": "₹2,000–4,000 per night",
+      "verified": true
+    },
+    {
+      "name": "Ri-Sohra Resort",
+      "location": "Cherrapunji (Sohra)",
+      "type": "resort",
+      "why_recommended": "Cliff-edge property with canyon views. One of the better-designed stays in Cherrapunji. Good for couples.",
+      "price_range": "₹3,000–6,000 per night",
+      "verified": true
+    },
+    {
+      "name": "Lawanba Home Stay",
+      "location": "Cherrapunji area",
+      "type": "homestay",
+      "why_recommended": "Local family-run. Home-cooked Khasi food. Most authentic experience in the area. Significantly cheaper than resorts.",
+      "price_range": "₹800–1,500 per night including meals",
+      "verified": true
+    }
+  ],
+
+  "what_most_people_miss": "Wei Sawdong Falls. It requires effort — a steep descent, no railings, can be slippery. Most tourists see Nohkalikai from the viewpoint and leave. Wei Sawdong is where you actually experience the plateau, not just look at it.",
+
+  "cultural_notes": "Cherrapunji is the Khasi name Sohra. Locals prefer Sohra. The Khasi matrilineal system means family names pass through the mother — a detail that surprises most visitors. Ask about it — people are proud of it.",
+
+  "hidden_score": 7,
+  "last_updated": "2026-03",
+  "source": "personal",
+  "verified": true,
+  "story_published": false,
+  "story_url": null
+}

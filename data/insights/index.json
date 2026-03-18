@@ -1,0 +1,15 @@
+{
+  "version": "1.1",
+  "last_updated": "2026-03",
+  "total_entries": 8,
+  "entries": [
+    { "id": "maguri-beel-hidden", "type": "hidden-spot", "file": "hidden-spots/maguri-beel.json" },
+    { "id": "dzukou-valley-seasonal", "type": "seasonal", "file": "seasonal/dzukou-valley.json" },
+    { "id": "mising-tribe-cultural", "type": "cultural", "file": "cultural/mising-tribe.json" },
+    { "id": "stilwell-road-offbeat", "type": "offbeat", "file": "offbeat/stilwell-road.json" },
+    { "id": "brahmaputra-river-camp-experience", "type": "experience", "file": "experiences/brahmaputra-river-camp.json" },
+    { "id": "tawang-corridor-route", "type": "route", "file": "offbeat/tawang-corridor.json" },
+    { "id": "shillong-cherrapunji-offbeat", "type": "route", "file": "offbeat/shillong-cherrapunji-offbeat.json" },
+    { "id": "shillong-dawki-shnongpedeng", "type": "route", "file": "offbeat/shillong-dawki-shnongpedeng.json" }
+  ]
+}
