@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="favicon.png">
-<title>Merch — Incitetales</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<title>Explore Nearby — Incitetales</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -160,91 +160,121 @@ nav {
 }
 .btn-ghost:hover { color: var(--terra); border-color: var(--terra-dim); }
 
-/* ── MERCH ── */
-.merch-section {
-  background: var(--yellow-pale);
-}
+/* ── EXPLORE NEARBY ── */
+.nearby-section { background: #f8f6f0; }
 
-.merch-grid {
+.nearby-card {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
+  grid-template-columns: 1fr 1fr;
   border: 1px solid var(--border);
-  margin-top: 48px;
-}
-
-.merch-card {
-  background: var(--cream);
   overflow: hidden;
 }
 
-.merch-visual {
-  height: 240px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.nearby-visual {
+  height: 360px;
+  background: linear-gradient(160deg, #1a1e2a 0%, #222838 50%, #101420 100%);
   position: relative;
+  overflow: hidden;
 }
 
-.merch-card:nth-child(1) .merch-visual { background: linear-gradient(135deg, #1a2e20 0%, #2a4a30 100%); }
-.merch-card:nth-child(2) .merch-visual { background: linear-gradient(135deg, #2a1e10 0%, #4a3020 100%); }
-.merch-card:nth-child(3) .merch-visual { background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4a 100%); }
+.nearby-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 40% 60%, rgba(42,92,72,0.25) 0%, transparent 60%),
+    linear-gradient(180deg, transparent 30%, rgba(16,20,32,0.5) 100%);
+}
 
-.merch-placeholder {
+.nearby-visual-label {
+  position: absolute;
+  bottom: 20px; left: 24px;
+  z-index: 2;
   font-family: 'Playfair Display', serif;
-  font-size: 13px;
+  font-size: 28px;
+  font-weight: 400;
   font-style: italic;
-  color: rgba(245,240,232,0.4);
-  text-align: center;
-  padding: 20px;
-  line-height: 1.5;
+  color: var(--bg);
+  line-height: 1.2;
 }
 
-.merch-body {
-  padding: 18px 20px;
-  border-top: 1px solid var(--border);
-}
-
-.merch-type {
-  font-family: 'DM Mono', monospace;
-  font-size: 7.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--terra);
-  margin-bottom: 6px;
-}
-
-.merch-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 10px;
-}
-
-.merch-footer {
+.nearby-body {
+  padding: 40px;
+  background: #fafaf8;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.merch-price {
+.nearby-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nearby-tag::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--forest);
+}
+
+.nearby-title {
   font-family: 'Playfair Display', serif;
-  font-size: 18px;
+  font-size: 32px;
   font-weight: 600;
   color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 16px;
 }
 
-.merch-coming {
+.nearby-desc {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.nearby-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink2);
+}
+.highlight-item::before {
+  content: '◆';
+  font-size: 6px;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+.trip-book {
   font-family: 'DM Mono', monospace;
-  font-size: 7.5px;
+  font-size: 8.5px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--ink3);
-  border: 1px solid var(--border2);
-  padding: 4px 10px;
+  color: var(--cream);
+  background: var(--forest);
+  padding: 9px 16px;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
 }
+.trip-book:hover { background: var(--ink); }
 
 /* ── FOOTER ── */
 footer {
@@ -343,63 +373,41 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">Incite<span>tales</span></a>
+  <a href="../" class="nav-logo">Incite<span>tales</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#stories">Stories</a></li>
-    <li><a href="discover-ne.html">Discover NE</a></li>
-    <li><a href="explore-nearby.html">Explore Nearby</a></li>
-    <li><a href="merch.html">Merch</a></li>
+    <li><a href="../#stories">Stories</a></li>
+    <li><a href="../discover-ne/">Discover NE</a></li>
+    <li><a href="../explore-nearby/">Explore Nearby</a></li>
+    <li><a href="../merch/">Merch</a></li>
   </ul>
-  <a href="index.html#builder" class="nav-cta">Plan a Trip</a>
+  <a href="../#builder" class="nav-cta">Plan a Trip</a>
 </nav>
 
-<!-- MERCH -->
-<div class="section-wrap merch-section reveal" id="merch">
+<!-- EXPLORE NEARBY -->
+<div class="section-wrap nearby-section reveal" id="nearby">
   <div class="section-header">
     <div>
-      <div class="section-label">Illustrated Prints & Apparel</div>
-      <h2 class="section-title">Wear <em>Northeast India</em></h2>
+      <div class="section-label">For People From Northeast</div>
+      <h2 class="section-title">Explore <em>Nearby</em></h2>
     </div>
-    <a href="#" class="btn-ghost">All products</a>
   </div>
-  <div class="merch-grid">
-    <div class="merch-card">
-      <div class="merch-visual">
-        <div class="merch-placeholder">Brahmaputra River<br>Illustrated Print<br>Coming Soon</div>
-      </div>
-      <div class="merch-body">
-        <div class="merch-type">◆ Art Print</div>
-        <div class="merch-name">Brahmaputra — River of Life</div>
-        <div class="merch-footer">
-          <div class="merch-price">₹850</div>
-          <span class="merch-coming">Coming Soon</span>
-        </div>
-      </div>
+  <div class="nearby-card">
+    <div class="nearby-visual">
+      <div class="nearby-visual-label">Darjeeling<br>+ Sikkim</div>
     </div>
-    <div class="merch-card">
-      <div class="merch-visual">
-        <div class="merch-placeholder">Kaziranga Rhino<br>Illustrated T-Shirt<br>Coming Soon</div>
+    <div class="nearby-body">
+      <div class="nearby-tag">Explore Nearby · Phase 1</div>
+      <h3 class="nearby-title">Darjeeling + Sikkim</h3>
+      <p class="nearby-desc">Seven days. Two states. Tiger Hill at sunrise, the toy train, Gurudongmar Lake, Yuksom monasteries. Planned by someone who's done it themselves — all bookings from Guwahati, all permits sorted.</p>
+      <div class="nearby-highlights">
+        <div class="highlight-item">4 days Darjeeling · 3 days Sikkim — the perfect split</div>
+        <div class="highlight-item">Sikkim Inner Line Permit handled</div>
+        <div class="highlight-item">Budget and mid-range tiers available</div>
+        <div class="highlight-item">Flights from Guwahati or Dibrugarh</div>
       </div>
-      <div class="merch-body">
-        <div class="merch-type">◆ T-Shirt</div>
-        <div class="merch-name">Kaziranga — One Horned</div>
-        <div class="merch-footer">
-          <div class="merch-price">₹1,200</div>
-          <span class="merch-coming">Coming Soon</span>
-        </div>
-      </div>
-    </div>
-    <div class="merch-card">
-      <div class="merch-visual">
-        <div class="merch-placeholder">Tawang Monastery<br>Illustrated Tote<br>Coming Soon</div>
-      </div>
-      <div class="merch-body">
-        <div class="merch-type">◆ Tote Bag</div>
-        <div class="merch-name">Tawang — 3,000 Metres</div>
-        <div class="merch-footer">
-          <div class="merch-price">₹950</div>
-          <span class="merch-coming">Coming Soon</span>
-        </div>
+      <div style="display:flex; gap:16px; align-items:center;">
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Darjeeling%20%2B%20Sikkim%20trip." class="trip-book" target="_blank">Enquire on WhatsApp</a>
+        <a href="#" class="btn-ghost">View full itinerary</a>
       </div>
     </div>
   </div>
@@ -416,21 +424,21 @@ footer {
     <div class="footer-col">
       <div class="footer-col-title">Stories</div>
       <ul>
-        <li><a href="maguri-beel.html">Maguri Beel</a></li>
+        <li><a href="../maguri-beel/">Maguri Beel</a></li>
         <li><a href="#">Dibru-Saikhowa</a></li>
         <li><a href="#">Stilwell Road</a></li>
         <li><a href="#">Majuli Island</a></li>
-        <li><a href="index.html#stories">All Stories →</a></li>
+        <li><a href="../#stories">All Stories →</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Trips</div>
       <ul>
-        <li><a href="discover-ne.html">Assam Immersion</a></li>
-        <li><a href="discover-ne.html">Meghalaya Loop</a></li>
-        <li><a href="discover-ne.html">Arunachal Tawang</a></li>
-        <li><a href="explore-nearby.html">Darjeeling + Sikkim</a></li>
-        <li><a href="index.html#builder">Itinerary Builder</a></li>
+        <li><a href="../discover-ne/">Assam Immersion</a></li>
+        <li><a href="../discover-ne/">Meghalaya Loop</a></li>
+        <li><a href="../discover-ne/">Arunachal Tawang</a></li>
+        <li><a href="../explore-nearby/">Darjeeling + Sikkim</a></li>
+        <li><a href="../#builder">Itinerary Builder</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -438,7 +446,7 @@ footer {
       <ul>
         <li><a href="#">Why Incitetales</a></li>
         <li><a href="#">For Operators</a></li>
-        <li><a href="merch.html">Merch</a></li>
+        <li><a href="../merch/">Merch</a></li>
         <li><a href="mailto:hello@incitetales.com">hello@incitetales.com</a></li>
         <li><a href="#">Instagram</a></li>
       </ul>
