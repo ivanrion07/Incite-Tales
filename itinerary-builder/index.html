@@ -1743,19 +1743,22 @@ Rules:
 }
 
 function showLoading() {
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('itinerary-output').style.display = 'none';
-  document.getElementById('loading-state').style.display = 'block';
+  const emptyState = document.getElementById('empty-state');
+  if (emptyState) emptyState.style.display = 'none';
+  const loadingState = document.getElementById('loading-state');
+  if (loadingState) loadingState.style.display = 'block';
   let i = 0;
   loadingInterval = setInterval(() => {
-    document.getElementById('loading-msg').textContent = loadingMessages[i % loadingMessages.length];
+    const msg = document.getElementById('loading-msg');
+    if (msg) msg.textContent = loadingMessages[i % loadingMessages.length];
     i++;
   }, 2500);
 }
 
 function hideLoading() {
   clearInterval(loadingInterval);
-  document.getElementById('loading-state').style.display = 'none';
+  const loadingState = document.getElementById('loading-state');
+  if (loadingState) loadingState.style.display = 'none';
 }
 
 async function generateItinerary() {
@@ -1888,155 +1891,6 @@ GEOGRAPHIC AND LOGISTICAL RULES — NON-NEGOTIABLE:
   }
 }
 
-function renderItinerary(data, destination, days, group, budget) {
-  document.getElementById('out-destination').textContent = '◆  ' + destination.toUpperCase();
-  document.getElementById('out-title').textContent = data.title;
-  document.getElementById('out-meta').innerHTML = `
-    <span class="meta-chip">${days} days</span>
-    <span class="meta-chip">${group}</span>
-    <span class="meta-chip">${budget}</span>
-  `;
-
-  const overviewEl = document.getElementById('out-overview');
-  const destinationImageQuery = getImagesForPlace(data.destination || destination)[0];
-  overviewEl.innerHTML = `
-    <img class="itinerary-hero-image" src="${buildImageUrl(destinationImageQuery, 1400, 700)}" alt="${destination}"
-      onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(1400, 700, destination)}';" loading="lazy">
-    <div style="padding-top:18px;">${data.overview}</div>
-  `;
-
-  // ── Render local insights strip ──
-  const insightsSection = document.getElementById('local-insights-section');
-  const insightsRow = document.getElementById('insight-cards-row');
-  insightsRow.innerHTML = '';
-
-  if (currentInsights.length > 0) {
-    currentInsights.forEach(ins => {
-      const card = document.createElement('div');
-      card.className = 'insight-card-mini';
-      card.innerHTML = `
-        <div class="insight-card-mini-type">${ins.type.replace('-', ' ')}</div>
-        <div class="insight-card-mini-title">${ins.title}</div>
-        <div class="insight-card-mini-score">Hidden score ${ins.hidden_score}/10 · ${ins.region || ins.state}</div>
-      `;
-      insightsRow.appendChild(card);
-    });
-    insightsSection.classList.add('visible');
-  } else {
-    insightsSection.classList.remove('visible');
-  }
-
-  // Days
-  const daysContainer = document.getElementById('out-days');
-  daysContainer.innerHTML = '';
-  data.days.forEach((day, idx) => {
-    const dayImageQueries = getBestImages(`${day.route || ''} ${day.theme || ''}`).slice(0, 3);
-    const dayImagesHtml = dayImageQueries.map((query) => `
-      <img class="day-image" src="${buildImageUrl(query, 900, 600)}" alt="${day.theme}"
-        onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(900, 600, day.theme)}';" loading="lazy">
-    `).join('');
-    const card = document.createElement('div');
-    card.className = 'day-card';
-    card.innerHTML = `
-      <div class="day-header ${idx === 0 ? 'active' : ''}">
-        <div class="day-number">0${day.number}</div>
-        <div class="day-info">
-          <div class="day-title">${day.theme}</div>
-          <div class="day-route">${day.route}</div>
-        </div>
-        <div class="day-toggle">▾</div>
-      </div>
-      <div class="day-content ${idx === 0 ? 'visible' : ''}">
-        <div class="day-images">${dayImagesHtml}</div>
-        <div class="time-block"><div class="time-label">Morning</div><div class="time-text">${day.morning}</div></div>
-        <div class="time-block"><div class="time-label">Afternoon</div><div class="time-text">${day.afternoon}</div></div>
-        <div class="time-block"><div class="time-label">Evening</div><div class="time-text">${day.evening}</div></div>
-        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${day.stay}</strong></div></div>
-        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${day.transport}</div></div>
-        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${day.tip}</div></div>
-      </div>
-    `;
-    daysContainer.appendChild(card);
-    card.querySelector('.day-header').addEventListener('click', (event) => toggleDay(event.currentTarget));
-  });
-
-  // Info grid
-  const infoGrid = document.getElementById('out-info');
-  infoGrid.innerHTML = '';
-  if (data.permits) {
-    const permitsCard = document.createElement('div');
-    permitsCard.className = 'info-card full';
-    permitsCard.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${data.permits}</div>`;
-    infoGrid.appendChild(permitsCard);
-  }
-  const budgetCard = document.createElement('div');
-  budgetCard.className = 'info-card';
-  let budgetHTML = '<div class="info-title">Budget breakdown</div>';
-  data.budget.forEach(item => {
-    budgetHTML += `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${item.label}</span><span class="budget-value">${item.value}</span></div>`;
-  });
-  budgetCard.innerHTML = budgetHTML;
-  infoGrid.appendChild(budgetCard);
-  const packingCard = document.createElement('div');
-  packingCard.className = 'info-card';
-  let packingHTML = '<div class="info-title">Packing list</div><div class="packing-grid">';
-  data.packing.forEach(item => { packingHTML += `<div class="packing-item">${item}</div>`; });
-  packingHTML += '</div>';
-  packingCard.innerHTML = packingHTML;
-  infoGrid.appendChild(packingCard);
-
-  const output = document.getElementById('itinerary-output');
-  output.style.display = 'block';
-  output.classList.add('fade-in');
-  document.getElementById('email-capture').style.display = 'block';
-  document.getElementById('book-cta').style.display = 'flex';
-
-  // Reset insights for next generation
-  currentInsights = [];
-
-  setTimeout(() => { output.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-}
-
-function toggleDay(header) {
-  const content = header.nextElementSibling;
-  const isActive = header.classList.contains('active');
-  document.querySelectorAll('.day-header').forEach(h => h.classList.remove('active'));
-  document.querySelectorAll('.day-content').forEach(c => c.classList.remove('visible'));
-  if (!isActive) { header.classList.add('active'); content.classList.add('visible'); }
-}
-
-async function saveItinerary() {
-  const email = document.getElementById('capture-email').value;
-  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
-  const btn = document.querySelector('.email-capture-btn');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  try {
-    const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'email',
-        itineraryData: JSON.parse(currentItinerary),
-        email: email,
-        itineraryTitle: JSON.parse(currentItinerary).title,
-        itineraryOverview: JSON.parse(currentItinerary).overview,
-        to: [{ email: email }],
-        subject: 'Your Incitetales itinerary is here',
-        htmlContent: `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;color:#1c1814;"><h1 style="font-size:28px;font-weight:400;margin-bottom:8px;">Your itinerary is ready</h1><p style="color:#6a6058;font-style:italic;margin-bottom:32px;">From Incitetales — The Untold Northeast</p><pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;line-height:1.8;color:#3a342c;">${JSON.parse(currentItinerary).title}\n\n${JSON.parse(currentItinerary).overview}\n\nFor the complete interactive itinerary, visit:\nhttps://incitetales.com/itinerary-builder/</pre><hr style="border:none;border-top:1px solid #ede8d8;margin:32px 0;"><p style="font-size:13px;color:#6a6058;">Want us to book this for you? Reply to this email or WhatsApp us.</p><p style="font-size:13px;color:#8b4a2a;font-weight:500;">incitetales.com · @incitetales</p></div>`
-      })
-    });
-    if (response.ok) {
-      document.getElementById('email-success').style.display = 'block';
-      document.querySelector('.email-capture-form').style.display = 'none';
-    } else { throw new Error('Email failed'); }
-  } catch (error) {
-    alert('Could not send email right now. Please try again.');
-    btn.textContent = 'Send to my inbox';
-    btn.disabled = false;
-  }
-}
-
 // ── URL parameter prefill (from recommendation layer) ──
 function prefillFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -2061,7 +1915,7 @@ document.addEventListener('DOMContentLoaded', () => {
   prefillFromUrl();
   document.getElementById('idea-generate-btn').addEventListener('click', generateFromIdea);
   document.getElementById('generate-btn').addEventListener('click', generateItinerary);
-  document.getElementById('save-itinerary-btn').addEventListener('click', saveItinerary);
+  // save-itinerary-btn is on the result page, not the builder
   document.getElementById('confirm-interpretation-btn').addEventListener('click', generateItinerary);
   document.getElementById('reset-interpretation-btn').addEventListener('click', () => {
     resetInterpretation();
