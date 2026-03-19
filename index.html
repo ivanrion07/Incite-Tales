@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="favicon.png">
 <title>Incitetales — The Untold Northeast</title>
+<meta name="description" content="Real stories. Real routes. AI itineraries built on personal field knowledge of Northeast India — by someone who grew up here.">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -41,6 +42,39 @@ body {
   overflow-x: hidden;
 }
 
+/* ── HERO CAROUSEL ── */
+.hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* Mild tint — text stays readable, image shows clearly */
+.hero-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(28,24,20,0.55) 0%,
+      rgba(28,24,20,0.38) 40%,
+      rgba(28,24,20,0.52) 100%
+    );
+}
+
 /* subtle paper texture */
 body::before {
   content: '';
@@ -52,127 +86,131 @@ body::before {
   opacity: 0.5;
 }
 
-/* ── NAV ── */
+/* ── NAV — centered logo only ── */
 nav {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0;
   z-index: 100;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 16px 48px;
-  background: rgba(255,255,255,0.97);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
+  padding: 20px 48px;
+  background: transparent;
 }
 
 .nav-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  color: var(--ink);
+  color: #ffffff;
   text-decoration: none;
   letter-spacing: 0.01em;
 }
-.nav-logo span { color: var(--ink); background: var(--yellow); padding: 0 4px; }
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
+.nav-logo span {
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 0 5px;
 }
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--terra); }
 
-.nav-cta {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cream);
-  background: var(--ink);
-  padding: 9px 18px;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.nav-cta:hover { background: var(--terra); }
-
-/* ── HERO ── */
+/* ── HERO — full dark, centered ── */
 .hero {
+  background: var(--ink);
   min-height: 100vh;
-  padding: 120px 48px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  /* carousel images render behind all hero content via z-index */
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 48px 80px;
   position: relative;
-  border-bottom: 1px solid var(--border);
+  overflow: hidden;
 }
 
-/* Decorative vertical line */
 .hero::before {
   content: '';
   position: absolute;
-  top: 120px; bottom: 80px;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, var(--border2), transparent);
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 60%, rgba(42,92,72,0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(139,74,42,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.hero-left {}
-
-.hero-issue {
+.hero-tag {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ink2);
+  color: var(--yellow);
   margin-bottom: 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-.hero-issue::before {
-  content: '';
-  width: 24px;
-  height: 3px;
-  background: var(--yellow);
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.1s forwards;
 }
 
 .hero-headline {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(48px, 5.5vw, 80px);
+  font-size: clamp(52px, 7vw, 96px);
   font-weight: 400;
   line-height: 1.05;
-  color: var(--ink);
+  color: #ffffff;
   letter-spacing: -0.02em;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.25s forwards;
 }
 .hero-headline em {
   font-style: italic;
-  color: var(--terra);
+  color: var(--yellow);
 }
 
-.hero-body {
-  font-size: 16px;
-  color: var(--ink2);
+.hero-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-style: italic;
+  color: rgba(245,240,232,0.55);
   line-height: 1.75;
-  max-width: 420px;
-  margin-bottom: 36px;
+  max-width: 580px;
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.4s forwards;
+}
+.hero-quote::before { content: '\201C'; color: var(--yellow); }
+.hero-quote::after  { content: '\201D'; color: var(--yellow); }
+
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.3);
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.55s forwards;
 }
 
 .hero-actions {
   display: flex;
-  gap: 20px;
+  gap: 14px;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s forwards;
 }
 
 .btn-primary {
@@ -180,116 +218,61 @@ nav {
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream);
-  background: var(--ink);
-  padding: 12px 24px;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 13px 28px;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.15s;
   display: inline-block;
 }
-.btn-primary:hover { background: var(--terra); }
+.btn-primary:hover { background: var(--yellow-dim); transform: translateY(-1px); }
 
 .btn-ghost {
   font-family: 'DM Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink3);
+  color: rgba(245,240,232,0.5);
   text-decoration: none;
-  border-bottom: 1px solid var(--border2);
-  padding-bottom: 2px;
+  border: 1px solid rgba(245,240,232,0.2);
+  padding: 13px 28px;
   transition: color 0.2s, border-color 0.2s;
+  display: inline-block;
 }
-.btn-ghost:hover { color: var(--terra); border-color: var(--terra-dim); }
+.btn-ghost:hover { color: rgba(245,240,232,0.85); border-color: rgba(245,240,232,0.4); }
 
-/* Hero right — featured story */
-.hero-right {
-  position: relative;
-}
-
-.hero-featured {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  position: relative;
-}
-
-.hero-featured-img {
-  height: 340px;
-  background-image:
-    linear-gradient(180deg, rgba(12, 18, 14, 0.12) 0%, rgba(12, 18, 14, 0.38) 100%),
-    var(--maguri-image);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-featured-img::after {
-  content: '';
+/* Scroll indicator */
+.hero-scroll {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 30% 70%, rgba(42,92,72,0.3) 0%, transparent 60%),
-    linear-gradient(180deg, transparent 40%, rgba(28,24,20,0.6) 100%);
-}
-
-.hero-featured-label {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 20px 24px;
-  z-index: 2;
-}
-
-.featured-region {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(245,240,232,0.7);
-  margin-bottom: 6px;
-}
-
-.featured-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--bg);
-  line-height: 1.2;
-}
-
-.hero-featured-body {
-  padding: 20px 24px;
-  border-top: 1px solid var(--border);
-}
-
-.hero-featured-excerpt {
-  font-size: 13px;
-  color: var(--ink2);
-  line-height: 1.6;
-  margin-bottom: 14px;
-  font-style: italic;
-}
-
-.hero-featured-link {
-  font-family: 'DM Mono', monospace;
-  font-size: 8.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--terra);
-  text-decoration: none;
-  display: inline-flex;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  transition: gap 0.2s;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+  z-index: 1;
 }
-.hero-featured-link:hover { gap: 12px; }
-.hero-featured-link::after { content: '→'; }
+.hero-scroll-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(245,200,66,0.6), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+.hero-scroll-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.25);
+}
 
 /* ── TICKER ── */
 .ticker {
-  background: var(--ink);
-  padding: 11px 0;
+  background: var(--yellow);
+  padding: 10px 0;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -302,192 +285,129 @@ nav {
   font-size: 8.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245,240,232,0.5);
+  color: var(--ink);
   padding: 0 28px;
-  border-right: 1px solid rgba(245,240,232,0.1);
+  border-right: 1px solid rgba(28,24,20,0.15);
+  opacity: 0.75;
 }
-.ticker-item span { color: var(--yellow); margin-right: 8px; }
+.ticker-item span { color: var(--terra); margin-right: 8px; opacity: 1; }
 
-/* ── SECTION COMMON ── */
-.section-wrap {
+/* ── WHAT IS INCITETALES ── */
+.what-section {
   padding: 80px 48px;
-  position: relative;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 48px;
-  padding-bottom: 20px;
+  background: var(--bg2);
   border-bottom: 1px solid var(--border);
+  text-align: center;
 }
 
-.section-label {
+.what-label {
   font-family: 'DM Mono', monospace;
   font-size: 8.5px;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--ink2);
-  margin-bottom: 8px;
-  display: inline-flex;
+  color: var(--terra);
+  margin-bottom: 20px;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
-.section-label::before {
+.what-label::before,
+.what-label::after {
   content: '';
-  width: 16px;
-  height: 3px;
+  width: 20px;
+  height: 2px;
   background: var(--yellow);
-  display: inline-block;
 }
 
-.section-title {
+.what-text {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: clamp(20px, 2.4vw, 28px);
   font-weight: 400;
-  color: var(--ink);
-  line-height: 1.15;
-}
-.section-title em { font-style: italic; color: var(--terra); }
-
-/* ── STORIES ── */
-.stories-section { background: #fff; border-top: 1px solid var(--border); }
-
-.stories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-
-.story-card {
-  background: #fafaf8;
-  overflow: hidden;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.story-card:hover { background: #f5f3ee; }
-
-.story-card-img {
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-}
-
-.story-card-img-bg {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.5s ease;
-}
-.story-card:hover .story-card-img-bg { transform: scale(1.04); }
-
-.story-card:nth-child(1) .story-card-img-bg {
-  background-image:
-    linear-gradient(180deg, rgba(12, 18, 14, 0.14) 0%, rgba(12, 18, 14, 0.34) 100%),
-    var(--maguri-image);
-  background-size: cover;
-  background-position: center;
-}
-.story-card:nth-child(2) .story-card-img-bg {
-  background: linear-gradient(160deg, #2a1e10 0%, #3a2a14 50%, #1a1008 100%);
-}
-.story-card:nth-child(3) .story-card-img-bg {
-  background: linear-gradient(160deg, #1a1e2e 0%, #1e2438 50%, #0e1020 100%);
-}
-
-.story-card-img-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(28,24,20,0.5) 100%);
-}
-
-.story-card-body {
-  padding: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.story-card-region {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--terra);
-  margin-bottom: 8px;
-}
-
-.story-card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.25;
-  margin-bottom: 10px;
-}
-
-.story-card-excerpt {
-  font-size: 13px;
-  color: var(--ink3);
-  line-height: 1.55;
-  margin-bottom: 14px;
   font-style: italic;
+  color: var(--ink2);
+  line-height: 1.65;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.what-text strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ink);
 }
 
-.story-card-link {
+/* ── BRIDGE — stories → itinerary ── */
+.bridge {
+  background: var(--ink);
+  padding: 60px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  border-top: 1px solid rgba(245,240,232,0.06);
+}
+
+.bridge-left {}
+
+.bridge-label {
   font-family: 'DM Mono', monospace;
   font-size: 8px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--terra);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.2s;
-}
-.story-card-link:hover { gap: 10px; }
-.story-card-link::after { content: '→'; }
-
-/* ── MANIFESTO ── */
-.manifesto {
-  background: var(--ink);
-  padding: 72px 48px;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.manifesto-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--yellow);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bridge-label::before {
+  content: '';
+  width: 16px;
+  height: 2px;
+  background: var(--yellow);
 }
 
-.manifesto-text {
+.bridge-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-size: clamp(24px, 2.8vw, 36px);
   font-weight: 400;
-  font-style: italic;
-  color: var(--bg);
-  line-height: 1.5;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 12px;
 }
-.manifesto-text strong {
-  font-style: normal;
-  font-weight: 700;
-  color: var(--terra-dim);
+.bridge-title em { font-style: italic; color: var(--yellow); }
+
+.bridge-sub {
+  font-size: 14px;
+  color: rgba(245,240,232,0.5);
+  max-width: 480px;
+  line-height: 1.65;
 }
+
+.bridge-right {
+  flex-shrink: 0;
+}
+
+.btn-bridge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+  white-space: nowrap;
+}
+.btn-bridge:hover { background: var(--yellow-dim); transform: translateY(-1px); }
 
 /* ── NEWSLETTER ── */
 .newsletter {
-  background: var(--ink);
-  padding: 96px 48px;
+  background: var(--forest);
+  padding: 80px 48px;
   text-align: center;
-  border-top: 1px solid var(--border);
 }
 
 .newsletter-label {
@@ -495,18 +415,18 @@ nav {
   font-size: 8.5px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--terra-dim);
+  color: rgba(245,240,232,0.5);
   margin-bottom: 20px;
 }
 
 .newsletter-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(28px, 3.5vw, 46px);
   font-weight: 400;
   font-style: italic;
   color: var(--bg);
   line-height: 1.2;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .newsletter-title strong {
   font-style: normal;
@@ -515,11 +435,12 @@ nav {
 
 .newsletter-sub {
   font-size: 14px;
-  color: rgba(245,240,232,0.6);
-  margin-bottom: 36px;
-  max-width: 380px;
+  color: rgba(245,240,232,0.55);
+  margin-bottom: 32px;
+  max-width: 360px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.65;
 }
 
 .newsletter-form {
@@ -533,7 +454,7 @@ nav {
   background: rgba(245,240,232,0.08);
   border: 1px solid rgba(245,240,232,0.2);
   border-right: none;
-  padding: 12px 16px;
+  padding: 13px 16px;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -549,15 +470,15 @@ nav {
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  background: var(--terra);
-  color: var(--cream);
+  background: var(--yellow);
+  color: var(--ink);
   border: none;
-  padding: 12px 20px;
+  padding: 13px 20px;
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
 }
-.newsletter-btn:hover { background: var(--terra-dim); }
+.newsletter-btn:hover { background: var(--yellow-dim); }
 
 /* ── FOOTER ── */
 footer {
@@ -655,59 +576,94 @@ footer {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
-.hero-issue { opacity:0; animation: fadeUp 0.7s ease 0.1s forwards; }
-.hero-headline { opacity:0; animation: fadeUp 0.8s ease 0.3s forwards; }
-.hero-body { opacity:0; animation: fadeUp 0.8s ease 0.5s forwards; }
-.hero-actions { opacity:0; animation: fadeUp 0.8s ease 0.7s forwards; }
-.hero-right { opacity:0; animation: fadeUp 0.9s ease 0.5s forwards; }
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
 
 .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-logo { font-size: 18px; }
+
+  .hero { padding: 100px 24px 72px; min-height: 100svh; }
+  .hero-headline { font-size: clamp(40px, 10vw, 64px); }
+  .hero-quote { font-size: 15px; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 14px 20px; }
+
+  .what-section { padding: 56px 24px; }
+  .what-text { font-size: 18px; }
+
+  .bridge { flex-direction: column; padding: 48px 24px; text-align: center; gap: 24px; }
+  .bridge-label { justify-content: center; }
+  .bridge-sub { margin: 0 auto; }
+  .btn-bridge { width: 100%; text-align: center; }
+
+  .newsletter { padding: 56px 24px; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-input { border-right: 1px solid rgba(245,240,232,0.2); border-bottom: none; }
+  .newsletter-btn { padding: 13px; }
+
+  footer { padding: 40px 24px 24px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAV — centered logo, sits over dark hero -->
 <nav>
   <a href="/" class="nav-logo">Incite<span>tales</span></a>
-  <ul class="nav-links">
-    <li><a href="#stories">Stories</a></li>
-    <li><a href="discover-ne/">Discover NE</a></li>
-    <li><a href="explore-nearby/">Explore Nearby</a></li>
-    <li><a href="itinerary-builder/">Itinerary Builder</a></li>
-    <li><a href="merch/">Merch</a></li>
-  </ul>
-  <a href="#newsletter" class="nav-cta">Newsletter</a>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — full dark, centered -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-issue">◆ &nbsp; Built in Guwahati · Northeast India</div>
-    <h1 class="hero-headline">The Untold<br><em>NORTHEAST.</em></h1>
-    <p class="hero-body">Real places. Real stories. Curated trips built on personal experience — for people who want to discover Northeast India, and for Northeast Indians who want to see the world.</p>
-    <div class="hero-actions">
-      <a href="#stories" class="btn-primary">Read the Stories</a>
-      <a href="#newsletter" class="btn-ghost">Join the Newsletter</a>
-    </div>
+
+  <!-- Background carousel -->
+  <div class="hero-carousel" id="heroCarousel">
+    <div class="hero-slide active" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951956/meghalaya-2_a9dyal.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951950/meghalaya-3_fkkvxw.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951950/assam-2_mdr5y3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951947/meghalaya-4_tcdg5z.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/arunachal-2_t6pgu3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/arunachal-3_ux2wpa.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/assam-3_cphzo3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951945/arunachal-1_umzs7y.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/meghalaya-5_xau3sl.jpg')"></div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-featured">
-      <div class="hero-featured-img">
-        <div class="hero-featured-label">
-          <div class="featured-region">Tinsukia · Upper Assam</div>
-          <div class="featured-title">Maguri Beel: The World-Class Wonder I Almost Took for Granted</div>
-        </div>
-      </div>
-      <div class="hero-featured-body">
-        <p class="hero-featured-excerpt">"Growing up in Bordoloi Nagar, I didn't know the word wetland. I just knew there was a place ten minutes from home where the world went quiet."</p>
-        <a href="maguri-beel/" class="hero-featured-link">Read the story</a>
-      </div>
-    </div>
+  <div class="hero-tag">◆ &nbsp; Built in Guwahati · Northeast India</div>
+
+  <h1 class="hero-headline">The Untold<br><em>Northeast.</em></h1>
+
+  <p class="hero-quote">Every other platform tells you Tawang has a monastery. We tell you to cross Sela Pass before 10am, what the monks eat for breakfast, and that the ATM in Tawang is usually empty — because we've been there.</p>
+
+  <p class="hero-sub">Real stories · Real routes · AI itineraries built on personal field knowledge</p>
+
+  <div class="hero-actions">
+    <a href="#what" class="btn-primary">Read the Stories</a>
+    <a href="itinerary-builder/" class="btn-ghost">Build my Itinerary</a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <div class="hero-scroll-label">Scroll</div>
   </div>
 </section>
 
@@ -724,7 +680,6 @@ footer {
     <div class="ticker-item"><span>◆</span>Gurudongmar · North Sikkim</div>
     <div class="ticker-item"><span>◆</span>Stilwell Road · 1942</div>
     <div class="ticker-item"><span>◆</span>Majuli · Largest River Island</div>
-    <!-- duplicate -->
     <div class="ticker-item"><span>◆</span>Maguri Beel · River Dolphins</div>
     <div class="ticker-item"><span>◆</span>Mechuka · Hidden Valley</div>
     <div class="ticker-item"><span>◆</span>Dawki · Crystal Waters</div>
@@ -738,69 +693,41 @@ footer {
   </div>
 </div>
 
-<!-- STORIES -->
-<div class="section-wrap stories-section reveal" id="stories">
-  <div class="section-header">
-    <div>
-      <div class="section-label">Field Notes</div>
-      <h2 class="section-title">Stories from <em>the ground</em></h2>
-    </div>
-    <a href="#" class="btn-ghost">All stories</a>
-  </div>
-  <div class="stories-grid">
-    <div class="story-card">
-      <div class="story-card-img"><div class="story-card-img-bg"></div></div>
-      <div class="story-card-body">
-        <div class="story-card-region">Tinsukia · Upper Assam</div>
-        <h3 class="story-card-title">Maguri Beel: The World-Class Wonder I Almost Took for Granted</h3>
-        <p class="story-card-excerpt">Growing up in Bordoloi Nagar, it was just the place you went when you needed to breathe.</p>
-        <a href="maguri-beel/" class="story-card-link">Read</a>
-      </div>
-    </div>
-   <div class="story-card">
-  <div class="story-card-img"><div class="story-card-img-bg"></div></div>
-  <div class="story-card-body">
-    <div class="story-card-region">Anini · Upper Dibang Valley · Arunachal</div>
-    <h3 class="story-card-title">The Valley That Carved Its Name Into the Mountain</h3>
-    <p class="story-card-excerpt">Growing up between Anini and Roing — a father who stayed, a monsoon that cost something, and a river where you jumped off rocks on Saturdays.</p>
-    <a href="anini-the-unseen-valley/" class="story-card-link">Read</a>
-  </div>
-</div>
-    </div>
-    <div class="story-card">
-      <div class="story-card-img"><div class="story-card-img-bg"></div></div>
-      <div class="story-card-body">
-        <div class="story-card-region">Changlang · Arunachal</div>
-        <h3 class="story-card-title">Stilwell Road: The Road That Couldn't Be Built</h3>
-        <p class="story-card-excerpt">1,726 kilometres of jungle, monsoon, and will. Most of it swallowed back by the forest.</p>
-        <a href="#" class="story-card-link">Coming soon</a>
-      </div>
-    </div>
-  </div>
+<!-- WHAT IS INCITETALES -->
+<div class="what-section reveal" id="what">
+  <div class="what-label">What is Incitetales</div>
+  <p class="what-text">Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no honest digital presence. We're building the first trusted voice for Northeast India travel — <strong>one story at a time, one itinerary at a time.</strong></p>
 </div>
 
-<!-- MANIFESTO -->
-<div class="manifesto reveal">
-  <div class="manifesto-label">Why Incitetales</div>
-  <p class="manifesto-text">Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no honest digital presence. We're fixing that — one story, one trip, one illustrated print at a time.</p>
+<!-- BRIDGE — what is incitetales → itinerary builder -->
+<div class="bridge reveal">
+  <div class="bridge-left">
+    <div class="bridge-label">◆ &nbsp; The tool</div>
+    <h2 class="bridge-title">Turn the story into<br><em>your trip.</em></h2>
+    <p class="bridge-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with real transport, permits, stays, and the spots only locals know.</p>
+  </div>
+  <div class="bridge-right">
+    <a href="itinerary-builder/" class="btn-bridge">Build my Itinerary →</a>
+  </div>
 </div>
 
 <!-- NEWSLETTER -->
 <div class="newsletter reveal" id="newsletter">
   <div class="newsletter-label">◆ &nbsp; One story, every week</div>
-  <h2 class="newsletter-title">The world learns<br><strong>what NORTHEAST is.</strong></h2>
+  <h2 class="newsletter-title">The world learns<br><strong>what Northeast is.</strong></h2>
   <p class="newsletter-sub">New stories, trip guides, and illustrated prints — in your inbox. No algorithms. Just Northeast India.</p>
   <div class="newsletter-form">
     <input type="email" class="newsletter-input" placeholder="your@email.com">
     <button class="newsletter-btn">Subscribe</button>
   </div>
 </div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
       <div class="footer-logo">Incite<span>tales</span></div>
-      <p class="footer-about">The untold stories of Northeast India. Curated trips built on personal experience. Illustrated prints from the field. Built in Guwahati.</p>
+      <p class="footer-about">The untold stories of Northeast India. Curated trips built on personal experience. Built in Guwahati.</p>
       <div class="footer-social">incitetales.com · @incitetales</div>
     </div>
     <div class="footer-col">
@@ -814,19 +741,20 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <div class="footer-col-title">Trips</div>
+      <div class="footer-col-title">Plan a Trip</div>
       <ul>
+        <li><a href="itinerary-builder/">Itinerary Builder</a></li>
+        <li><a href="local-experience/">Find Your Northeast</a></li>
         <li><a href="discover-ne/">Discover Northeast</a></li>
         <li><a href="explore-nearby/">Explore Nearby</a></li>
-        <li><a href="itinerary-builder/">Itinerary Builder</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">About</div>
       <ul>
         <li><a href="#">Why Incitetales</a></li>
-        <li><a href="#">For Operators</a></li>
-        <li><a href="#"><span class="__cf_email__" data-cfemail="1f777a7373705f76717c766b7a6b7e737a6c317c7072">[email&#160;protected]</span></a></li>
+        <li><a href="merch/">Merch</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#3a525f5656557a535459534e5f4e5b565f4914595557"><span class="__cf_email__" data-cfemail="8ae2efe6e6e5cae3e4e9e3feeffeebe6eff9a4e9e5e7">[email&#160;protected]</span></a></li>
         <li><a href="#">Instagram</a></li>
       </ul>
     </div>
@@ -837,26 +765,44 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+// Hero carousel — auto-play every 5 seconds
+(function() {
+  const slides = document.querySelectorAll('.hero-slide');
+  if (!slides.length) return;
+  let current = 0;
+  let timer;
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  function next() { goTo(current + 1); }
+  function start() { timer = setInterval(next, 5000); }
+  function stop()  { clearInterval(timer); }
+
+  // Preload remaining images after first loads
+  window.addEventListener('load', () => {
+    slides.forEach((slide, i) => {
+      if (i === 0) return;
+      const url = slide.style.backgroundImage.replace(/url\(['"]?|['"]?\)/g, '');
+      const img = new Image();
+      img.src = url;
+    });
+  });
+
+  // Pause on hover
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+  }
+
+  start();
+})();
+</script><script>
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.06 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Nav scroll
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.style.boxShadow = window.scrollY > 40
-    ? '0 2px 20px rgba(28,24,20,0.08)'
-    : 'none';
-});
-</script>
-</body>
-</html>
+  entries.forEach(e 
