@@ -82,7 +82,7 @@ body::before {
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
   opacity: 0.5;
 }
 
@@ -582,8 +582,9 @@ footer {
 
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
 }
 .reveal.visible {
   opacity: 1;
@@ -656,7 +657,7 @@ footer {
   <p class="hero-sub">Real stories · Real routes · AI itineraries built on personal field knowledge</p>
 
   <div class="hero-actions">
-    <a href="#what" class="btn-primary">Read the Stories</a>
+    <a href="#" class="btn-primary" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'});return false;">Read the Stories</a>
     <a href="itinerary-builder/" class="btn-ghost">Build my Itinerary</a>
   </div>
 
@@ -693,7 +694,7 @@ footer {
 </div>
 
 <!-- WHAT IS INCITETALES -->
-<div class="what-section reveal" id="what">
+<div class="what-section reveal" id="about">
   <div class="what-label">What is Incitetales</div>
   <p class="what-text">Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no honest digital presence. We're building the first trusted voice for Northeast India travel — <strong>one story at a time, one itinerary at a time.</strong></p>
 </div>
@@ -765,32 +766,30 @@ footer {
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
-// Hero carousel — auto-play every 5 seconds
-(function() {
+// Hero carousel
+document.addEventListener('DOMContentLoaded', function() {
   const slides = document.querySelectorAll('.hero-slide');
   if (!slides.length) return;
-  let current = 0;
-  let timer;
 
-  function goTo(index) {
+  let current = 0;
+  let timer = null;
+
+  function goTo(n) {
     slides[current].classList.remove('active');
-    current = (index + slides.length) % slides.length;
+    current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
   }
 
   function next() { goTo(current + 1); }
-  function start() { timer = setInterval(next, 5000); }
-  function stop()  { clearInterval(timer); }
 
-  // Preload remaining images after first loads
-  window.addEventListener('load', () => {
-    slides.forEach((slide, i) => {
-      if (i === 0) return;
-      const url = slide.style.backgroundImage.replace(/url\(['"]?|['"]?\)/g, '');
-      const img = new Image();
-      img.src = url;
-    });
-  });
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
 
   // Pause on hover
   const hero = document.querySelector('.hero');
@@ -799,8 +798,839 @@ footer {
     hero.addEventListener('mouseleave', start);
   }
 
+  // Preload images
+  slides.forEach(function(slide, i) {
+    if (i === 0) return;
+    var bg = slide.style.backgroundImage;
+    var url = bg.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    if (url) { var img = new Image(); img.src = url; }
+  });
+
+  // Start
   start();
-})();
+});
+</script><script>
+// Scroll reveal — with fallback
+const revealEls = document.querySelectorAll('.reveal');
+if (!('IntersectionObserver' in window)) {
+  revealEls.forEach(el => el.classList.add('visible'));
+} else {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+}e="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Incitetales — The Untold Northeast</title>
+<meta name="description" content="Real stories. Real routes. AI itineraries built on personal field knowledge of Northeast India — by someone who grew up here.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #ffffff;
+  --bg2:        #fffdf5;
+  --bg3:        #fdf8e8;
+  --ink:        #1c1814;
+  --ink2:       #3a342c;
+  --ink3:       #6a6058;
+  --terra:      #8b4a2a;
+  --terra-dim:  #b87a58;
+  --terra-pale: #fff8e8;
+  --forest:     #2a5c48;
+  --forest-dim: #4a8c70;
+  --forest-pale:#d8ede5;
+  --yellow:     #f5c842;
+  --yellow-dim: #f5e090;
+  --yellow-pale:#fffbe8;
+  --border:     #ede8d8;
+  --border2:    #e0d8c4;
+  --cream:      #ffffff;
+  --maguri-image: url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773693474/849484299_Maguri_Beel_Tinsukia1_1_z0krti.webp');
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── HERO CAROUSEL ── */
+.hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* Mild tint — text stays readable, image shows clearly */
+.hero-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(28,24,20,0.55) 0%,
+      rgba(28,24,20,0.38) 40%,
+      rgba(28,24,20,0.52) 100%
+    );
+}
+
+/* subtle paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* ── NAV — centered logo only ── */
+nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 48px;
+  background: transparent;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-logo span {
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 0 5px;
+}
+
+/* ── HERO — full dark, centered ── */
+.hero {
+  background: var(--ink);
+  min-height: 100vh;
+  /* carousel images render behind all hero content via z-index */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 48px 80px;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 60%, rgba(42,92,72,0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(139,74,42,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.1s forwards;
+}
+
+.hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.25s forwards;
+}
+.hero-headline em {
+  font-style: italic;
+  color: var(--yellow);
+}
+
+.hero-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-style: italic;
+  color: rgba(245,240,232,0.55);
+  line-height: 1.75;
+  max-width: 580px;
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.4s forwards;
+}
+.hero-quote::before { content: '\201C'; color: var(--yellow); }
+.hero-quote::after  { content: '\201D'; color: var(--yellow); }
+
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.3);
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.55s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--yellow-dim); transform: translateY(-1px); }
+
+.btn-ghost {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  text-decoration: none;
+  border: 1px solid rgba(245,240,232,0.2);
+  padding: 13px 28px;
+  transition: color 0.2s, border-color 0.2s;
+  display: inline-block;
+}
+.btn-ghost:hover { color: rgba(245,240,232,0.85); border-color: rgba(245,240,232,0.4); }
+
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+  z-index: 3;
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(245,200,66,0.6), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+.hero-scroll-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.25);
+}
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--yellow);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  animation: ticker 35s linear infinite;
+}
+.ticker-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 0 28px;
+  border-right: 1px solid rgba(28,24,20,0.15);
+  opacity: 0.75;
+}
+.ticker-item span { color: var(--terra); margin-right: 8px; opacity: 1; }
+
+/* ── WHAT IS INCITETALES ── */
+.what-section {
+  padding: 80px 48px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.what-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.what-label::before,
+.what-label::after {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.what-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink2);
+  line-height: 1.65;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.what-text strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── BRIDGE — stories → itinerary ── */
+.bridge {
+  background: var(--ink);
+  padding: 60px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  border-top: 1px solid rgba(245,240,232,0.06);
+}
+
+.bridge-left {}
+
+.bridge-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bridge-label::before {
+  content: '';
+  width: 16px;
+  height: 2px;
+  background: var(--yellow);
+}
+
+.bridge-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.bridge-title em { font-style: italic; color: var(--yellow); }
+
+.bridge-sub {
+  font-size: 14px;
+  color: rgba(245,240,232,0.5);
+  max-width: 480px;
+  line-height: 1.65;
+}
+
+.bridge-right {
+  flex-shrink: 0;
+}
+
+.btn-bridge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+  white-space: nowrap;
+}
+.btn-bridge:hover { background: var(--yellow-dim); transform: translateY(-1px); }
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  background: var(--forest);
+  padding: 80px 48px;
+  text-align: center;
+}
+
+.newsletter-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  margin-bottom: 20px;
+}
+
+.newsletter-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--bg);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.newsletter-title strong {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.newsletter-sub {
+  font-size: 14px;
+  color: rgba(245,240,232,0.55);
+  margin-bottom: 32px;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  background: rgba(245,240,232,0.08);
+  border: 1px solid rgba(245,240,232,0.2);
+  border-right: none;
+  padding: 13px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--bg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-input::placeholder { color: rgba(245,240,232,0.3); }
+.newsletter-input:focus { border-color: rgba(245,240,232,0.5); }
+
+.newsletter-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  color: var(--ink);
+  border: none;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.newsletter-btn:hover { background: var(--yellow-dim); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 48px 48px 28px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.footer-logo span { color: var(--terra); }
+
+.footer-about {
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.footer-social {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.15em;
+  color: var(--terra);
+  text-transform: uppercase;
+}
+
+.footer-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer-col ul a {
+  font-size: 13px;
+  color: var(--ink3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--terra); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  color: var(--ink3);
+  text-transform: uppercase;
+}
+
+.footer-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink3);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-logo { font-size: 18px; }
+
+  .hero { padding: 100px 24px 72px; min-height: 100svh; }
+  .hero-headline { font-size: clamp(40px, 10vw, 64px); }
+  .hero-quote { font-size: 15px; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 14px 20px; }
+
+  .what-section { padding: 56px 24px; }
+  .what-text { font-size: 18px; }
+
+  .bridge { flex-direction: column; padding: 48px 24px; text-align: center; gap: 24px; }
+  .bridge-label { justify-content: center; }
+  .bridge-sub { margin: 0 auto; }
+  .btn-bridge { width: 100%; text-align: center; }
+
+  .newsletter { padding: 56px 24px; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-input { border-right: 1px solid rgba(245,240,232,0.2); border-bottom: none; }
+  .newsletter-btn { padding: 13px; }
+
+  footer { padding: 40px 24px 24px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV — centered logo, sits over dark hero -->
+<nav>
+  <a href="/" class="nav-logo">Incite<span>tales</span></a>
+</nav>
+
+<!-- HERO — full dark, centered -->
+<section class="hero">
+
+  <!-- Background carousel -->
+  <div class="hero-carousel" id="heroCarousel">
+    <div class="hero-slide active" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951956/meghalaya-2_a9dyal.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951950/meghalaya-3_fkkvxw.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951950/assam-2_mdr5y3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951947/meghalaya-4_tcdg5z.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/arunachal-2_t6pgu3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/arunachal-3_ux2wpa.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/assam-3_cphzo3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951945/arunachal-1_umzs7y.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/w_1600,q_auto,f_auto/v1773951946/meghalaya-5_xau3sl.jpg')"></div>
+  </div>
+
+  <div class="hero-tag">◆ &nbsp; Built in Guwahati · Northeast India</div>
+
+  <h1 class="hero-headline">The Untold<br><em>Northeast.</em></h1>
+
+  <p class="hero-quote">Every other platform tells you Tawang has a monastery. We tell you to cross Sela Pass before 10am, what the monks eat for breakfast, and that the ATM in Tawang is usually empty — because we've been there.</p>
+
+  <p class="hero-sub">Real stories · Real routes · AI itineraries built on personal field knowledge</p>
+
+  <div class="hero-actions">
+    <a href="#" class="btn-primary" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'});return false;">Read the Stories</a>
+    <a href="itinerary-builder/" class="btn-ghost">Build my Itinerary</a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <div class="hero-scroll-label">Scroll</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item"><span>◆</span>Maguri Beel · River Dolphins</div>
+    <div class="ticker-item"><span>◆</span>Mechuka · Hidden Valley</div>
+    <div class="ticker-item"><span>◆</span>Dawki · Crystal Waters</div>
+    <div class="ticker-item"><span>◆</span>Dzukou Valley · Nagaland</div>
+    <div class="ticker-item"><span>◆</span>Darjeeling · Sunrise at Tiger Hill</div>
+    <div class="ticker-item"><span>◆</span>Dibang Valley · Arunachal</div>
+    <div class="ticker-item"><span>◆</span>Aizawl · Mizoram</div>
+    <div class="ticker-item"><span>◆</span>Gurudongmar · North Sikkim</div>
+    <div class="ticker-item"><span>◆</span>Stilwell Road · 1942</div>
+    <div class="ticker-item"><span>◆</span>Majuli · Largest River Island</div>
+    <div class="ticker-item"><span>◆</span>Maguri Beel · River Dolphins</div>
+    <div class="ticker-item"><span>◆</span>Mechuka · Hidden Valley</div>
+    <div class="ticker-item"><span>◆</span>Dawki · Crystal Waters</div>
+    <div class="ticker-item"><span>◆</span>Dzukou Valley · Nagaland</div>
+    <div class="ticker-item"><span>◆</span>Darjeeling · Sunrise at Tiger Hill</div>
+    <div class="ticker-item"><span>◆</span>Dibang Valley · Arunachal</div>
+    <div class="ticker-item"><span>◆</span>Aizawl · Mizoram</div>
+    <div class="ticker-item"><span>◆</span>Gurudongmar · North Sikkim</div>
+    <div class="ticker-item"><span>◆</span>Stilwell Road · 1942</div>
+    <div class="ticker-item"><span>◆</span>Majuli · Largest River Island</div>
+  </div>
+</div>
+
+<!-- WHAT IS INCITETALES -->
+<div class="what-section reveal" id="about">
+  <div class="what-label">What is Incitetales</div>
+  <p class="what-text">Northeast India has <strong>more biodiversity, more history, and more living culture</strong> than almost anywhere on earth. It also has almost no honest digital presence. We're building the first trusted voice for Northeast India travel — <strong>one story at a time, one itinerary at a time.</strong></p>
+</div>
+
+<!-- BRIDGE — what is incitetales → itinerary builder -->
+<div class="bridge reveal">
+  <div class="bridge-left">
+    <div class="bridge-label">◆ &nbsp; The tool</div>
+    <h2 class="bridge-title">Turn the story into<br><em>your trip.</em></h2>
+    <p class="bridge-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with real transport, permits, stays, and the spots only locals know.</p>
+  </div>
+  <div class="bridge-right">
+    <a href="itinerary-builder/" class="btn-bridge">Build my Itinerary →</a>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter reveal" id="newsletter">
+  <div class="newsletter-label">◆ &nbsp; One story, every week</div>
+  <h2 class="newsletter-title">The world learns<br><strong>what Northeast is.</strong></h2>
+  <p class="newsletter-sub">New stories, trip guides, and illustrated prints — in your inbox. No algorithms. Just Northeast India.</p>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" placeholder="your@email.com">
+    <button class="newsletter-btn">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Incite<span>tales</span></div>
+      <p class="footer-about">The untold stories of Northeast India. Curated trips built on personal experience. Built in Guwahati.</p>
+      <div class="footer-social">incitetales.com · @incitetales</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Stories</div>
+      <ul>
+        <li><a href="maguri-beel/">Maguri Beel</a></li>
+        <li><a href="anini-the-unseen-valley/">Anini — The Unseen Valley</a></li>
+        <li><a href="#">Stilwell Road</a></li>
+        <li><a href="#">Majuli Island</a></li>
+        <li><a href="#">All Stories →</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Plan a Trip</div>
+      <ul>
+        <li><a href="itinerary-builder/">Itinerary Builder</a></li>
+        <li><a href="local-experience/">Find Your Northeast</a></li>
+        <li><a href="discover-ne/">Discover Northeast</a></li>
+        <li><a href="explore-nearby/">Explore Nearby</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">About</div>
+      <ul>
+        <li><a href="#">Why Incitetales</a></li>
+        <li><a href="merch/">Merch</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#3a525f5656557a535459534e5f4e5b565f4914595557"><span class="__cf_email__" data-cfemail="8ae2efe6e6e5cae3e4e9e3feeffeebe6eff9a4e9e5e7">[email&#160;protected]</span></a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Incitetales · Guwahati, Assam</span>
+    <span class="footer-tagline">"One story. Every week."</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+// Hero carousel
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.hero-slide');
+  if (!slides.length) return;
+
+  let current = 0;
+  let timer = null;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  function next() { goTo(current + 1); }
+
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  // Pause on hover
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+  }
+
+  // Preload images
+  slides.forEach(function(slide, i) {
+    if (i === 0) return;
+    var bg = slide.style.backgroundImage;
+    var url = bg.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    if (url) { var img = new Image(); img.src = url; }
+  });
+
+  // Start
+  start();
+});
 </script><script>
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
