@@ -1269,6 +1269,131 @@ let engineReady = false;
 engine.load().then(() => { engineReady = true; });
 
 // Stores matched insights for the current itinerary
+
+// ── DESTINATION GROUPS ──────────────────────────────────────
+const destinationGroups = [
+  { label: "✨ Quick Picks", options: [
+    { value: "meghalaya_3_5", name: "Meghalaya Escape (3–5 days)" },
+    { value: "tawang_5_7",    name: "Tawang Adventure (5–7 days)" },
+    { value: "kaziranga_majuli", name: "Kaziranga + Majuli (4–6 days)" },
+    { value: "shillong_cherrapunji", name: "Shillong + Cherrapunji (3 days)" }
+  ]},
+  { label: "🎯 By Experience", options: [
+    { value: "peaceful",   name: "Peaceful & Scenic" },
+    { value: "adventure",  name: "Adventure & Trek" },
+    { value: "waterfalls", name: "Waterfalls & Nature" },
+    { value: "culture",    name: "Culture & Heritage" }
+  ]},
+  { label: "📍 By State", options: [
+    { value: "assam",       name: "Assam" },
+    { value: "meghalaya",   name: "Meghalaya" },
+    { value: "arunachal",   name: "Arunachal Pradesh" },
+    { value: "nagaland",    name: "Nagaland" }
+  ]},
+  { label: "🌿 Offbeat Picks", options: [
+    { value: "ziro",     name: "Ziro Valley" },
+    { value: "mechuka",  name: "Mechuka" },
+    { value: "dzukou",   name: "Dzukou Valley" },
+    { value: "majuli",   name: "Majuli" }
+  ]},
+  { label: "🧭 Combo Trips", options: [
+    { value: "assam_meghalaya",      name: "Assam + Meghalaya" },
+    { value: "arunachal_assam",      name: "Arunachal + Assam" },
+    { value: "meghalaya_kaziranga",  name: "Meghalaya + Kaziranga" }
+  ]}
+];
+
+let ideaRequestInFlight = false;
+let interpretedIdea = null;
+let currentItinerary = '';
+
+function populateDestinationDropdown() {
+  const select = document.getElementById('destination');
+  select.innerHTML = '<option value="">Select destination</option>';
+  destinationGroups.forEach(group => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = group.label;
+    group.options.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt.value;
+      o.textContent = opt.name;
+      o.dataset.name = opt.name;
+      optgroup.appendChild(o);
+    });
+    select.appendChild(optgroup);
+  });
+}
+
+function getSelectedDestinationLabel() {
+  const select = document.getElementById('destination');
+  const opt = select.options[select.selectedIndex];
+  return opt ? (opt.dataset.name || opt.textContent || '').trim() : '';
+}
+
+function quickFill(dest, days, group, budget, interests) {
+  document.getElementById('destination').value = '';
+  document.getElementById('custom-destination').value = dest;
+  document.getElementById('days').value = days;
+  document.getElementById('group').value = group;
+  document.getElementById('budget').value = budget;
+  document.getElementById('interests').value = interests;
+  document.getElementById('custom-focus').value = interests;
+}
+
+function titleCase(text) {
+  return text.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+function resetInterpretation() {
+  interpretedIdea = null;
+  document.getElementById('interpretation-card').style.display = 'none';
+  document.getElementById('interpretation-suggestions').style.display = 'none';
+  document.getElementById('interpretation-suggestion-list').innerHTML = '';
+  document.getElementById('insight-selector').classList.remove('visible');
+  selectedInsightIds = new Set();
+  const badge = document.getElementById('ai-only-badge');
+  if (badge) badge.style.display = 'none';
+}
+
+function showInterpretation(result, originalIdea) {
+  interpretedIdea = result;
+  document.getElementById('interpretation-title').textContent = 'Here is what I understood';
+  document.getElementById('interpretation-copy').innerHTML = `
+    <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;">Suggested destination</div>
+    <div style="font-family:'Playfair Display';font-size:20px;margin-bottom:14px;">${result.destination}</div>
+    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
+    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
+    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
+    <div style="margin-top:10px;font-size:12px;color:var(--forest);">✓ Strong match based on your preferences</div>
+  `;
+
+  const suggestionList = document.getElementById('interpretation-suggestion-list');
+  suggestionList.innerHTML = '';
+  const suggestionsWrap = document.getElementById('interpretation-suggestions');
+
+  if (Array.isArray(result.locationSuggestions) && result.locationSuggestions.length) {
+    result.locationSuggestions
+      .filter(l => l.name && l.name !== result.destination)
+      .slice(0, 4)
+      .forEach(location => {
+        const item = document.createElement('div');
+        item.className = 'interpretation-suggestion-item';
+        item.innerHTML = `<div class="interpretation-suggestion-name">${location.name}</div><div class="interpretation-suggestion-why">${location.why}</div>`;
+        suggestionList.appendChild(item);
+      });
+    suggestionsWrap.style.display = suggestionList.children.length ? 'block' : 'none';
+  } else {
+    suggestionsWrap.style.display = 'none';
+  }
+
+  document.getElementById('interpretation-destination').textContent = result.destination;
+  document.getElementById('interpretation-days').textContent = result.days + ' days';
+  document.getElementById('interpretation-group').textContent = titleCase(result.group);
+  document.getElementById('interpretation-budget').textContent = titleCase(result.budget);
+  document.getElementById('interpretation-interests').textContent = titleCase(result.interests);
+  document.getElementById('interpretation-card').style.display = 'block';
+}
+
 let currentInsights = [];   // flat insight entries for selector UI
 // v2.0: currentMatches removed — use currentInsights directly
 
