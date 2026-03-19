@@ -1,15 +1,104 @@
 {
-  "version": "1.1",
+  "version": "2.0",
   "last_updated": "2026-03",
-  "total_entries": 8,
+  "total_entries": 16,
+  "notes": "Unified brain \u2014 insights + destinations. InsightEngine loads all.",
   "entries": [
-    { "id": "maguri-beel-hidden", "type": "hidden-spot", "file": "hidden-spots/maguri-beel.json" },
-    { "id": "dzukou-valley-seasonal", "type": "seasonal", "file": "seasonal/dzukou-valley.json" },
-    { "id": "mising-tribe-cultural", "type": "cultural", "file": "cultural/mising-tribe.json" },
-    { "id": "stilwell-road-offbeat", "type": "offbeat", "file": "offbeat/stilwell-road.json" },
-    { "id": "brahmaputra-river-camp-experience", "type": "experience", "file": "experiences/brahmaputra-river-camp.json" },
-    { "id": "tawang-corridor-route", "type": "route", "file": "offbeat/tawang-corridor.json" },
-    { "id": "shillong-cherrapunji-offbeat", "type": "route", "file": "offbeat/shillong-cherrapunji-offbeat.json" },
-    { "id": "shillong-dawki-shnongpedeng", "type": "route", "file": "offbeat/shillong-dawki-shnongpedeng.json" }
+    {
+      "id": "maguri-beel-hidden",
+      "type": "hidden-spot",
+      "file": "hidden-spots/maguri-beel.json",
+      "state": "Assam"
+    },
+    {
+      "id": "dzukou-valley-seasonal",
+      "type": "seasonal",
+      "file": "seasonal/dzukou-valley.json",
+      "state": "Nagaland"
+    },
+    {
+      "id": "mising-tribe-cultural",
+      "type": "cultural",
+      "file": "cultural/mising-tribe.json",
+      "state": "Assam"
+    },
+    {
+      "id": "stilwell-road-offbeat",
+      "type": "offbeat",
+      "file": "offbeat/stilwell-road.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "brahmaputra-river-camp-experience",
+      "type": "experience",
+      "file": "experiences/brahmaputra-river-camp.json",
+      "state": "Assam"
+    },
+    {
+      "id": "tawang-corridor-route",
+      "type": "route",
+      "file": "offbeat/tawang-corridor.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "shillong-cherrapunji-offbeat",
+      "type": "route",
+      "file": "offbeat/shillong-cherrapunji-offbeat.json",
+      "state": "Meghalaya"
+    },
+    {
+      "id": "shillong-dawki-shnongpedeng",
+      "type": "route",
+      "file": "offbeat/shillong-dawki-shnongpedeng.json",
+      "state": "Meghalaya"
+    },
+    {
+      "id": "dest-west-kameng",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/west-kameng.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-tawang",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/tawang.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-ziro",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/lower-subansiri-ziro.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-mechuka",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/shi-yomi-mechuka.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-dibang-valley",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/dibang-valley.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-changlang",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/changlang.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-east-siang",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/east-siang-pasighat.json",
+      "state": "Arunachal Pradesh"
+    },
+    {
+      "id": "dest-lohit-namsai",
+      "type": "destination",
+      "file": "destinations/arunachal-pradesh/lohit-namsai.json",
+      "state": "Arunachal Pradesh"
+    }
   ]
 }

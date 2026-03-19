@@ -1,0 +1,276 @@
+{
+  "id": "dibang-valley",
+  "state": "Arunachal Pradesh",
+  "districts": [
+    "Lower Dibang Valley",
+    "Upper Dibang Valley"
+  ],
+  "district_headquarters": [
+    "Roing",
+    "Anini"
+  ],
+  "tagline": "The wildest river valley in India",
+  "description": "The Dibang Valley is two districts separated by Mayodia Pass. Lower Dibang Valley (headquarters: Roing) is accessible and has real tourist infrastructure. Upper Dibang Valley (headquarters: Anini) is one of the most remote destinations in India — the Idu Mishmi tribe, the Dibang River, and complete wilderness.",
+  "incitetales_angle": "Most people who say they have been to Dibang Valley mean Roing. Anini is a completely different category of remote.",
+  "destinations": [
+    {
+      "id": "roing",
+      "name": "Roing",
+      "type": "town",
+      "district": "Lower Dibang Valley",
+      "tagline": "Orchids, rivers, and the gateway to Dibang",
+      "description": "Roing is the headquarters of Lower Dibang Valley — a proper town with hotels, ATMs, and supplies. It sits at the confluence of the Roing and Deopani rivers. The surrounding forests are exceptional for orchids and birdwatching. Mehao Wildlife Sanctuary is the main draw.",
+      "what_is_there": [
+        "Mehao Wildlife Sanctuary — 281 sq km, tigers, clouded leopards, red pandas, extraordinary birding",
+        "Deopani River — walk the banks at dawn, excellent birding",
+        "Roing Park — small public garden, good for evening walks",
+        "Bhismaknagar Fort — ruined medieval fort 22km from Roing, significant archaeology",
+        "Sally Lake — 3km from town, migratory birds",
+        "Mayodia Pass — 85km from Roing on the Anini road (see separate entry)"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Abhinav",
+          "type": "hotel",
+          "price_range": "₹800–1,500"
+        },
+        {
+          "name": "Circuit House Roing",
+          "type": "government",
+          "price_range": "₹400–700",
+          "notes": "Book via DC office Lower Dibang Valley"
+        },
+        {
+          "name": "Mehao Wildlife Sanctuary rest house",
+          "type": "forest",
+          "price_range": "₹300–600",
+          "notes": "Book via Forest Dept"
+        }
+      ],
+      "local_food": [
+        "Idu Mishmi cuisine — pork, bamboo shoot, wild herbs",
+        "Thupka — Tibetan-influenced noodle soup",
+        "Fresh fish from Deopani and Dibang rivers",
+        "Local rice beer",
+        "Cheap and good Arunachali meals at local dhabas — ₹80–150 per plate",
+        "Local alcohol — significantly cheaper than Assam or Guwahati"
+      ],
+      "local_tips": [
+        "Last ATM before Anini — withdraw enough for 5+ days",
+        "Last reliable fuel — fill completely before heading to Anini",
+        "Deopani river walk at 5:30am — exceptional birdwatching, bring binoculars",
+        "Bhismaknagar fort is understated — one of the most significant medieval ruins in Northeast India",
+        "Ask locally about current road conditions to Anini before departing"
+      ],
+      "hidden_score": 6
+    },
+    {
+      "id": "mayodia-pass",
+      "name": "Mayodia Pass",
+      "type": "mountain-pass",
+      "altitude_m": 2655,
+      "district": "Lower Dibang Valley",
+      "tagline": "On the road to Anini — where the rhododendrons and snow meet",
+      "description": "Mayodia Pass sits on the road between Roing and Anini, at 2,655m. The pass area is known for exceptional birdwatching (including rare species like Ward's trogon and Blyth's tragopan), rhododendron forests in spring, and snow in winter. It is NOT a detour — it is on the route.",
+      "what_is_there": [
+        "Exceptional birdwatching — one of the best birding spots in Arunachal Pradesh",
+        "Rhododendron forest — bloom in March–April",
+        "Snow — November through February",
+        "Dibang River valley views from the top"
+      ],
+      "stays": [
+        {
+          "name": "Forest Rest House Mayodia",
+          "type": "forest",
+          "price_range": "₹300–500",
+          "notes": "Must book in advance via Forest Dept. Cold — bring sleeping bag."
+        }
+      ],
+      "local_food": [
+        "Nothing at pass. Carry food from Roing."
+      ],
+      "local_tips": [
+        "This is ON THE ROUTE Roing → Anini, not a detour",
+        "Birders stay at the forest rest house specifically for the pass birds",
+        "In winter the road over the pass can be blocked by snow — check before travel",
+        "Start from Roing by 7am to cross the pass comfortably and reach Anini before dark"
+      ],
+      "hidden_score": 8
+    },
+    {
+      "id": "anini",
+      "name": "Anini",
+      "type": "town",
+      "district": "Upper Dibang Valley",
+      "altitude_m": 1970,
+      "tagline": "End of the road. Beginning of something else.",
+      "description": "Anini is the headquarters of Upper Dibang Valley — one of the least visited districts in India. The Dibang River here is wide, clear, and flanked by mountains. The Idu Mishmi people have their own language, their own religion (Igu — a form of animism), and their own relationship with the forest. There is almost no tourist infrastructure. That is the entire point.",
+      "what_is_there": [
+        "Dibang River — walk the banks at any time for views and solitude",
+        "Idu Mishmi culture — one of the most isolated and intact tribal cultures in India",
+        "Military presence — the China border creates a particular atmosphere",
+        "Surrounding mountains — peaks visible on clear mornings",
+        "Forest walks — with a local guide, the forests around Anini are extraordinary",
+        "Idu Mishmi Cultural and Literary Society — visit if you want to understand the culture"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Anini",
+          "type": "government",
+          "price_range": "₹400–700",
+          "notes": "Book via DC office Upper Dibang Valley. Best and most reliable option."
+        },
+        {
+          "name": "Basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹300–600",
+          "notes": "Very basic. Carry sleeping bag."
+        }
+      ],
+      "local_food": [
+        "Idu Mishmi home cooking — if invited, accept. Pork, wild herbs, bamboo shoot.",
+        "Circuit House cook prepares basic dal-rice-sabji",
+        "Local rice beer — called 'poka' by Idu Mishmi",
+        "Wild mushrooms and forest greens in season"
+      ],
+      "local_tips": [
+        "No ATM in Anini. Carry all cash from Roing.",
+        "No reliable phone signal. BSNL occasionally. Inform someone before you leave Roing.",
+        "Carry all medicines, torch, extra batteries, warm clothes",
+        "The Dibang River bank at sunrise is among the most beautiful things in this part of India",
+        "Idu Mishmi families are welcoming but private — let them invite you in rather than approaching uninvited",
+        "A local guide from Anini is strongly recommended — they know the forest paths and the right people to meet"
+      ],
+      "hidden_score": 10
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at arunachalilp.com or Arunachal House",
+    "cost": "₹100",
+    "processing_time": "Same day to 1 day",
+    "notes": "Anini and Upper Dibang Valley — additional restricted area regulations may apply near border. Check current status with DC office before travel."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 620,
+      "travel_days": 2,
+      "waypoints": [
+        "Dholla-Sadiya Bridge",
+        "Sadiya",
+        "Roing",
+        "Mayodia Pass",
+        "Hunli",
+        "Anini"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati / Dibrugarh",
+          "end": "Roing",
+          "distance_km": 180,
+          "drive_hours": "5–6 hours from Dibrugarh",
+          "stops": [
+            "Dr. Bhupen Hazarika Setu (Dholla-Sadiya Bridge) — mandatory stop, longest river bridge in India, 9.15km over the Brahmaputra/Lohit",
+            "Sadiya town — lunch, local Assamese food, river ghat",
+            "Banks of Brahmaputra near Sadiya — wide flat empty riverbank unlike anywhere downstream"
+          ],
+          "notes": "From Guwahati: 8–9 hours total. Leave by 4am from Guwahati or take overnight train to Dibrugarh and start from there. Evening in Roing: Deopani River walk, local market, thupka dinner."
+        },
+        {
+          "day": 2,
+          "start": "Roing",
+          "end": "Anini",
+          "distance_km": 150,
+          "drive_hours": "6–8 hours",
+          "stops": [
+            "Mayodia Pass — stop for views, birdwatching, snow (this is ON the route, not a detour)",
+            "Hunli — midpoint, fuel check, brief rest"
+          ],
+          "notes": "Leave Roing by 7am. Road is rough in sections past Mayodia. Reach Anini before dark. Do not attempt this section after 3pm."
+        }
+      ],
+      "nearest_railhead": "Tinsukia (120km from Roing via Sadiya)",
+      "nearest_airport": "Dibrugarh (160km from Roing)"
+    },
+    "from_dibrugarh": {
+      "total_distance_km": 160,
+      "travel_days": 1,
+      "waypoints": [
+        "Tinsukia",
+        "Dholla-Sadiya Bridge",
+        "Sadiya",
+        "Roing"
+      ],
+      "drive_hours": "5–6 hours",
+      "notes": "Standard route from upper Assam to Roing."
+    }
+  },
+  "connectivity": {
+    "roing": "Airtel and BSNL in Roing town.",
+    "mayodia": "No reliable signal.",
+    "anini": "No reliable signal. BSNL very occasional.",
+    "atm": "ATM in Roing only. No ATM in Anini."
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november",
+      "december"
+    ],
+    "good": [
+      "march",
+      "april"
+    ],
+    "birdwatching": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October–December: best overall. Mayodia Pass birdwatching peaks in winter. March–April: rhododendrons at Mayodia. Monsoon: Roing–Anini road frequently blocked."
+  },
+  "budget_level": "budget",
+  "hidden_score": 9,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "roing",
+    "anini",
+    "dibang",
+    "dibang valley",
+    "upper dibang",
+    "lower dibang",
+    "mayodia",
+    "mayodia pass",
+    "mehao",
+    "hunli",
+    "bhismaknagar",
+    "deopani"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november",
+      "december"
+    ],
+    "also_good": [
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

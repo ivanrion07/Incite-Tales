@@ -1,0 +1,100 @@
+{
+  "id": "east-siang-pasighat",
+  "state": "Arunachal Pradesh",
+  "district": "East Siang",
+  "district_headquarters": "Pasighat",
+  "tagline": "Where the Siang becomes the Brahmaputra",
+  "description": "Pasighat is the oldest town in Arunachal Pradesh and sits where the Siang River exits the mountains and becomes the Brahmaputra. The Adi tribe's homeland. Good base for river activities and for reaching Mechuka.",
+  "incitetales_angle": "The Siang at Pasighat, where a mountain river emerges from the gorge into the plains, is one of those sights that changes something in you.",
+  "destinations": [
+    {
+      "id": "pasighat",
+      "name": "Pasighat",
+      "type": "town",
+      "tagline": "The Siang emerging from the Himalayan gorge",
+      "description": "Pasighat is a proper town with infrastructure — hotels, ATMs, fuel. The Siang River here is powerful. The Adi tribal culture is strong. Used as a base for Mechuka drives or Siang river activities.",
+      "what_is_there": [
+        "Siang River — watch from the banks where the mountain river enters the plains",
+        "Daying Ering Wildlife Sanctuary — 190 sq km, gangetic dolphins, river birds",
+        "Pasighat town market — good for Adi handicrafts",
+        "Kekar Monying waterfall — 5km from town"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Siang",
+          "type": "hotel",
+          "price_range": "₹800–2,000"
+        },
+        {
+          "name": "Circuit House Pasighat",
+          "type": "government",
+          "price_range": "₹400–700"
+        }
+      ],
+      "local_food": [
+        "Adi pork dishes — smoked, bamboo shoot, various preparations",
+        "Apong rice beer",
+        "Fresh Siang river fish"
+      ],
+      "local_tips": [
+        "ATM available — withdraw before heading to Mechuka",
+        "Pasighat airport operates occasionally — check IndiGo schedules",
+        "Dawn walk along the Siang bank is excellent — watch the mist clear"
+      ],
+      "hidden_score": 5
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 350,
+      "travel_days": 1,
+      "drive_hours": "9–10 hours",
+      "notes": "Long day. Option: fly Guwahati → Pasighat (when IndiGo operates). Pasighat is a gateway for Mechuka."
+    }
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november",
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 5,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "pasighat",
+    "east siang",
+    "siang",
+    "daying ering",
+    "murkongselek"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november",
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "id": "lohit-namsai",
+  "state": "Arunachal Pradesh",
+  "districts": [
+    "Lohit",
+    "Namsai"
+  ],
+  "tagline": "Parshuram Kund, the Golden Pagoda, and the Lohit River",
+  "description": "The easternmost accessible districts of Arunachal Pradesh. Lohit has Parshuram Kund — a Hindu pilgrimage site on the Lohit River where a January bathing fair draws lakhs of pilgrims. Namsai has the Golden Pagoda — a striking Theravada Buddhist temple built by the Khamti people.",
+  "destinations": [
+    {
+      "id": "parshuram-kund",
+      "name": "Parshuram Kund",
+      "district": "Lohit",
+      "type": "pilgrimage-natural",
+      "tagline": "A Hindu kund where the Lohit cuts through a gorge",
+      "description": "Parshuram Kund is where the Lohit River cuts through a narrow gorge and a natural bathing pool forms. Hindu pilgrimage site — according to legend, Parshuram washed away the sin of killing his mother here. January Makar Sankranti mela draws 50,000+ pilgrims. The site itself, outside the festival, is a peaceful gorge.",
+      "what_is_there": [
+        "The Kund itself — natural pool in a gorge",
+        "January Mela — one of the largest religious fairs in Northeast India",
+        "Lohit River gorge — dramatic",
+        "Brahmapur Fort ruins nearby"
+      ],
+      "stays": [
+        {
+          "name": "PWD Rest House Tezu",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Temporary camps during January mela",
+          "type": "camp",
+          "price_range": "₹200–500"
+        }
+      ],
+      "local_food": [
+        "Mela food stalls in January",
+        "Tezu market for regular meals"
+      ],
+      "local_tips": [
+        "January Mela: arrive a day early, accommodation books out completely",
+        "Outside January the site is peaceful and nearly empty",
+        "Tezu town (35km) is the base — no accommodation at the Kund"
+      ],
+      "hidden_score": 5
+    },
+    {
+      "id": "golden-pagoda-namsai",
+      "name": "Golden Pagoda (Kongmu Kham)",
+      "district": "Namsai",
+      "type": "religious-site",
+      "tagline": "A Theravada Buddhist temple unlike anything else in India",
+      "description": "The Golden Pagoda in Namsai is a Theravada Buddhist monastery complex built by the Khamti people — a Thai-related ethnic group unique to this corner of Arunachal. The architecture is distinctly Southeast Asian — more Myanmar or Thailand than Tibet. Often called the most beautiful monastery in Northeast India.",
+      "what_is_there": [
+        "Golden Pagoda — the main temple, gold-covered, reflecting pool",
+        "Monks in residence — Theravada tradition, different from the Tibetan Buddhism of Tawang",
+        "Khamti village nearby — see traditional weaving",
+        "Evening light is the best time — the gold catches the sunset"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Namsai",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Monastery guest house",
+          "type": "guesthouse",
+          "price_range": "₹300–500",
+          "notes": "Simple, peaceful"
+        }
+      ],
+      "local_food": [
+        "Khamti cuisine — Thai-influenced, rice-based, distinctly different from rest of Arunachal",
+        "Sticky rice preparations",
+        "Fish dishes — Khamti are river people"
+      ],
+      "local_tips": [
+        "Visit in the early morning or evening — midday light is harsh for photos",
+        "Remove footwear before entering the temple",
+        "The Khamti weaving is among the most intricate in Arunachal — buy directly from weavers"
+      ],
+      "hidden_score": 7
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 560,
+      "travel_days": 2,
+      "waypoints": [
+        "Dibrugarh",
+        "Tinsukia",
+        "Tezu (Lohit) or Namsai"
+      ],
+      "notes": "2 days from Guwahati. Dibrugarh is the practical base for this region. Namsai is 50km from Tinsukia — doable as a day trip from Assam."
+    },
+    "from_dibrugarh": {
+      "total_distance_km": 170,
+      "travel_days": 1,
+      "drive_hours": "4–5 hours to Namsai"
+    }
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "festival": [
+      "january"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  },
+  "budget_level": "budget",
+  "hidden_score": 6,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "namsai",
+    "lohit",
+    "tezu",
+    "parshuram kund",
+    "golden pagoda",
+    "wakro",
+    "khamti"
+  ],
+  "incitetales_angle": "The Golden Pagoda in Namsai is Theravada Buddhist — more Myanmar or Thailand than Tibet. One of the most beautiful monastery complexes in Northeast India.",
+  "season": {
+    "best": [
+      "october",
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

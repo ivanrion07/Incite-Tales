@@ -1,0 +1,253 @@
+{
+  "id": "tawang",
+  "state": "Arunachal Pradesh",
+  "district": "Tawang",
+  "district_headquarters": "Tawang",
+  "tagline": "The monastery at the end of the road",
+  "description": "Tawang is the highest district in Arunachal Pradesh and one of the most dramatic destinations in India. The Tawang Monastery — the largest Buddhist monastery in India and second largest in the world — sits at 3,048m overlooking a valley that drops into clouds. The road there through Sela Pass (4,170m) is itself an experience.",
+  "incitetales_angle": "Everyone knows Tawang monastery. Arrive on a weekday before 9am when the monks are doing morning prayers and the tourists haven't arrived. That version of Tawang is unforgettable.",
+  "destinations": [
+    {
+      "id": "sela-pass",
+      "name": "Sela Pass",
+      "type": "mountain-pass",
+      "altitude_m": 4170,
+      "tagline": "4,170m. A frozen lake. A shrine. And clouds below you.",
+      "description": "Sela Pass is the high point on the Tawang road — a Buddhist shrine, a frozen lake (Paradise Lake), and on clear days, a 360° view of Himalayan peaks. Snow present from November through March. The pass is often clouded over by midday — pass through early.",
+      "what_is_there": [
+        "Paradise Lake — a small glacial lake, often frozen Nov–Mar",
+        "War Memorial — for the 1962 Indo-China war, small but moving",
+        "Buddhist shrine and prayer flags",
+        "Snow experience in winter — first snow for many Indian tourists"
+      ],
+      "stays": [],
+      "local_food": [
+        "Hot tea and Maggi from roadside stalls — the only option"
+      ],
+      "local_tips": [
+        "Cross before 10am — clouds roll in fast after that, you'll see nothing",
+        "Carry warm layers even in October — temperature can drop to 0°C at the pass",
+        "Altitude sickness possible — take it slow, don't run around",
+        "The lake is 500m from the road — worth the short walk"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "tawang-town",
+      "name": "Tawang",
+      "type": "town",
+      "altitude_m": 3048,
+      "tagline": "The monastery at the edge of India",
+      "description": "Tawang town is small, cold, and completely dominated by its monastery. The Tawang Chhu valley below, the monastery above, and Bumla Pass (India-China border) 37km further. The town has improved significantly in the last decade — good hotels, decent food, a functioning market.",
+      "what_is_there": [
+        "Tawang Monastery — 17th century, 450 monks, 400+ year old manuscripts, massive golden Buddha. Arrive for morning prayers.",
+        "Urgelling Monastery — birthplace of the 6th Dalai Lama, small, peaceful, 4km from town",
+        "Tawang War Memorial — the most significant 1962 war memorial in India. Attending the evening ceremony (5pm) is deeply moving.",
+        "Shonga-tser Lake (Madhuri Lake) — 35km from town, high altitude lake with mountain reflections. Named after Madhuri Dixit from a 1997 film shot there.",
+        "Nuranang (Jung) Falls — 100m waterfall, 30km from Tawang on the Bomdila road",
+        "Bumla Pass — India-China border at 4,700m. Requires special PAP permit. 37km from Tawang on rough road. Book through a local operator.",
+        "Pt. 4794 — trekking peak above Tawang, full day climb, guide required"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Tawang Inn",
+          "type": "hotel",
+          "price_range": "₹1,500–3,000"
+        },
+        {
+          "name": "Hotel Gakyi Khang-zhang",
+          "type": "hotel",
+          "price_range": "₹2,000–4,000",
+          "notes": "Best views of the valley"
+        },
+        {
+          "name": "Monastery Guest House",
+          "type": "guesthouse",
+          "price_range": "₹500–1,000",
+          "notes": "Basic, inside monastery complex, advance booking needed"
+        },
+        {
+          "name": "homestays in Tawang",
+          "type": "homestay",
+          "price_range": "₹800–1,500 including meals"
+        }
+      ],
+      "local_food": [
+        "Thukpa — noodle soup, the staple here. Order everywhere.",
+        "Butter tea (Po Cha) — salted, yak butter. Acquire the taste.",
+        "Zan — buckwheat porridge, traditional Monpa food",
+        "Khura — buckwheat pancakes with butter and local honey",
+        "Chura Sabji — dried cheese with vegetables",
+        "Local pork and yak meat at small eateries",
+        "Tawang wine — made from local millet, buy from local homes"
+      ],
+      "local_tips": [
+        "Morning prayers at the monastery start around 7am — be there before 8am",
+        "The War Memorial evening ceremony (retreat) at 5pm is worth rearranging your day for",
+        "Bumla Pass needs a separate Protected Area Permit — arrange through any local tour operator in Tawang, 1 day advance",
+        "Madhuri Lake is often windy — go in the morning for calm reflections",
+        "Buy local honey and buckwheat products from monastery stalls — far better than tourist shops",
+        "Tawang is expensive vs Bomdila — stock up before arriving"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "nuranang-falls",
+      "name": "Nuranang Falls (Jung Falls)",
+      "type": "waterfall",
+      "tagline": "100m of cold water with a war story behind it",
+      "description": "Nuranang Falls is a 100m single-drop waterfall about 30km from Tawang on the Bomdila road, near Jung village. The Nuranang River here was the site of a famous last stand by Rifleman Jaswant Singh Rawat during the 1962 war — a small shrine commemorates it near the falls.",
+      "what_is_there": [
+        "100m waterfall — powerful in summer, partially frozen in winter",
+        "Jaswant Singh Rawat Memorial — small shrine, worth reading the story",
+        "Jung village below — Monpa tribal settlement"
+      ],
+      "stays": [],
+      "local_food": [
+        "Nothing at the falls — eat in Tawang or bring food"
+      ],
+      "local_tips": [
+        "Stop here on the way into or out of Tawang — it's on the main road",
+        "In January–February part of the falls freezes — extraordinary to see",
+        "The war memorial story is genuinely moving — read before you visit"
+      ],
+      "hidden_score": 4
+    },
+    {
+      "id": "madhuri-lake",
+      "name": "Madhuri Lake (Shonga-tser Lake)",
+      "type": "lake",
+      "altitude_m": 3700,
+      "tagline": "A Himalayan lake that accidentally became famous from a 1997 Bollywood song",
+      "description": "Shonga-tser Lake is a high altitude lake 35km from Tawang, near the Bumla road. The Himalayan peaks reflect in the water. It was made famous by a song sequence from the film Koyla (1997) with Madhuri Dixit — locals renamed it. The setting is stunning regardless.",
+      "what_is_there": [
+        "High altitude lake with peak reflections on calm mornings",
+        "Rhododendron forests on the approach road (March–April)",
+        "YAK — yaks graze around the lake, particularly photogenic"
+      ],
+      "stays": [],
+      "local_food": [
+        "Roadside stalls near the lake — basic tea and snacks only"
+      ],
+      "local_tips": [
+        "Go in the morning for flat water and peak reflections — afternoons are windy",
+        "The Bumla road passes nearby — combine with a Bumla day if you have the PAP permit",
+        "October is the best month — clear skies, snow on peaks, no crowds"
+      ],
+      "hidden_score": 4
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP",
+      "PAP"
+    ],
+    "ilp_notes": "ILP for all non-Arunachal residents. Apply online at arunachalilp.com or at Arunachal House.",
+    "pap_notes": "Protected Area Permit required specifically for Tawang district — additional to ILP. Apply simultaneously. Also required for Bumla Pass visit.",
+    "cost": "ILP ₹100 per person. PAP ₹100 additional.",
+    "processing_time": "1–2 days",
+    "bumla_notes": "Bumla Pass requires a separate permit arranged through a registered local operator in Tawang. Minimum group of 2. Indians only — foreigners cannot visit Bumla."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 500,
+      "travel_days": 2,
+      "waypoints": [
+        "Tezpur",
+        "Bhalukpong",
+        "Bomdila",
+        "Dirang",
+        "Sela Pass",
+        "Tawang"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati",
+          "end": "Bomdila or Dirang",
+          "distance_km": 300,
+          "drive_hours": "8–9 hours",
+          "stops": [
+            "Tezpur breakfast",
+            "Bhalukpong ILP check",
+            "Tipi Orchid Centre optional"
+          ],
+          "notes": "Leave Guwahati by 5am. Reach Bomdila by 4–5pm. Overnight Bomdila for acclimatization, or push 30km more to Dirang."
+        },
+        {
+          "day": 2,
+          "start": "Bomdila / Dirang",
+          "end": "Tawang",
+          "distance_km": 180,
+          "drive_hours": "6–7 hours",
+          "stops": [
+            "Dirang hot springs if starting from Bomdila",
+            "Sela Pass (cross before 10am)",
+            "Nuranang Falls on descent"
+          ],
+          "notes": "Critical: cross Sela Pass by 10am before clouds. Road is good but winding. Reach Tawang by 2–3pm."
+        }
+      ],
+      "nearest_railhead": "Tezpur (280km from Tawang)",
+      "nearest_airport": "Tezpur Airport or Guwahati"
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL works in Tawang town. Airtel/Jio patchy. No signal between Sela Pass and Tawang in many stretches.",
+    "internet": "Very limited. Hotel WiFi in Tawang unreliable.",
+    "atm": "One ATM in Tawang — often empty. Carry sufficient cash from Guwahati or Tezpur."
+  },
+  "best_season": {
+    "peak": [
+      "march",
+      "april",
+      "october",
+      "november"
+    ],
+    "good": [
+      "may",
+      "september"
+    ],
+    "snow_season": [
+      "december",
+      "january",
+      "february"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "March–April: rhododendrons, clear skies. October: best month overall — post monsoon clarity, no crowds, all roads open. Winter: snow possible at Sela Pass, beautiful but cold. Monsoon: Sela Pass frequently closed by landslides."
+  },
+  "budget_level": "mid-range",
+  "hidden_score": 3,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "tawang",
+    "sela pass",
+    "sela",
+    "madhuri lake",
+    "nuranang",
+    "bumla",
+    "tawang monastery",
+    "tawang district",
+    "west kameng"
+  ],
+  "season": {
+    "best": [
+      "march",
+      "april",
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

@@ -1264,12 +1264,13 @@ nav {
 // ─────────────────────────────────────────────────────────────
 // INSIGHT ENGINE — init
 // ─────────────────────────────────────────────────────────────
-const engine = new InsightEngine('/data/insights');
+const engine = new InsightEngine('/data/insights', '/data/destinations');
 let engineReady = false;
 engine.load().then(() => { engineReady = true; });
 
 // Stores matched insights for the current itinerary
-let currentInsights = [];
+let currentInsights = [];   // flat insight entries for selector UI
+// v2.0: currentMatches removed — use currentInsights directly
 
 // ─────────────────────────────────────────────────────────────
 // INTENT PARSER
@@ -1277,118 +1278,23 @@ let currentInsights = [];
 // Returns: { filters, matchedInsights, contextBlock }
 // ─────────────────────────────────────────────────────────────
 function parseIntent(ideaText, destination) {
-  if (!engineReady || !ideaText) return { filters: {}, matchedInsights: [], contextBlock: '' };
-
-  const text = ideaText.toLowerCase();
-  const combined = `${text} ${(destination || '').toLowerCase()}`;
-
-  // ── STEP 1: Geographic scope matching (district/town level) ──
-  // Each schema entry has geographic_scope[] — exact towns and districts it covers.
-  // We match the user's query against these directly.
-  // This is strict: "upper dibang" will NOT match a Tawang entry.
-  const scopeMatches = engine.insights.filter(entry => {
-    const scope = entry.geographic_scope || [];
-    return scope.some(keyword => combined.includes(keyword.toLowerCase()));
-  });
-
-  // ── STEP 2: Intent detection ──
-  // Only applied ON TOP of scope matches — never used to broaden geography
-  const intentKeywords = {
-    offbeat:    ['offbeat', 'hidden', 'secret', 'unknown', 'undiscovered', 'off the beaten', 'no tourist', 'less crowd', 'avoid crowd'],
-    camping:    ['camping', 'camp', 'tent', 'riverside camp', 'outdoor stay'],
-    homestay:   ['homestay', 'home stay', 'local stay', 'family stay', 'village stay'],
-    trekking:   ['trek', 'trekking', 'hike', 'hiking', 'trail'],
-    wildlife:   ['wildlife', 'animals', 'safari', 'birds', 'birdwatch', 'dolphin'],
-    river:      ['river', 'waterfall', 'water', 'lake', 'crystal'],
-    cultural:   ['culture', 'tribe', 'tribal', 'heritage', 'local life', 'village'],
-    nopermit:   ['no permit', 'permit free', 'without permit', 'no ilp'],
-    detox:      ['digital detox', 'no signal', 'offline', 'disconnect'],
-  };
-
-  const detectedIntents = new Set();
-  for (const [intent, keywords] of Object.entries(intentKeywords)) {
-    if (keywords.some(k => combined.includes(k))) detectedIntents.add(intent);
-  }
-
-  const wantsOffbeat = detectedIntents.has('offbeat');
-
-  // ── STEP 3: Filter scope matches by intent ──
-  let matchedInsights = scopeMatches;
-
-  if (detectedIntents.has('camping'))  matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'camp') || e.tags?.includes('camping'));
-  if (detectedIntents.has('homestay')) matchedInsights = matchedInsights.filter(e => e.stays?.some(s => s.type === 'homestay'));
-  if (detectedIntents.has('nopermit')) matchedInsights = matchedInsights.filter(e => (e.permit_needed ?? e.local_intel?.permit_needed) === false);
-  if (detectedIntents.has('detox'))    matchedInsights = matchedInsights.filter(e => e.connectivity?.mobile_signal === 'none');
-  if (detectedIntents.has('cultural')) matchedInsights = matchedInsights.filter(e => e.type === 'cultural' || e.tags?.some(t => ['tribe','culture','heritage'].includes(t)));
-  if (wantsOffbeat)                    matchedInsights = matchedInsights.filter(e => (e.hidden_score || 0) >= 7);
-
-  // If intent filters wiped everything out, fall back to all scope matches
-  // Better to show geographically correct entries than nothing
-  if (matchedInsights.length === 0 && scopeMatches.length > 0) {
-    matchedInsights = scopeMatches;
-  }
-
-  // ── STEP 4: GEOGRAPHIC GUARD ──
-  // If zero scope matches — we have no verified data for this area.
-  // Do NOT inject. Tell the truth.
-  if (scopeMatches.length === 0) {
-    return { filters: {}, matchedInsights: [], contextBlock: '' };
-  }
-
-  // Sort by hidden_score desc, take top 4
-  matchedInsights = matchedInsights
-    .sort((a, b) => (b.hidden_score || 0) - (a.hidden_score || 0))
-    .slice(0, 4);
-
-  // ── STEP 5: Build context block for Groq prompt ──
-  const contextBlock = `
-VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
-The following have been verified on the ground by the Incitetales team.
-Use this data exactly as provided. Do not substitute with generic information.
-If a location is listed here, include it in the itinerary by name.
-
-${matchedInsights.map((ins, i) => `
-[${i + 1}] ${ins.title}
-Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
-${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
-${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
-${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
-${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
-${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
-${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
-${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
-${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
-${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
-${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
-`).join('\n---\n')}
-
-INSTRUCTIONS:
-- Include these exact locations in the itinerary where geographically logical
-- Use the "what most people miss" detail as the local tip for that day
-- Use recommended stays if available — do not replace with generic hotel names
-- Mention permit requirements explicitly in the permits section
-- The local angle quotes are field notes — reference them naturally, not verbatim
-`;
-
-  return { filters: {}, matchedInsights, contextBlock };
+  if (!engineReady || !ideaText) return { matchedEntries: [], contextBlock: '', hasVerifiedData: false, isAIOnly: true };
+  return engine.buildPromptContext(ideaText, destination, null);
 }
-// ── Selected insights (user-chosen) ──
+
 let selectedInsightIds = new Set();
 
-// ── Render insight selector panel ──
 function updateInsightSelector(matchedInsights) {
   const selector  = document.getElementById('insight-selector');
   const optionsEl = document.getElementById('insight-selector-options');
-  const countEl   = document.getElementById('insight-selector-count');
   const skipLink  = document.getElementById('insight-skip-link');
 
-  if (!matchedInsights.length) {
+  if (!matchedInsights || !matchedInsights.length) {
     selector.classList.remove('visible');
     selectedInsightIds = new Set();
     return;
   }
 
-  // Default: all selected
   selectedInsightIds = new Set(matchedInsights.map(i => i.id));
   optionsEl.innerHTML = '';
 
@@ -1396,22 +1302,18 @@ function updateInsightSelector(matchedInsights) {
     const opt = document.createElement('div');
     opt.className = 'insight-option selected';
     opt.dataset.id = ins.id;
-
     const bestMonths = ins.season?.best?.slice(0,3).join(', ') || '';
-    const stayInfo = ins.stays?.length ? `· ${ins.stays[0].name}` : '';
-    const detail = [ins.region, bestMonths ? `Best: ${bestMonths}` : '', stayInfo]
-      .filter(Boolean).join(' · ');
-
+    const stayName = ins.stays?.[0]?.name || ins.destinations?.[0]?.stays?.[0]?.name || '';
+    const detail = [ins.region || ins.state, bestMonths ? 'Best: '+bestMonths : '', stayName ? '· '+stayName : ''].filter(Boolean).join(' · ');
     opt.innerHTML = `
       <div class="insight-option-check">✓</div>
       <div class="insight-option-body">
         <div class="insight-option-type">${ins.type.replace('-',' ')}</div>
-        <div class="insight-option-title">${ins.title}</div>
+        <div class="insight-option-title">${ins.title || ins.district || ins.name || ''}</div>
         <div class="insight-option-detail">${detail}</div>
       </div>
-      <div class="insight-option-score">${ins.hidden_score}</div>
+      <div class="insight-option-score">${ins.hidden_score || ''}</div>
     `;
-
     opt.addEventListener('click', () => {
       const id = opt.dataset.id;
       if (selectedInsightIds.has(id)) {
@@ -1425,13 +1327,10 @@ function updateInsightSelector(matchedInsights) {
       }
       updateSelectorCount();
     });
-
     optionsEl.appendChild(opt);
   });
 
   updateSelectorCount();
-
-  // Skip link — deselect all and proceed
   skipLink.onclick = () => {
     selectedInsightIds = new Set();
     document.querySelectorAll('.insight-option').forEach(o => {
@@ -1440,7 +1339,6 @@ function updateInsightSelector(matchedInsights) {
     });
     updateSelectorCount();
   };
-
   selector.classList.add('visible');
 }
 
@@ -1448,289 +1346,101 @@ function updateSelectorCount() {
   const countEl = document.getElementById('insight-selector-count');
   const n = selectedInsightIds.size;
   countEl.textContent = n > 0
-    ? `${n} spot${n > 1 ? 's' : ''} selected — will anchor the itinerary`
-    : 'None selected — Groq generates freely';
+    ? n + ' verified spot' + (n > 1 ? 's' : '') + ' selected — will anchor the itinerary'
+    : 'None selected — AI generates freely from its own knowledge';
 }
 
-// ── Build context block from SELECTED insights only ──
 function buildContextFromSelected(allInsights) {
-  const selected = allInsights.filter(i => selectedInsightIds.has(i.id));
-  if (!selected.length) return '';
-
-  return `
-VERIFIED LOCAL KNOWLEDGE FROM INCITETALES DATABASE:
-The following have been verified on the ground by the Incitetales team.
-The user has specifically chosen to include these in their itinerary.
-Use this data exactly as provided. Include these locations by name.
-
-${selected.map((ins, i) => `
-[${i + 1}] ${ins.title}
-Type: ${ins.type} | Region: ${ins.region}, ${ins.state} | Hidden Score: ${ins.hidden_score}/10
-${ins.incitetales_angle ? `Local angle: "${ins.incitetales_angle}"` : ''}
-${ins.season?.best ? `Best months: ${ins.season.best.join(', ')}` : ''}
-${ins.local_intel?.how_to_get ? `Getting there: ${ins.local_intel.how_to_get}` : ''}
-${ins.local_intel?.permit_needed === true ? `⚠ Permit required: ${ins.permit_notes || ins.local_intel?.permit_notes || 'Yes'}` : ''}
-${ins.local_intel?.permit_needed === false ? `✓ No permit needed` : ''}
-${ins.connectivity?.mobile_signal === 'none' ? `📵 No mobile signal — warn travellers` : ''}
-${ins.connectivity?.mobile_signal === 'limited' ? `📶 Limited signal — BSNL most reliable` : ''}
-${ins.what_most_people_miss ? `What most people miss: ${ins.what_most_people_miss}` : ''}
-${ins.stays?.length ? `Recommended stays: ${ins.stays.map(s => `${s.name} (${s.type}${s.price_range ? ', ' + s.price_range : ''})`).join(', ')}` : ''}
-${ins.cultural_notes ? `Cultural notes: ${ins.cultural_notes}` : ''}
-`).join('\n---\n')}
-
-INSTRUCTIONS:
-- Include these exact locations in the itinerary where geographically logical
-- Use the "what most people miss" detail as the local tip for that day
-- Use recommended stays if available — do not replace with generic hotel names
-- Mention permit requirements explicitly in the permits section
-- The local angle quotes are field notes — reference them naturally, not verbatim
-`;
+  if (!allInsights || !allInsights.length) return { contextBlock: '', isAIOnly: true };
+  const result = engine.buildPromptContext(
+    document.getElementById('idea-input').value || '',
+    document.getElementById('custom-destination').value || '',
+    selectedInsightIds
+  );
+  return result;
 }
 
-// ─────────────────────────────────────────────────────────────
-// EXISTING CODE (unchanged except generateItinerary injection)
-// ─────────────────────────────────────────────────────────────
-
-const BREVO_API_KEY = 'YOUR_BREVO_API_KEY_HERE';
-
-const loadingMessages = [
-  'Researching the best routes...',
-  'Checking permit requirements...',
-  'Finding hidden local spots...',
-  'Calculating your budget...',
-  'Building your day-by-day plan...',
-  'Adding local tips and tricks...',
-  'Almost ready...'
-];
-
-const placeImageMap = {
-  Shillong: ["shillong city hills","umiam lake sunrise","police bazaar night"],
-  Cherrapunji: ["nohkalikai falls meghalaya","living root bridge cherrapunji","seven sisters falls"],
-  Dawki: ["umngot river crystal clear boat","dawki river boating","indo bangladesh border river"],
-  Kaziranga: ["kaziranga national park safari","one horned rhino kaziranga","jeep safari assam"],
-  Tawang: ["tawang monastery snow","sela pass arunachal","madhuri lake tawang"],
-  Ziro: ["ziro valley landscape","apatani tribe ziro","ziro rice fields"]
-};
-
-const fallbackImages = ["northeast india mountains","northeast india waterfalls","northeast india scenic landscape"];
-
-function getImagesForPlace(place) {
-  if (!place) return fallbackImages;
-  return placeImageMap[place] || fallbackImages;
-}
-
-function getBestImages(title) {
-  const keys = Object.keys(placeImageMap);
-  for (let key of keys) {
-    if (title.toLowerCase().includes(key.toLowerCase())) return placeImageMap[key];
+function showAIOnlyBadge(show) {
+  let badge = document.getElementById('ai-only-badge');
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.id = 'ai-only-badge';
+    badge.style.cssText = 'display:none;margin-top:12px;padding:10px 14px;background:#fff8ee;border:1px solid #e8c090;border-left:3px solid #d4804a;font-family:DM Mono,monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:#8b4a2a;line-height:1.6;';
+    const selector = document.getElementById('insight-selector');
+    if (selector) selector.insertAdjacentElement('afterend', badge);
   }
-  return fallbackImages;
-}
-
-function escapeSvgText(text) {
-  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-function buildImageUrl(query, width = 1200, height = 800) {
-  const label = query || 'Northeast India';
-  const safeLabel = escapeSvgText(label);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1c1814" /><stop offset="45%" stop-color="#2a5c48" /><stop offset="100%" stop-color="#8b4a2a" /></linearGradient></defs><rect width="100%" height="100%" fill="url(#bg)" /><circle cx="${Math.round(width*0.82)}" cy="${Math.round(height*0.22)}" r="${Math.round(Math.min(width,height)*0.12)}" fill="rgba(245,200,66,0.22)" /><circle cx="${Math.round(width*0.18)}" cy="${Math.round(height*0.78)}" r="${Math.round(Math.min(width,height)*0.16)}" fill="rgba(255,255,255,0.08)" /><text x="${Math.round(width*0.08)}" y="${Math.round(height*0.16)}" fill="#f5c842" font-family="Georgia, serif" font-size="${Math.max(18,Math.round(width*0.028))}" letter-spacing="4">INCITETALES</text><text x="${Math.round(width*0.08)}" y="${Math.round(height*0.70)}" fill="#ffffff" font-family="Georgia, serif" font-size="${Math.max(28,Math.round(width*0.055))}" font-weight="600">${safeLabel}</text></svg>`.trim();
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
-function buildFallbackPlaceholder(width = 1200, height = 800, label = 'Northeast India') {
-  return buildImageUrl(label, width, height);
-}
-
-const destinationGroups = [
-  { label: "✨ Quick Picks", options: [{ value: "meghalaya_3_5", name: "Meghalaya Escape (3–5 days)" },{ value: "tawang_5_7", name: "Tawang Adventure (5–7 days)" },{ value: "kaziranga_majuli", name: "Kaziranga + Majuli (4–6 days)" },{ value: "shillong_cherrapunji", name: "Shillong + Cherrapunji (3 days)" }] },
-  { label: "🎯 By Experience", options: [{ value: "peaceful", name: "Peaceful & Scenic" },{ value: "adventure", name: "Adventure & Trek" },{ value: "waterfalls", name: "Waterfalls & Nature" },{ value: "culture", name: "Culture & Heritage" }] },
-  { label: "📍 By State", options: [{ value: "assam", name: "Assam" },{ value: "meghalaya", name: "Meghalaya" },{ value: "arunachal", name: "Arunachal Pradesh" },{ value: "nagaland", name: "Nagaland" }] },
-  { label: "🌿 Offbeat Picks", options: [{ value: "ziro", name: "Ziro Valley" },{ value: "mechuka", name: "Mechuka" },{ value: "dzukou", name: "Dzukou Valley" },{ value: "majuli", name: "Majuli" }] },
-  { label: "🧭 Combo Trips", options: [{ value: "assam_meghalaya", name: "Assam + Meghalaya" },{ value: "arunachal_assam", name: "Arunachal + Assam" },{ value: "meghalaya_kaziranga", name: "Meghalaya + Kaziranga" }] }
-];
-
-let loadingInterval;
-let currentItinerary = '';
-let ideaRequestInFlight = false;
-let interpretedIdea = null;
-
-function populateDestinationDropdown() {
-  const select = document.getElementById('destination');
-  select.innerHTML = '<option value="">Select destination</option>';
-  destinationGroups.forEach((group) => {
-    const optgroup = document.createElement('optgroup');
-    optgroup.label = group.label;
-    group.options.forEach((optionData) => {
-      const option = document.createElement('option');
-      option.value = optionData.value;
-      option.textContent = optionData.name;
-      option.dataset.name = optionData.name;
-      optgroup.appendChild(option);
-    });
-    select.appendChild(optgroup);
-  });
-}
-
-function getSelectedDestinationLabel() {
-  const select = document.getElementById('destination');
-  const selectedOption = select.options[select.selectedIndex];
-  return selectedOption ? (selectedOption.dataset.name || selectedOption.textContent || '').trim() : '';
-}
-
-function quickFill(dest, days, group, budget, interests) {
-  const destinationSelect = document.getElementById('destination');
-  destinationSelect.value = '';
-  document.getElementById('custom-destination').value = dest;
-  document.getElementById('days').value = days;
-  document.getElementById('group').value = group;
-  document.getElementById('budget').value = budget;
-  document.getElementById('interests').value = interests;
-  document.getElementById('custom-focus').value = interests;
-}
-
-function titleCase(text) {
-  return text.split(' ').filter(Boolean).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-}
-
-function resetInterpretation() {
-  interpretedIdea = null;
-  document.getElementById('interpretation-card').style.display = 'none';
-  document.getElementById('interpretation-suggestions').style.display = 'none';
-  document.getElementById('interpretation-suggestion-list').innerHTML = '';
-  document.getElementById('insight-selector').classList.remove('visible'); selectedInsightIds = new Set();
-}
-
-function showInterpretation(result, originalIdea) {
-  interpretedIdea = result;
-  const interpretationContent = document.getElementById('interpretation-copy');
-  const suggestionsWrap = document.getElementById('interpretation-suggestions');
-  const suggestionList = document.getElementById('interpretation-suggestion-list');
-  document.getElementById('interpretation-title').textContent = 'Here is what I understood';
-  interpretationContent.innerHTML = `
-    <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;">Suggested destination</div>
-    <div style="font-family:'Playfair Display'; font-size:20px; margin-bottom:14px;">${result.destination}</div>
-    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
-    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
-    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
-    <div style="margin-top:10px; font-size:12px; color:var(--forest);">✓ Strong match based on your preferences</div>
-  `;
-  suggestionList.innerHTML = '';
-  if (Array.isArray(result.locationSuggestions) && result.locationSuggestions.length) {
-    result.locationSuggestions.filter((l) => l.name && l.name !== result.destination).slice(0, 4).forEach((location) => {
-      const item = document.createElement('div');
-      item.className = 'interpretation-suggestion-item';
-      item.innerHTML = `<div class="interpretation-suggestion-name">${location.name}</div><div class="interpretation-suggestion-why">${location.why}</div>`;
-      suggestionList.appendChild(item);
-    });
-    suggestionsWrap.style.display = suggestionList.children.length ? 'block' : 'none';
+  if (show) {
+    badge.textContent = '◆ This destination is not yet in our verified database — itinerary generated by AI from general knowledge';
+    badge.style.display = 'block';
   } else {
-    suggestionsWrap.style.display = 'none';
+    badge.style.display = 'none';
   }
-  document.getElementById('interpretation-destination').textContent = result.destination;
-  document.getElementById('interpretation-days').textContent = `${result.days} days`;
-  document.getElementById('interpretation-group').textContent = titleCase(result.group);
-  document.getElementById('interpretation-budget').textContent = titleCase(result.budget);
-  document.getElementById('interpretation-interests').textContent = titleCase(result.interests);
-  document.getElementById('interpretation-card').style.display = 'block';
 }
 
 async function generateFromIdea() {
   const ideaInput = document.getElementById('idea-input');
   const idea = ideaInput.value.trim();
   const btn = document.getElementById('idea-generate-btn');
-
   if (!idea) { alert('Tell us a little about the trip you want first.'); ideaInput.focus(); return; }
   if (ideaRequestInFlight) return;
-
   ideaRequestInFlight = true;
   btn.disabled = true;
   btn.querySelector('span').textContent = 'Turning idea into trip...';
 
-  // Run InsightEngine intent parse immediately on idea text
-  const { matchedInsights } = parseIntent(idea, '');
-  updateInsightSelector(matchedInsights);
-  currentInsights = matchedInsights;
+  const { matchedEntries, isAIOnly } = engine.buildPromptContext(idea, '');
+  currentInsights = matchedEntries || [];
+  updateInsightSelector(currentInsights);
+  showAIOnlyBadge(isAIOnly && idea.length > 5);
 
   const planningPrompt = `You are a Northeast India travel expert.
-
 User idea: "${idea}"
-
-Convert this into structured travel inputs and summarize your interpretation.
-
-Return ONLY JSON:
-
+Convert this into structured travel inputs. Return ONLY JSON:
 {
   "destination": "",
   "days": "5 or 7 or 10 or 14",
   "group": "solo traveller / couple / friend group of 3-5 people / family with children",
-  "budget": "budget (under ₹10,000) / mid-range (₹10,000–₹20,000) / comfortable (₹20,000–₹35,000) / premium (₹35,000+)",
+  "budget": "budget (under ₹10,000) / mid-range (₹10,000-₹20,000) / comfortable (₹20,000-₹35,000) / premium (₹35,000+)",
   "interests": "short phrase describing the real trip focus",
-  "summary": "1 short sentence explaining what you understood",
-  "locationSuggestions": [
-    { "name": "Different destination name", "why": "Why this place fits the user's idea and vibe" }
-  ]
+  "summary": "1 short sentence",
+  "locationSuggestions": [{ "name": "destination", "why": "why it fits" }]
 }
-
-Rules:
-- Destination MUST be specific (e.g. Ziro Valley, Mechuka, Majuli, Dawki)
-- DO NOT limit to dropdown list
-- Interests SHOULD be natural and specific
-- Pick best Northeast location based on idea
-- Default days = 5–7 if not mentioned. For remote destinations (Mechuka, Dibang, Stilwell Road, Tawang) minimum 5 days — travel days count.
-- Return 3 or 4 different locationSuggestions only
-- Each locationSuggestions.why should be practical and specific
-- NEVER suggest combining a remote mountain destination with river camping unless they are geographically adjacent
-- Return raw JSON only`;
+Rules: Destination MUST be specific. Default days 5-7. Remote destinations (Mechuka, Dibang, Tawang) minimum 5 days. Return 3-4 locationSuggestions. Return raw JSON only.`;
 
   try {
     const response = await fetch('https://incitetales-api.incitetales.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate', prompt: planningPrompt })
     });
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content;
-    if (!text) throw new Error('No text in response');
-    const clean = text.replace(/```json|```/g, '').trim();
-    const result = JSON.parse(clean);
+    if (!text) throw new Error('No text');
+    const result = JSON.parse(text.replace(/```json|```/g, '').trim());
 
     document.getElementById('custom-destination').value = result.destination;
-
     const dropdown = document.getElementById('destination');
     let matched = false;
     for (let i = 0; i < dropdown.options.length; i++) {
-      const optionText = (dropdown.options[i].dataset.name || dropdown.options[i].textContent || '').toLowerCase();
-      if (optionText.includes(result.destination.toLowerCase())) {
+      if ((dropdown.options[i].dataset.name || dropdown.options[i].textContent || '').toLowerCase().includes(result.destination.toLowerCase())) {
         dropdown.value = dropdown.options[i].value;
         document.getElementById('custom-destination').value = dropdown.options[i].dataset.name || result.destination;
-        matched = true;
-        break;
+        matched = true; break;
       }
     }
     if (!matched) dropdown.value = '';
-
     document.getElementById('custom-focus').value = result.interests;
-    const focusDropdown = document.getElementById('interests');
-    let focusMatched = false;
-    for (let i = 0; i < focusDropdown.options.length; i++) {
-      if (focusDropdown.options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
-        focusDropdown.value = focusDropdown.options[i].value;
-        focusMatched = true;
-        break;
+    for (let i = 0; i < document.getElementById('interests').options.length; i++) {
+      if (document.getElementById('interests').options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
+        document.getElementById('interests').value = document.getElementById('interests').options[i].value; break;
       }
     }
-    if (!focusMatched) focusDropdown.value = '';
-
     document.getElementById('days').value = String(result.days);
     document.getElementById('group').value = result.group;
     document.getElementById('budget').value = result.budget;
 
-    // Re-run intent parse now that we have the AI destination too
-    const refined = parseIntent(idea, result.destination);
-    currentInsights = refined.matchedInsights;
-    updateInsightSelector(refined.matchedInsights);
-
+    const refined = engine.buildPromptContext(idea, result.destination);
+    currentInsights = refined.matchedEntries || [];
+    updateInsightSelector(currentInsights);
+    showAIOnlyBadge(refined.isAIOnly);
     showInterpretation(result, idea);
   } catch (error) {
     alert('Could not turn that idea into a trip right now. Please try again.');
@@ -1775,15 +1485,16 @@ async function generateItinerary() {
 
   if (!destination) { alert('Tell us where you want to go.'); return; }
 
-  // ── Run InsightEngine if not already run ──
-  if (currentInsights.length === 0 && engineReady) {
-    const parsed = parseIntent(ideaText, destination);
-    currentInsights = parsed.matchedInsights;
+  // ── Run scope match if not already run ──
+  if (!currentInsights.length && engineReady) {
+    const parsed = engine.buildPromptContext(ideaText, destination);
+    currentInsights = parsed.matchedEntries || [];
   }
 
   // ── Build context block from USER-SELECTED insights only ──
-  // If user deselected all (or skipped), contextBlock is empty → Groq generates freely
-  const contextBlock = buildContextFromSelected(currentInsights);
+  const { contextBlock, isAIOnly } = buildContextFromSelected(currentInsights);
+  // Show AI-only badge if no verified data used
+  showAIOnlyBadge(isAIOnly);
 
   const btn = document.getElementById('generate-btn');
   btn.disabled = true;
@@ -1857,9 +1568,10 @@ RULE 1 — TRAVEL DAYS ARE FULL DAYS:
 - Stays must be in the town where the traveller actually ends that day.
 
 RULE 2 — NORTHEAST INDIA ACTUAL ROAD TIMES (use these exactly):
-- Dibrugarh → Anini (Upper Dibang Valley): 450km mountain road = 2 full travel days minimum. Day 1 stay in Roing or Hunli. Day 2 reach Anini.
-- Dibrugarh → Roing: 180km = 5-6 hours. One travel day.
-- Anini → Dibrugarh (return): same as above — 2 full travel days.
+- Dibrugarh → Roing: 180km = 5-6 hours. One travel day. En route stops (do not skip): (1) Dr. Bhupen Hazarika Setu (Dholla-Sadiya Bridge) — longest river bridge in India, dramatic Brahmaputra crossing, mandatory stop for photos and context. (2) Sadiya town — stop for lunch, known for local Assamese/tribal food, river ghats. (3) Banks of Brahmaputra near Sadiya — wide, flat, empty, unlike anywhere downstream. Evening in Roing: Roing Park walk, Deopani River, local thupka dinner, cheap booze at local shops (Roing is significantly cheaper than Guwahati or Dibrugarh for alcohol). Stay at Circuit House or basic guesthouses.
+- Roing → Anini: 150km mountain road = 6-8 hours. This is the road where Mayodia Pass sits — Mayodia Pass is ON THIS ROUTE, not reachable from Dibrugarh directly and NOT a detour from Roing. It is the pass you cross while driving Roing → Anini. Stop at Mayodia for views, snow (in winter), rhododendrons (in spring). Continue to Anini via Hunli.
+- Dibrugarh → Anini total: 2 full travel days. Day 1: Dibrugarh → Roing (with Dholla-Sadiya Bridge + Sadiya stops). Day 2: Roing → Anini (via Mayodia Pass).
+- Anini → Dibrugarh (return): same — 2 full travel days in reverse.
 - Guwahati → Tawang: 500km = 2 full travel days. Day 1 stay Bhalukpong or Bomdila. Day 2 reach Tawang.
 - Guwahati → Mechuka: 550km = 2 full travel days. Day 1 stay Pasighat. Day 2 reach Mechuka.
 - Guwahati → Ziro: 500km = 2 full travel days.
@@ -1923,9 +1635,10 @@ function prefillFromUrl() {
     document.getElementById('idea-input').value = decodeURIComponent(dest);
     // Auto-run intent parse so badge shows immediately
     if (engineReady) {
-      const parsed = parseIntent(decodeURIComponent(dest), decodeURIComponent(dest));
-      currentInsights = parsed.matchedInsights;
-      updateInsightSelector(parsed.matchedInsights);
+      const parsed = engine.buildPromptContext(decodeURIComponent(dest), decodeURIComponent(dest));
+      currentInsights = parsed.matchedEntries || [];
+      updateInsightSelector(currentInsights);
+      showAIOnlyBadge(parsed.isAIOnly);
     } else {
       // Engine still loading — try again in 1s
       setTimeout(() => prefillFromUrl(), 1000);
@@ -1962,9 +1675,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window._intentDebounce = setTimeout(() => {
       const idea = document.getElementById('idea-input').value.trim();
       if (idea.length > 10 && engineReady) {
-        const parsed = parseIntent(idea, '');
-        currentInsights = parsed.matchedInsights;
-        updateInsightSelector(parsed.matchedInsights);
+        const parsed = engine.buildPromptContext(idea, '');
+        currentInsights = parsed.matchedEntries || [];
+        updateInsightSelector(currentInsights);
+        showAIOnlyBadge(parsed.isAIOnly);
       }
     }, 500);
   });

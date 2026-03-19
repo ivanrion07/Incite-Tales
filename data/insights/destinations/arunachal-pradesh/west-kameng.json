@@ -1,0 +1,309 @@
+{
+  "id": "west-kameng",
+  "state": "Arunachal Pradesh",
+  "district": "West Kameng",
+  "district_headquarters": "Bomdila",
+  "tagline": "Apple orchards, monasteries, and the gateway to Tawang",
+  "description": "West Kameng is the first district you enter when driving into Arunachal Pradesh from Assam. The landscape shifts rapidly — from Assam's flat tea gardens to dense forest to alpine meadows. Bhalukpong is the border checkpost. Shergaon is a secret. Bomdila and Dirang are the classic overnight stops on the Tawang corridor.",
+  "incitetales_angle": "Everyone drives through West Kameng to get to Tawang. Almost no one actually stops. Shergaon alone is worth a two-night detour.",
+  "destinations": [
+    {
+      "id": "bhalukpong",
+      "name": "Bhalukpong",
+      "type": "border-town",
+      "tagline": "The gate into Arunachal",
+      "description": "Bhalukpong is the checkpost town where you enter Arunachal Pradesh from Assam. The Kameng River runs through it. There's a small wildlife sanctuary — Pakhui/Pakke — nearby. Most people just stop to show permits and refuel. Worth a short riverside walk.",
+      "what_is_there": [
+        "Kameng River — good swimming spot before the mountain roads begin",
+        "Bhalukpong Fort ruins — small, easy walk",
+        "Pakke Tiger Reserve entry point — 5km away"
+      ],
+      "stays": [
+        {
+          "name": "Inspection Bungalow",
+          "type": "government",
+          "price_range": "₹500–800",
+          "notes": "Book via DC office West Kameng"
+        },
+        {
+          "name": "Private lodges near checkpost",
+          "type": "basic",
+          "price_range": "₹600–1,200"
+        }
+      ],
+      "local_food": [
+        "Assamese-influenced dhabas",
+        "Fresh river fish",
+        "Tea from nearby Assam gardens"
+      ],
+      "local_tips": [
+        "Fill up fuel here — next reliable petrol pump is Bomdila",
+        "Get permits checked and stamped — don't skip this, checkpost is strict",
+        "Kameng riverside in the morning before driving uphill is peaceful"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "shergaon",
+      "name": "Shergaon",
+      "type": "village",
+      "tagline": "The village nobody stops at. The one everyone should.",
+      "description": "A small Sherdukpen tribal village of around 200 families, 13km off the main Bomdila highway. Apple and kiwi orchards, a 16th century monastery (Chug Monastery), quiet forest walks, and Red Berry Homestay — one of the most genuine small stays in the Northeast.",
+      "what_is_there": [
+        "Chug Monastery — 16th century, small, atmospheric, rarely visited",
+        "Apple and kiwi orchards — walk through them freely in season (Sept–Nov)",
+        "Sherdukpen tribal culture — distinct from Tibetan-influenced Tawang",
+        "Forest walks toward Eaglenest Wildlife Sanctuary boundary",
+        "Rupa Lake — 4km from village, migratory birds Oct–Feb"
+      ],
+      "stays": [
+        {
+          "name": "Red Berry Home Stay",
+          "type": "homestay",
+          "price_range": "₹800–1,500 per night including meals",
+          "why_recommended": "Family-run, surrounded by apple orchards. Home-cooked Arunachali food. One of the finest small stays in the Northeast. Book weeks ahead.",
+          "booking": "Search Facebook or ask locally — no online booking",
+          "verified": true
+        }
+      ],
+      "local_food": [
+        "Home-cooked Sherdukpen food at Red Berry — don't eat anywhere else",
+        "Local apple juice and fresh apples in season (Sept–Nov)",
+        "Thukpa and rice with local vegetables"
+      ],
+      "local_tips": [
+        "Take the 13km diversion off NH13 — it is fully worth it",
+        "Stay 2 nights minimum — one night is too short",
+        "Ask the homestay family about Chug Monastery — they'll arrange access",
+        "Eaglenest Wildlife Sanctuary is nearby — one of India's top birdwatching spots"
+      ],
+      "hidden_score": 9
+    },
+    {
+      "id": "bomdila",
+      "name": "Bomdila",
+      "type": "town",
+      "tagline": "The acclimatization town with the best monastery views",
+      "description": "Bomdila is the district headquarters of West Kameng, sitting at 2,415m. Most Tawang travellers overnight here to acclimatize. The monastery complex has excellent views of the Kangto and Gorichen peaks on a clear day. The market is good for local woolens, apple products, and supplies.",
+      "what_is_there": [
+        "Bomdila Monastery (Upper, Middle, Lower) — three levels, Upper has the best views",
+        "Craft Centre — local weaving, thangkas, Monpa handicrafts",
+        "Apple Orchard Resort viewpoint",
+        "Tipi Orchid Research Centre — 45km below on the highway, worth a stop going down"
+      ],
+      "stays": [
+        {
+          "name": "Kameng Residency",
+          "type": "hotel",
+          "price_range": "₹1,200–2,500",
+          "verified": true
+        },
+        {
+          "name": "Hotel Bonsai",
+          "type": "hotel",
+          "price_range": "₹700–1,500",
+          "verified": true
+        },
+        {
+          "name": "Inspection Bungalow",
+          "type": "government",
+          "price_range": "₹400–800",
+          "notes": "Book in advance via DC office"
+        }
+      ],
+      "local_food": [
+        "Thukpa and momos — multiple small restaurants in the main market",
+        "Local apple products — jams, juice, dried apples from market stalls",
+        "Pork dishes — Monpa-style pork with local greens"
+      ],
+      "local_tips": [
+        "Acclimatize properly — Bomdila is 2,415m, Tawang is 3,048m",
+        "Upper Monastery at sunrise — the Himalayan view is exceptional on clear days",
+        "Stock up on snacks and supplies here — Tawang is more expensive",
+        "Woolens and Monpa shawls from the craft centre are better quality than Tawang market"
+      ],
+      "hidden_score": 4
+    },
+    {
+      "id": "dirang",
+      "name": "Dirang",
+      "type": "town",
+      "tagline": "Hot springs, yaks, and kiwi orchards between Bomdila and Tawang",
+      "description": "Dirang sits in a valley at 1,560m, warmer than Bomdila. The Dirang Dzong (old stone fort village) is one of the most atmospheric old settlements in Arunachal. Hot springs, a yak research centre, and extensive kiwi orchards make it worth more than the usual overnight stop.",
+      "what_is_there": [
+        "Old Dirang Village (Dirang Dzong) — ancient stone houses, narrow alleys, a small monastery inside",
+        "Hot Springs — natural sulphur springs, 2km from town, free",
+        "National Research Centre on Yak — only one in India, free to visit",
+        "Kiwi orchards — walk through them in season (Oct–Nov)",
+        "Sangti Valley — 15km away, migratory black-necked cranes (Nov–Feb)"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Pemaling",
+          "type": "hotel",
+          "price_range": "₹1,000–2,000"
+        },
+        {
+          "name": "Possum Lodge",
+          "type": "homestay",
+          "price_range": "₹800–1,500",
+          "notes": "Good birdwatching base"
+        },
+        {
+          "name": "Circuit House",
+          "type": "government",
+          "price_range": "₹400–700"
+        }
+      ],
+      "local_food": [
+        "Thukpa and butter tea",
+        "Kiwi fruit direct from orchards in Oct–Nov",
+        "Local pork dishes at small dhabas"
+      ],
+      "local_tips": [
+        "Old Dirang village is 2km from the highway — most people miss it entirely",
+        "Hot springs are basic but the sulphur water is genuine — bring a towel",
+        "Sangti Valley cranes: arrive at dawn, November is peak",
+        "Dirang to Sela Pass is 3-4 hours — start early to avoid afternoon cloud"
+      ],
+      "hidden_score": 6
+    },
+    {
+      "id": "sangti-valley",
+      "name": "Sangti Valley",
+      "type": "valley",
+      "tagline": "Where the black-necked cranes come every winter",
+      "description": "A quiet valley 15km from Dirang, completely off the main tourist trail. Sangti River, apple orchards, and most importantly — migratory black-necked cranes (Grus nigricollis) that arrive from Tibet in November and stay through February.",
+      "what_is_there": [
+        "Black-necked crane sightings — November to February, early morning",
+        "Sangti River — flat, wide, excellent for walks",
+        "Completely empty valley — no tourist infrastructure, almost no visitors"
+      ],
+      "stays": [
+        {
+          "name": "Forest Rest House",
+          "type": "government",
+          "price_range": "₹300–500",
+          "notes": "Book through Forest Dept West Kameng"
+        }
+      ],
+      "local_food": [
+        "Carry food from Dirang"
+      ],
+      "local_tips": [
+        "Dawn walk along the river is where you'll spot the cranes — be quiet",
+        "No phone signal in the valley",
+        "Combine with a Dirang night — Sangti is a half-day from there"
+      ],
+      "hidden_score": 8
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at arunachalilp.com or at Arunachal House in Guwahati/Kolkata/Delhi",
+    "cost": "₹100 per person",
+    "processing_time": "Same day to 1 day",
+    "notes": "ILP checked at Bhalukpong checkpost — have printed copy ready"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 300,
+      "travel_time": "8–9 hours to Bomdila",
+      "waypoints": [
+        "NH27 to Tezpur",
+        "Bhalukpong (ILP check)",
+        "Tipi",
+        "Bomdila"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati",
+          "end": "Bomdila",
+          "distance_km": 300,
+          "drive_hours": "8–9 hours",
+          "stops": [
+            "Tezpur for breakfast",
+            "Bhalukpong ILP check + Kameng riverside",
+            "Tipi Orchid Centre"
+          ],
+          "notes": "Leave Guwahati by 5am to reach Bomdila before dark. Road is good till Bhalukpong, mountain from there."
+        }
+      ],
+      "nearest_railhead": "Tezpur (180km from Bhalukpong)",
+      "nearest_airport": "Tezpur Airport (closest) or Guwahati"
+    },
+    "from_tezpur": {
+      "total_distance_km": 175,
+      "travel_time": "5–6 hours to Bomdila",
+      "waypoints": [
+        "Bhalukpong (ILP check)",
+        "Tipi",
+        "Bomdila"
+      ]
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel/Jio in Bomdila and Dirang. BSNL most reliable. Shergaon has patchy signal.",
+    "internet": "Limited. Available in Bomdila hotels.",
+    "atm": "Bomdila has ATMs. Carry cash for Shergaon and Dirang."
+  },
+  "best_season": {
+    "peak": [
+      "march",
+      "april",
+      "october",
+      "november"
+    ],
+    "good": [
+      "may",
+      "september"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "winter": [
+      "december",
+      "january",
+      "february"
+    ],
+    "notes": "March–April: rhododendrons in bloom. October–November: crisp, clear, best views. Winter: cold but possible, Sela Pass may snow. Monsoon: landslides on mountain roads, avoid."
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 6,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "west kameng",
+    "bhalukpong",
+    "shergaon",
+    "bomdila",
+    "dirang",
+    "sangti valley",
+    "sangti",
+    "kameng",
+    "rupa",
+    "tenga",
+    "tipi",
+    "eaglenest"
+  ],
+  "season": {
+    "best": [
+      "march",
+      "april",
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

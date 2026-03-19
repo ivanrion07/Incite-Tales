@@ -1,0 +1,224 @@
+{
+  "id": "changlang",
+  "state": "Arunachal Pradesh",
+  "district": "Changlang",
+  "district_headquarters": "Changlang",
+  "tagline": "The jungle war road and one of Asia's most biodiverse forests",
+  "description": "Changlang is the easternmost tourist district of Arunachal Pradesh. It has two draws that are completely different from each other: Namdapha National Park — one of the most biodiverse protected areas in Asia — and the Stilwell Road, the 1,736km WWII supply route built through this jungle in 1942–44.",
+  "incitetales_angle": "Namdapha is the most biodiverse national park in India that nobody talks about. Four big cat species in one park.",
+  "destinations": [
+    {
+      "id": "namdapha",
+      "name": "Namdapha National Park",
+      "type": "national-park",
+      "tagline": "Four big cats, one jungle, almost no tourists",
+      "description": "Namdapha is India's third-largest national park and one of its most extraordinary — 1,985 sq km of forest ranging from tropical to alpine, home to tiger, leopard, snow leopard, and clouded leopard (the only park in the world with all four), Hoolock gibbon, red panda, and over 1,000 plant species. The base is Miao town.",
+      "what_is_there": [
+        "Four big cat species — tiger, leopard, snow leopard, clouded leopard",
+        "Hoolock gibbons — hear them at dawn from Deban rest house",
+        "Red panda",
+        "Namdapha River — crystal clear, runs through the park",
+        "Jungle walks with forest guides — Deban to Hornbill Camp trail",
+        "Extensive birding — 500+ species"
+      ],
+      "stays": [
+        {
+          "name": "Deban Forest Rest House",
+          "type": "forest",
+          "price_range": "₹400–800",
+          "notes": "Inside the park, on the Namdapha River bank. Best base. Book via Namdapha Field Director, Miao. Book months ahead."
+        },
+        {
+          "name": "Hornbill Camp",
+          "type": "forest-camp",
+          "price_range": "₹300–500",
+          "notes": "Deeper inside, basic. For serious trekkers."
+        }
+      ],
+      "local_food": [
+        "Cook at Deban prepares basic meals — arrange in advance",
+        "Carry packaged food as backup"
+      ],
+      "local_tips": [
+        "Book Deban rest house at least 2 months ahead — it has very few rooms",
+        "Gibbons are most vocal at dawn — sit outside Deban by 5:30am",
+        "Hire a forest guide through the park office — mandatory and worth every rupee",
+        "Namdapha River is safe to swim in near Deban — clear, cold, beautiful",
+        "The road inside the park is rough — 4WD essential"
+      ],
+      "hidden_score": 9
+    },
+    {
+      "id": "miao",
+      "name": "Miao",
+      "type": "town",
+      "tagline": "The base town for Namdapha and Stilwell Road",
+      "description": "Miao is a small town on the Noa-Dihing River, the base for Namdapha. It has basic hotels, the park permit office, and is the last town with any services before the park. The Stilwell Road starts properly here.",
+      "what_is_there": [
+        "Namdapha permit office",
+        "Noa-Dihing River walk",
+        "Stilwell Road Mile 0 marker vicinity"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Miao",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹400–800"
+        }
+      ],
+      "local_food": [
+        "Local dhabas — basic Assamese and Arunachali food",
+        "Fresh river fish"
+      ],
+      "local_tips": [
+        "Get Namdapha permits here before entering park",
+        "Fuel up — last reliable petrol"
+      ],
+      "hidden_score": 4
+    },
+    {
+      "id": "stilwell-road",
+      "name": "Stilwell Road",
+      "type": "historical-road",
+      "tagline": "1,736km of jungle, monsoon, and will. Most of it swallowed back by forest.",
+      "description": "The Stilwell Road (also called Ledo Road) was built by 40,000 Allied troops in 1942–44 to supply Nationalist China after Japan cut the Burma Road. It runs from Ledo in Assam through Changlang district of Arunachal, into Myanmar, and on to Yunnan, China. The Indian portion is driveable in sections. WWII-era bridges, mile markers, and abandoned equipment still exist in the jungle.",
+      "what_is_there": [
+        "Mile 0 marker at Ledo (Assam) — small monument at the official start",
+        "WWII-era stone bridges — still standing in the jungle sections",
+        "Mile markers — concrete posts with mileage, some still legible",
+        "Pangsau Pass — India-Myanmar border crossing on the Stilwell Road (restricted, special permit needed)",
+        "Nampong town — last Indian town on the road before Myanmar",
+        "Dense jungle — the road disappears into forest in sections, exactly as it looked in 1945"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Nampong",
+          "type": "government",
+          "price_range": "₹300–600"
+        },
+        {
+          "name": "Basic accommodation in Changlang town",
+          "type": "guesthouse",
+          "price_range": "₹400–800"
+        }
+      ],
+      "local_food": [
+        "Local dhabas in Nampong",
+        "Tangsa and Wancho tribal food if invited"
+      ],
+      "local_tips": [
+        "Pangsau Pass crossing requires special permit — not available for regular tourists",
+        "4WD essential for the jungle sections of the road",
+        "Hire a local jeep driver from Miao — they know which sections are driveable",
+        "The Digboi WWII cemetery in Assam (nearby) gives essential context before driving the road",
+        "Best Oct–Feb — monsoon makes the jungle sections impassable"
+      ],
+      "hidden_score": 9
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at arunachalilp.com or Arunachal House",
+    "cost": "₹100",
+    "processing_time": "Same day to 1 day",
+    "pangsau_pass_notes": "Pangsau Pass crossing requires additional restricted area permit — not routinely issued to tourists. Check with Ministry of Home Affairs."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 520,
+      "travel_days": 2,
+      "waypoints": [
+        "Dibrugarh",
+        "Tinsukia",
+        "Margherita",
+        "Ledo",
+        "Miao"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati",
+          "end": "Dibrugarh or Tinsukia",
+          "distance_km": 440,
+          "drive_hours": "8 hours",
+          "notes": "Or take overnight train Guwahati → Dibrugarh/Tinsukia. Much easier."
+        },
+        {
+          "day": 2,
+          "start": "Tinsukia",
+          "end": "Miao",
+          "distance_km": 160,
+          "drive_hours": "4–5 hours",
+          "stops": [
+            "Margherita",
+            "Ledo (Stilwell Road Mile 0)",
+            "Nampong optional"
+          ],
+          "notes": "Leave Tinsukia by 8am. Reach Miao by early afternoon. Register at Namdapha office same day."
+        }
+      ],
+      "nearest_railhead": "Ledo or Tinsukia",
+      "nearest_airport": "Dibrugarh"
+    }
+  },
+  "connectivity": {
+    "miao": "Airtel and BSNL in Miao town.",
+    "namdapha": "No signal inside the park.",
+    "stilwell_road": "No signal on jungle sections.",
+    "atm": "No ATM in Miao. Carry cash from Dibrugarh or Tinsukia."
+  },
+  "best_season": {
+    "peak": [
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august",
+      "september"
+    ],
+    "notes": "Dry season only. Monsoon makes the jungle road and park trails impassable. Winter is excellent — cold nights but clear days."
+  },
+  "budget_level": "budget",
+  "hidden_score": 9,
+  "verified": false,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "changlang",
+    "namdapha",
+    "miao",
+    "stilwell road",
+    "nampong",
+    "ledo road",
+    "deban",
+    "noa-dihing"
+  ],
+  "season": {
+    "best": [
+      "november",
+      "december",
+      "january",
+      "february",
+      "march"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august",
+      "september"
+    ]
+  }
+}

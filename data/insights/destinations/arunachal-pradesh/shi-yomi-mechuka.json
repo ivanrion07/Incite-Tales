@@ -1,0 +1,200 @@
+{
+  "id": "shi-yomi",
+  "state": "Arunachal Pradesh",
+  "district": "Shi Yomi",
+  "district_headquarters": "Aalo (Along)",
+  "tagline": "The valley the world forgot",
+  "description": "Mechuka is one of the most remote and visually spectacular destinations in India — a high-altitude valley at 1,800m near the China border, barely touched by tourism, with the Siyom River running through it and the Himalayas visible on clear days. Getting there is part of the experience.",
+  "incitetales_angle": "Mechuka is genuinely difficult to get to. That is exactly why it still looks like this.",
+  "destinations": [
+    {
+      "id": "mechuka",
+      "name": "Mechuka",
+      "type": "valley",
+      "altitude_m": 1800,
+      "tagline": "Snow peaks, a turquoise river, and almost no one else",
+      "description": "Mechuka is a small Memba tribal town in the Siyom River valley, 29km from the Chinese border. The valley floor has paddy fields and apple orchards. The surrounding peaks exceed 6,000m. There is one road in. There is almost nothing here in terms of tourist infrastructure — which is entirely the point.",
+      "what_is_there": [
+        "Samten Yongcha Monastery — 400-year-old Buddhist monastery, monks in residence",
+        "Siyom River — turquoise glacial river, excellent for riverside walks",
+        "Mechuka airstrip — one of the highest airstrips in India, rarely operational (IAF)",
+        "Apple orchards — walk through freely in season (Oct–Nov)",
+        "Surrounding peaks — 6,000m+ peaks visible on clear mornings",
+        "Memba tribal villages — distinct Buddhist tribal culture different from Tawang Monpa",
+        "Old Mechuka village — 3km from town, traditional wooden houses",
+        "Border area experience — the Chinese border is 29km away, military presence visible"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Mechuka",
+          "type": "government",
+          "price_range": "₹400–700",
+          "notes": "Book through DC Shi Yomi. Best option."
+        },
+        {
+          "name": "Basic guesthouses in town",
+          "type": "guesthouse",
+          "price_range": "₹400–800",
+          "notes": "Very basic. Carry sleeping bag in winter."
+        },
+        {
+          "name": "Homestays with Memba families",
+          "type": "homestay",
+          "price_range": "₹500–1,000 including meals",
+          "notes": "Informal — ask on arrival. Best food in Mechuka."
+        }
+      ],
+      "local_food": [
+        "Thukpa — the staple, available everywhere",
+        "Rice with local vegetables and pork — Memba home cooking",
+        "Apong (rice beer) — offered in homes",
+        "Fresh trout from Siyom River at some guesthouses",
+        "Butter tea — strong local style",
+        "Local honey — one of the best in Arunachal, buy from families"
+      ],
+      "local_tips": [
+        "No reliable phone signal in Mechuka. BSNL very occasional. Tell someone your plans before entering.",
+        "Carry all medicines and essentials from Pasighat or Aalo — nothing available in Mechuka",
+        "The best views are from the monastery hill at 6am on a clear day — set your alarm",
+        "Mechuka Adventure Festival (November) — 3-day cultural and adventure sports event, the one time there are crowds",
+        "River crossing to old village requires a log bridge — check condition before crossing",
+        "Carry extra fuel — petrol available in Mechuka but supply is erratic"
+      ],
+      "hidden_score": 9
+    },
+    {
+      "id": "aalo-along",
+      "name": "Aalo (Along)",
+      "type": "town",
+      "tagline": "The last proper town before Mechuka",
+      "description": "Aalo (officially Along) is the district headquarters of West Siang, 170km from Mechuka. It's a proper town with ATMs, fuel, hotels, and supplies. Stock up here before heading to Mechuka. The Siang River gorge between Aalo and Yingkiong is dramatic.",
+      "what_is_there": [
+        "Siang River — wide, powerful, turquoise",
+        "Kaying — 15km from Aalo, traditional Adi village",
+        "Poge Orchid Sanctuary",
+        "Weekly market — Adi tribal goods, local produce"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Donyi Polo Ashok",
+          "type": "hotel",
+          "price_range": "₹1,500–3,000"
+        },
+        {
+          "name": "Circuit House Along",
+          "type": "government",
+          "price_range": "₹400–700"
+        }
+      ],
+      "local_food": [
+        "Pork and bamboo shoot — Adi tribal specialty",
+        "Apong rice beer",
+        "Market food stalls — cheap, local, good"
+      ],
+      "local_tips": [
+        "Last ATM before Mechuka — withdraw here",
+        "Last reliable fuel — fill up completely",
+        "Mechuka road from Aalo is 6–7 hours — start by 7am"
+      ],
+      "hidden_score": 5
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at arunachalilp.com or Arunachal House",
+    "cost": "₹100",
+    "processing_time": "Same day to 1 day",
+    "notes": "Mechuka is near the China border — additional Inner Line restrictions may apply. Check current status before travel. Military checkposts on the road — have ILP and ID ready."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 550,
+      "travel_days": 2,
+      "waypoints": [
+        "Pasighat or North Lakhimpur",
+        "Aalo (Along)",
+        "Tato",
+        "Mechuka"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati",
+          "end": "Pasighat or Aalo",
+          "distance_km": 350,
+          "drive_hours": "9–10 hours",
+          "notes": "Long first day. Option: fly Guwahati → Pasighat (IndiGo, when operational). If driving, leave by 4am."
+        },
+        {
+          "day": 2,
+          "start": "Aalo",
+          "end": "Mechuka",
+          "distance_km": 170,
+          "drive_hours": "6–7 hours",
+          "notes": "Mountain road. The last 50km is rough. Cross Tato by 2pm. Arrive Mechuka before dark. Leave Aalo by 7am."
+        }
+      ],
+      "nearest_railhead": "Murkongselek (for Pasighat), 5km",
+      "nearest_airport": "Pasighat Airport (when operational) or Dibrugarh"
+    }
+  },
+  "connectivity": {
+    "mobile": "No reliable signal in Mechuka. BSNL occasionally works. Aalo has Airtel/Jio.",
+    "internet": "None in Mechuka.",
+    "atm": "Last ATM in Aalo. No ATM in Mechuka."
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "good": [
+      "march",
+      "april",
+      "september"
+    ],
+    "festival": [
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October–November: clearest skies, best mountain views, Mechuka Adventure Festival in Nov. March–April: spring, rhododendrons. Monsoon: road frequently blocked by landslides between Aalo and Mechuka."
+  },
+  "budget_level": "budget",
+  "hidden_score": 9,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "mechuka",
+    "shi yomi",
+    "siyom",
+    "tato",
+    "aalo",
+    "along",
+    "west siang",
+    "mechuka valley"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "also_good": [
+      "march",
+      "april",
+      "september"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

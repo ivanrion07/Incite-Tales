@@ -1,0 +1,157 @@
+{
+  "id": "lower-subansiri",
+  "state": "Arunachal Pradesh",
+  "district": "Lower Subansiri",
+  "district_headquarters": "Ziro (Hapoli)",
+  "tagline": "Rice fields, Apatani culture, and a music festival at 1,500m",
+  "description": "Ziro Valley is a UNESCO World Heritage nominated cultural landscape — a broad, flat valley at 1,500m surrounded by pine-covered hills, filled with Apatani tribal villages and their unique paddy-fish farming system. The Ziro Music Festival (September) draws thousands. The rest of the year it is almost completely empty.",
+  "incitetales_angle": "Ziro Music Festival aside, you will have the entire valley to yourself. Walk into an Apatani village on any morning in November and you are the only outsider there.",
+  "destinations": [
+    {
+      "id": "ziro-valley",
+      "name": "Ziro Valley",
+      "type": "valley",
+      "altitude_m": 1500,
+      "tagline": "Paddy fields, pine forests, and one of India's most intact tribal cultures",
+      "description": "The Ziro Valley is the homeland of the Apatani tribe — known for their unique rice-fish farming method (paddy fields double as fish ponds), their intricate bamboo weaving, and historically for facial tattoos and nose plugs among older women. The valley is flat and walkable, surrounded by pine forests. Hapoli is the main town; the actual Apatani villages are 3–8km away.",
+      "what_is_there": [
+        "Apatani villages — Hong, Hari, Hija, Bamin, Dutta, Mudang-Tage, Michi-Bamin. Each has a distinct character.",
+        "Paddy-fish farming — the valley floor is a working agricultural landscape, most striking June–October",
+        "Talley Valley Wildlife Sanctuary — 5km from Ziro, rhododendron and orchid forest",
+        "Kile Pakho viewpoint — hill above Hapoli, sunrise view over the entire valley",
+        "Ziro Music Festival — last weekend of September, outdoor, 3 days, Indian and international indie acts",
+        "Pine Grove — forest walks between villages",
+        "Meghna Cave Temple — small cave temple carved into rock face"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Ziro",
+          "type": "government",
+          "price_range": "₹400–800",
+          "notes": "Best location in Hapoli, book via DC office"
+        },
+        {
+          "name": "Blue Pine Resort",
+          "type": "resort",
+          "price_range": "₹2,000–4,000"
+        },
+        {
+          "name": "Homestays in Apatani villages",
+          "type": "homestay",
+          "price_range": "₹600–1,200 including meals",
+          "notes": "Ask in Hong or Hari village — families take in guests informally. Best experience in Ziro."
+        }
+      ],
+      "local_food": [
+        "Pila Pila — fermented rice cake, Apatani specialty",
+        "Bamboo shoot curry — bamboo shoot in every form",
+        "Apong (rice beer) — offered in every Apatani home",
+        "Smoked pork with bamboo shoot — the definitive Arunachal dish",
+        "Marua (millet alcohol) — different from apong, stronger",
+        "Fresh river fish from the paddy-fish farms"
+      ],
+      "local_tips": [
+        "Visit Hong village first — most accessible and welcoming to visitors",
+        "The older Apatani women with facial tattoos are in their 70s–80s — this practice ended decades ago. Do not stare or photograph without permission.",
+        "Apong offered in homes — accept it. Refusing is considered impolite.",
+        "Kile Pakho sunrise: wake at 5am, 30-minute walk up the hill behind Hapoli",
+        "Ziro Music Festival: book accommodation 3 months ahead. The valley fills completely.",
+        "Walk between villages rather than drive — the paddy field paths are the real Ziro"
+      ],
+      "hidden_score": 6
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at arunachalilp.com or Arunachal House",
+    "cost": "₹100",
+    "processing_time": "Same day to 1 day"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 500,
+      "travel_days": 2,
+      "waypoints": [
+        "Tezpur or North Lakhimpur",
+        "Itanagar / Naharlagun",
+        "Ziro"
+      ],
+      "day_splits": [
+        {
+          "day": 1,
+          "start": "Guwahati",
+          "end": "Itanagar or North Lakhimpur",
+          "distance_km": 280,
+          "drive_hours": "7–8 hours",
+          "notes": "Two route options: via Tezpur → Bhalukpong → Itanagar (more scenic), or via North Lakhimpur direct. Overnight Itanagar or Naharlagun."
+        },
+        {
+          "day": 2,
+          "start": "Itanagar",
+          "end": "Ziro",
+          "distance_km": 160,
+          "drive_hours": "5–6 hours",
+          "notes": "Mountain road through dense forest. Reach Ziro by afternoon."
+        }
+      ],
+      "nearest_railhead": "North Lakhimpur (100km from Ziro)",
+      "nearest_airport": "Lilabari Airport, North Lakhimpur (105km)"
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel and BSNL work in Hapoli town. Villages have patchy signal.",
+    "internet": "Limited, available in Hapoli hotels.",
+    "atm": "ATM in Hapoli. Carry cash."
+  },
+  "best_season": {
+    "peak": [
+      "september",
+      "october",
+      "november"
+    ],
+    "good": [
+      "march",
+      "april"
+    ],
+    "festival": [
+      "september"
+    ],
+    "avoid": [
+      "june",
+      "july"
+    ],
+    "notes": "September: music festival + lush green paddy fields at peak. October–November: post harvest, golden fields, clear skies, best for village walks. March–April: rhododendrons in Talley Valley."
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 6,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "ziro",
+    "ziro valley",
+    "hapoli",
+    "apatani",
+    "lower subansiri",
+    "talley valley",
+    "dolo mando"
+  ],
+  "season": {
+    "best": [
+      "september",
+      "october",
+      "november"
+    ],
+    "also_good": [
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july"
+    ]
+  }
+}
