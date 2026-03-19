@@ -589,7 +589,7 @@ footer {
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
   }
-  function start() { timer = setInterval(function() { goTo(current + 1); }, 5000); }
+  function start() { timer = setInterval(function() { goTo(current + 1); }, 3500); }
   function stop()  { clearInterval(timer); }
   var hero = document.querySelector('.hero');
   if (hero) { hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start); }
