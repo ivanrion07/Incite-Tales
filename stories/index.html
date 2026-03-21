@@ -168,6 +168,10 @@ nav {
   display: block;
   background: var(--ink);
 }
+.place-card.soon {
+  cursor: default;
+  pointer-events: none;
+}
 
 /* Background image / gradient — replace with real photo */
 .place-card-bg {
@@ -343,6 +347,10 @@ nav {
   gap: 14px;
 }
 .place-card-cta::after { content: '→'; }
+.place-card.soon .place-card-cta {
+  color: rgba(255,255,255,0.5);
+}
+.place-card.soon .place-card-cta::after { content: ''; }
 
 /* BOTTOM CTA */
 .bottom-cta {
@@ -457,7 +465,7 @@ footer {
 <div class="places-grid">
 
   <!-- ASSAM -->
-  <a href="../assam-stories/" class="place-card">
+  <a href="./assam/" class="place-card">
     <div class="place-card-bg" style="background-image: url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773693474/849484299_Maguri_Beel_Tinsukia1_1_z0krti.webp'); background-size: cover; background-position: center;"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -478,7 +486,7 @@ footer {
   </a>
 
   <!-- ARUNACHAL PRADESH -->
-  <a href="../arunachal-stories/" class="place-card">
+  <a href="./arunachal-pradesh/" class="place-card">
     <div class="place-card-bg bg-arunachal"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -499,7 +507,7 @@ footer {
   </a>
 
   <!-- MEGHALAYA -->
-  <a href="../meghalaya-stories/" class="place-card">
+  <a href="./meghalaya/" class="place-card">
     <div class="place-card-bg bg-meghalaya"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -520,7 +528,7 @@ footer {
   </a>
 
   <!-- NAGALAND -->
-  <a href="../nagaland-stories/" class="place-card">
+  <div class="place-card soon">
     <div class="place-card-bg bg-nagaland"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -535,13 +543,13 @@ footer {
       <div class="place-card-bottom">
         <div class="place-name">Nagaland</div>
         <div class="place-tagline">Dzukou Valley, Hornbill Festival, and tribal culture unchanged for centuries</div>
-        <div class="place-card-cta">Read Nagaland stories</div>
+        <div class="place-card-cta">Coming soon</div>
       </div>
     </div>
-  </a>
+  </div>
 
   <!-- DARJEELING + SIKKIM -->
-  <a href="../darjeeling-sikkim-stories/" class="place-card">
+  <div class="place-card soon">
     <div class="place-card-bg bg-darjeeling"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -556,13 +564,13 @@ footer {
       <div class="place-card-bottom">
         <div class="place-name">Darjeeling<br>+ Sikkim</div>
         <div class="place-tagline">Tiger Hill at sunrise, the toy train, Gurudongmar Lake</div>
-        <div class="place-card-cta">Read stories</div>
+        <div class="place-card-cta">Coming soon</div>
       </div>
     </div>
-  </a>
+  </div>
 
   <!-- MIZORAM -->
-  <a href="../mizoram-stories/" class="place-card">
+  <div class="place-card soon">
     <div class="place-card-bg bg-sikkim"></div>
     <div class="place-card-grid"></div>
     <div class="place-card-overlay"></div>
@@ -577,10 +585,10 @@ footer {
       <div class="place-card-bottom">
         <div class="place-name">Mizoram</div>
         <div class="place-tagline">The bluest hills in India — Aizawl, Phawngpui, and the bamboo forests</div>
-        <div class="place-card-cta">Read Mizoram stories</div>
+        <div class="place-card-cta">Coming soon</div>
       </div>
     </div>
-  </a>
+  </div>
 
 </div>
 
