@@ -79,7 +79,11 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: linear-gradient(180deg,
+    rgba(28,24,20,0.52) 0%,
+    rgba(28,24,20,0.36) 40%,
+    rgba(28,24,20,0.54) 100%
+  );
 }
 
 .hero {
@@ -549,7 +553,7 @@ footer {
       <ul>
         <li><a href="#">Why Incitetales</a></li>
         <li><a href="merch/">Merch</a></li>
-        <li><a href="mailto:hello@incitetales.com">hello@incitetales.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#1a727f7676755a737479736e7f6e7b767f6934797577"><span class="__cf_email__" data-cfemail="670f020b0b08270e09040e130213060b02144904080a">[email&#160;protected]</span></a></li>
         <li><a href="#">Instagram</a></li>
       </ul>
     </div>
@@ -560,7 +564,7 @@ footer {
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function() {
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
@@ -580,22 +584,65 @@ footer {
   if (!slides.length) return;
   var current = 0;
   var timer = null;
+
   function goTo(n) {
     slides[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
   }
-  function start() { timer = setInterval(function() { goTo(current + 1); }, 3500); }
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(function() { goTo(current + 1); }, 5000);
+  }
+  function stop() { clearInterval(timer); timer = null; }
+
+  // Pause on hover
+  var hero = document.querySelector('.hero');
+  if (hero) {
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', function() { if (!timer) start(); });
+  }
+
+  // Preload all images first, then start carousel
+  var firstSlide = slides[0];
+  var firstUrl = firstSlide.style.backgroundImage
+    .replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+
+  var firstImg = new Image();
+  firstImg.onload = function() {
+    // First image loaded — make it visible and start cycling
+    firstSlide.classList.add('active');
+    // Preload the rest
+    slides.forEach(function(slide, i) {
+      if (i === 0) return;
+      var url = slide.style.backgroundImage
+        .replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+      var img = new Image();
+      img.src = url;
+    });
+    start();
+  };
+  firstImg.onerror = function() {
+    // First image failed — still start carousel so other images can show
+    start();
+  };
+
+  // Remove active from first slide so we control it via onload
+  firstSlide.classList.remove('active');
+  firstImg.src = firstUrl;
+})();
+
+(function() {
+  var slides = document.querySelectorAll('.hero-slide');
+  if (!slides.length) return;
+  var current = 0;
+  var timer = null;
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+  function start() { timer = setInterval(function() { goTo(current + 1); }, 5000); }
   function stop()  { clearInterval(timer); }
   var hero = document.querySelector('.hero');
   if (hero) { hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start); }
-  slides.forEach(function(slide, i) {
-    if (i === 0) return;
-    var url = slide.style.backgroundImage.replace(/url\(["']?/, '').replace(/["']?\)/, '');
-    var img = new Image(); img.src = url;
-  });
-  start();
-})();
-</script>
-</body>
-</html>
