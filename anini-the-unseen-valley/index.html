@@ -88,47 +88,34 @@
     /* ── HERO ── */
     .story-hero {
       padding: 120px 0 0;
-      background: var(--ink);
-      position: relative;
-      overflow: hidden;
-    }
-    .story-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(42,92,72,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 15% 70%, rgba(139,74,42,0.08) 0%, transparent 50%);
-      pointer-events: none;
+      background: var(--bg);
     }
     .hero-inner {
       max-width: 780px;
       margin: 0 auto;
       padding: 60px 48px 80px;
-      position: relative;
-      z-index: 1;
     }
     .breadcrumb {
       font-family: 'DM Mono', monospace;
       font-size: 9px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: var(--ink3);
       margin-bottom: 28px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
-    .breadcrumb a:hover { color: var(--yellow); }
-    .breadcrumb span { opacity: 0.4; }
+    .breadcrumb a { color: var(--ink3); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--ink); }
+    .breadcrumb span { opacity: 0.5; }
 
     .story-tag {
       font-family: 'DM Mono', monospace;
       font-size: 9px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--yellow);
+      color: var(--terra);
       margin-bottom: 20px;
       display: flex;
       align-items: center;
@@ -137,19 +124,21 @@
     .story-tag::before { content: '◆'; font-size: 7px; }
 
     .story-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: clamp(32px, 5vw, 56px);
       font-weight: 400;
-      color: #ffffff;
-      line-height: 1.1;
-      margin-bottom: 24px;
+      color: var(--ink);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
     }
-    .story-title em { font-style: italic; color: var(--yellow); }
+    .story-title em { font-style: italic; color: var(--terra); }
 
     .story-lede {
       font-size: 17px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.75;
+      color: var(--ink2);
+      font-style: italic;
+      line-height: 1.55;
       max-width: 560px;
       margin-bottom: 48px;
     }
@@ -515,10 +504,10 @@
     <div class="story-tag">Upper Dibang Valley · Roing · Arunachal Pradesh</div>
 
     <h1 class="story-title">
-      The Valley That Carved Its<br><em>Name Into the Mountain</em>
+      Anini: The Valley That<br><em>Carved Its Name Into the Mountain</em>
     </h1>
 
-    <p class="story-lede">On growing up between Anini and Roing — a father who stayed, a monsoon that cost something, and a river where you jumped off rocks on Saturdays.</p>
+    <p class="story-lede">Growing up between Anini and Roing, I didn't know remoteness was something people romanticised. I just knew there was a valley where helicopters looked for a name carved into the mountain.</p>
 
     <div class="story-meta">
       <div class="meta-item">
