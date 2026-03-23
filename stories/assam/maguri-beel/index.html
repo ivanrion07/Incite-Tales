@@ -484,122 +484,6 @@ nav {
   line-height: 1.4;
 }
 
-/* Operator booking card */
-.op-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-
-.op-card-header {
-  background: var(--surface2);
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.op-card-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 7.5px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-
-.op-card-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--cream);
-}
-
-.op-card-location {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  margin-top: 3px;
-}
-
-.op-card-body {
-  padding: 16px 20px;
-}
-
-.op-card-desc {
-  font-size: 12.5px;
-  color: var(--text);
-  line-height: 1.55;
-  margin-bottom: 14px;
-  font-style: italic;
-}
-
-.op-card-packages {
-  margin-bottom: 16px;
-}
-
-.package-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--border);
-  align-items: baseline;
-}
-.package-row:last-child { border-bottom: none; }
-
-.package-name {
-  font-size: 12px;
-  color: var(--text);
-}
-
-.package-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--cream);
-  white-space: nowrap;
-}
-
-/* 
-  THE WHATSAPP BOOKING BUTTON
-  The href uses wa.me with a pre-filled message.
-  Format: https://wa.me/[country code][number]?text=[encoded message]
-  
-  HOW TO USE:
-  1. Replace 919876543210 with the operator's real number
-  2. Edit the text= message to match the experience
-  3. The %20 = space, %0A = new line in URL encoding
-*/
-.book-whatsapp {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 13px;
-  background: var(--teal);
-  color: var(--bg);
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-bottom: 8px;
-}
-.book-whatsapp:hover { background: var(--teal-light); }
-
-.book-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
-  text-align: center;
-  line-height: 1.5;
-}
-
 /* ============================================
    STEP 8 — RELATED STORIES (below article)
    ============================================ */
@@ -734,15 +618,15 @@ footer {
      NAV — copy this to every page
      ============================================ -->
 <nav>
-  <a href="../" class="nav-logo">Incite<span>tales</span></a>
+  <a href="../../" class="nav-logo">Incite<span>tales</span></a>
   <ul class="nav-links">
-    <li><a href="#" class="active">Stories</a></li>
-    <li><a href="#">Destinations</a></li>
-    <li><a href="#">Operators</a></li>
-    <li><a href="#">Experiences</a></li>
-    <li><a href="#">Agents</a></li>
+    <li><a href="../" class="active">Stories</a></li>
+    <li><a href="../../itinerary-builder/">Itinerary Builder</a></li>
+    <li><a href="../../discover-ne/">Discover NE</a></li>
+    <li><a href="../../explore-nearby/">Explore Nearby</a></li>
+    <li><a href="../../merch/">Merch</a></li>
   </ul>
-  <a href="#" class="nav-cta">Plan a Trip</a>
+  <a href="../../itinerary-builder/" class="nav-cta">Plan a Trip</a>
 </nav>
 
 <!-- ============================================
@@ -752,8 +636,8 @@ footer {
   <div class="hero-img"></div>
   <div class="hero-content">
     <div class="breadcrumb">
-      <a href="../">Home</a> ›
-      <a href="../#stories">Stories</a> ›
+      <a href="../../">Home</a> ›
+      <a href="../">Stories</a> ›
       <span>Maguri Beel</span>
     </div>
     <div class="story-category">◆ &nbsp; Wetland · Wildlife · Upper Assam</div>
@@ -891,7 +775,7 @@ footer {
     </p>
 
     <p>
-      The best way to see it is by boat — a local wooden boat, not a tourist launch. Early morning, before 7am, is when the dolphins are most active and the light is best for photography. The operator listed on this page has been on this water his whole life.
+      The best way to see it is by boat — a local wooden boat, not a tourist launch. Early morning, before 7am, is when the dolphins are most active and the light is best for photography. Ask at Guijan Ghat and go with a local boatman who knows the channels well.
     </p>
 
   </article>
@@ -932,57 +816,6 @@ footer {
       </div>
     </div>
 
-    <!-- Operator booking card -->
-    <div class="op-card">
-      <div class="op-card-header">
-        <div class="op-card-label">◆ Local Operator</div>
-        <div class="op-card-name">Raju Moran</div>
-        <div class="op-card-location">Guijan Ghat · Tinsukia</div>
-      </div>
-      <div class="op-card-body">
-        <p class="op-card-desc">Third-generation boat operator. Knows every dolphin feeding spot and every early-morning birding window on Maguri Beel.</p>
-
-        <div class="op-card-packages">
-          <div class="package-row">
-            <span class="package-name">Dawn Birding (3hr)</span>
-            <span class="package-price">₹2,500</span>
-          </div>
-          <div class="package-row">
-            <span class="package-name">Sunset Stroll (2hr)</span>
-            <span class="package-price">₹1,800</span>
-          </div>
-          <div class="package-row">
-            <span class="package-name">Full Day (6hr)</span>
-            <span class="package-price">₹4,200</span>
-          </div>
-        </div>
-
-        <!--
-          WHATSAPP BOOKING BUTTON
-          ========================
-          How the URL works:
-          https://wa.me/[number]?text=[message]
-
-          The message is URL-encoded:
-          %20 = space
-          %0A = new line
-          %2C = comma
-
-          To customise:
-          1. Change 919876543210 to the real number
-          2. Edit the text after ?text= for each experience
-        -->
-        <a
-          href="https://wa.me/919876543210?text=Hi%20Raju%2C%20I%20found%20you%20on%20Incitetales.%0A%0AI%20want%20to%20book%20a%20boat%20tour%20at%20Maguri%20Beel.%0ADate%3A%20%5Benter%20date%5D%0AGroup%20size%3A%20%5Benter%20number%5D%0APreference%3A%20%5BDawn%20%2F%20Sunset%20%2F%20Full%20day%5D"
-          class="book-whatsapp"
-          target="_blank"
-        >
-          ◆ &nbsp; Book via WhatsApp
-        </a>
-        <p class="book-note">Direct booking · No agency fee<br>Responds within a few hours</p>
-      </div>
-    </div>
-
   </aside>
 </div>
 
@@ -992,7 +825,7 @@ footer {
 <div class="related-section">
   <div class="related-header">
     <div class="related-title">More from Upper Assam</div>
-    <a href="#" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--cream-dim); text-decoration:none; border-bottom:1px solid var(--border2); padding-bottom:2px;">All stories →</a>
+    <a href="../" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--cream-dim); text-decoration:none; border-bottom:1px solid var(--border2); padding-bottom:2px;">All stories →</a>
   </div>
 
   <div class="related-grid">
