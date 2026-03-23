@@ -1,0 +1,39 @@
+name: Generate Story Page
+
+on:
+  repository_dispatch:
+    types: [new-story]
+
+jobs:
+  generate-story:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate story HTML
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          STORY_SLUG: ${{ github.event.client_payload.slug }}
+          STORY_TITLE: ${{ github.event.client_payload.title }}
+          STORY_AUTHOR: ${{ github.event.client_payload.author_name }}
+          STORY_LOCATION: ${{ github.event.client_payload.location }}
+        run: |
+          node .github/scripts/generate-story.js
+
+      - name: Commit and push story
+        run: |
+          git config user.name "Incitetales Bot"
+          git config user.email "hello@incitetales.com"
+          git add stories/
+          git diff --staged --quiet || git commit -m "story: add ${{ github.event.client_payload.slug }}"
+          git push
