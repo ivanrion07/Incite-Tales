@@ -236,20 +236,29 @@
     }
 
     /* ── STORY BODY ── */
-    .story-wrap {
-      max-width: 680px;
+    .article-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 0;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 72px 48px 100px;
+      align-items: start;
     }
 
-    .story-body p {
+    .article-body {
+      padding: 0 64px 0 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .article-body p {
       margin-bottom: 1.6em;
       color: var(--ink2);
       font-size: 18px;
       line-height: 1.85;
     }
 
-    .story-body p:first-child::first-letter {
+    .article-body p:first-child::first-letter {
       font-family: 'Playfair Display', serif;
       font-size: 4.2em;
       font-weight: 700;
@@ -259,7 +268,7 @@
       color: var(--ink);
     }
 
-    .story-body h2 {
+    .article-body h2 {
       font-family: 'Playfair Display', serif;
       font-size: 26px;
       font-weight: 400;
@@ -268,7 +277,7 @@
       line-height: 1.3;
     }
 
-    .story-body blockquote {
+    .article-body blockquote {
       border-left: 3px solid var(--yellow);
       margin: 2em 0;
       padding: 0 0 0 24px;
@@ -306,42 +315,53 @@
     .pull-quote p::before { content: '\201C'; color: var(--yellow); }
     .pull-quote p::after  { content: '\201D'; color: var(--yellow); }
 
-    /* ── FACT BOX ── */
-    .fact-box {
+    .article-sidebar {
+      padding: 0 0 0 40px;
+      position: sticky;
+      top: 88px;
+    }
+
+    .sidebar-card {
       background: var(--bg2);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--yellow);
-      padding: 24px 28px;
-      margin: 2.5em 0;
+      padding: 20px;
+      margin-bottom: 16px;
     }
-    .fact-box-title {
+
+    .sidebar-card-title {
       font-family: 'DM Mono', monospace;
       font-size: 8px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--ink3);
-      margin-bottom: 16px;
+      color: var(--terra);
+      margin-bottom: 14px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--border);
     }
-    .fact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px 24px;
+
+    .fact-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
     }
-    .fact-item {}
+    .fact-row:last-child { border-bottom: none; }
+
     .fact-label {
       font-family: 'DM Mono', monospace;
       font-size: 8px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink3);
-      margin-bottom: 3px;
+      white-space: nowrap;
     }
     .fact-value {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--ink);
-      font-family: 'DM Mono', monospace;
+      text-align: right;
+      line-height: 1.4;
     }
 
     /* ── GETTING THERE ── */
@@ -455,7 +475,9 @@
       .hero-inner { padding: 40px 24px 60px; }
       .story-meta { grid-template-columns: 1fr 1fr; gap: 16px; }
       .meta-item { border-right: none; margin-right: 0; padding-right: 0; }
-      .story-wrap { padding: 48px 24px 60px; }
+      .article-layout { grid-template-columns: 1fr; padding: 48px 24px 60px; }
+      .article-body { padding: 0; border-right: none; }
+      .article-sidebar { padding: 24px 0 0; position: static; top: auto; }
       .pull-quote { margin: 2em -24px; padding: 32px 24px; }
       .hero-image-wrap { height: 300px; }
       .more-stories { padding: 40px 24px; }
@@ -526,8 +548,8 @@
 <div class="image-caption">◆ &nbsp; Upper Dibang Valley · Arunachal Pradesh · The Dibang River in winter</div>
 
 <!-- STORY BODY -->
-<div class="story-wrap">
-  <div class="story-body">
+<div class="article-layout">
+  <article class="article-body">
 
     <p>There is a word carved into the mountain above Anini. Not painted — carved, by cutting trees and clearing jungle, so that helicopter pilots could find the valley from the air during emergencies. You can see it from the back of the government quarters where we lived. ANINI. The mountain announcing itself to anyone who might be looking.</p>
 
@@ -605,37 +627,6 @@
 
     <div class="story-divider">◆</div>
 
-    <!-- FACT BOX -->
-    <div class="fact-box">
-      <div class="fact-box-title">Quick Facts · Anini &amp; Roing</div>
-      <div class="fact-grid">
-        <div class="fact-item">
-          <div class="fact-label">District</div>
-          <div class="fact-value">Upper Dibang Valley (Anini) · Lower Dibang Valley (Roing)</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label">Nearest airport</div>
-          <div class="fact-value">Dibrugarh · 160km from Roing</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label">Best season</div>
-          <div class="fact-value">October – March</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label">Permit needed</div>
-          <div class="fact-value">ILP — arunachalilp.com</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label">Dibrugarh → Roing</div>
-          <div class="fact-value">160km · 5–6 hours</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label">Roing → Anini</div>
-          <div class="fact-value">150km · 6–8 hours via Mayodia Pass</div>
-        </div>
-      </div>
-    </div>
-
     <!-- GETTING THERE -->
     <div class="getting-there">
       <div class="getting-there-title">Getting There</div>
@@ -644,7 +635,41 @@
       <p>ILP (Inner Line Permit) required for all non-Arunachal residents. Apply at arunachalilp.com — same day processing, ₹100. Carry cash from Dibrugarh. No ATM in Anini.</p>
     </div>
 
-  </div>
+  </article>
+
+  <aside class="article-sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">Quick Facts</div>
+      <div class="fact-row">
+        <span class="fact-label">District</span>
+        <span class="fact-value">Upper Dibang Valley · Lower Dibang Valley</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Base towns</span>
+        <span class="fact-value">Anini · Roing</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Best time</span>
+        <span class="fact-value">Oct – Mar</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Nearest airport</span>
+        <span class="fact-value">Dibrugarh</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">To Roing</span>
+        <span class="fact-value">160 km · 5-6 hrs</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">To Anini</span>
+        <span class="fact-value">150 km · 6-8 hrs</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Permit needed</span>
+        <span class="fact-value">ILP required</span>
+      </div>
+    </div>
+  </aside>
 </div>
 
 <!-- MORE STORIES -->
