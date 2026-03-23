@@ -22,6 +22,7 @@
       --yellow-pale:#fffbe8;
       --border:     #ede8d8;
       --border2:    #e0d8c4;
+      --anini-hero-image: url("https://res.cloudinary.com/dzi5yuumz/image/upload/v1774122361/Screenshot_2026-03-22_at_1.15.34_AM_trbsol.png");
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -87,56 +88,87 @@
 
     /* ── HERO ── */
     .story-hero {
-      padding: 120px 0 0;
-      background: var(--bg);
+      margin-top: 57px;
+      height: 70vh;
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(180deg, rgba(28,24,20,0.08) 18%, rgba(28,24,20,0.94) 100%),
+        radial-gradient(ellipse 100% 60% at 50% 80%, rgba(42,92,72,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 40% at 30% 20%, rgba(245,200,66,0.08) 0%, transparent 50%),
+        var(--anini-hero-image);
+      background-size: cover;
+      background-position: center;
+      transition: transform 8s ease;
+    }
+    .story-hero:hover .hero-img {
+      transform: scale(1.02);
+    }
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      bottom: 35%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 10%, rgba(245,200,66,0.12), rgba(42,92,72,0.18), rgba(245,200,66,0.12), transparent 90%);
     }
     .hero-inner {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 60px 48px 80px;
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      padding: 0 48px 48px;
     }
     .breadcrumb {
       font-family: 'DM Mono', monospace;
       font-size: 9px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink3);
-      margin-bottom: 28px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .breadcrumb a { color: var(--ink3); text-decoration: none; transition: color 0.2s; }
-    .breadcrumb a:hover { color: var(--ink); }
-    .breadcrumb span { opacity: 0.5; }
+    .breadcrumb a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--yellow); }
+    .breadcrumb span { color: var(--yellow); opacity: 1; }
 
     .story-tag {
       font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.22em;
+      font-size: 8px;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--terra);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      color: var(--yellow);
+      border: 1px solid rgba(245,200,66,0.35);
+      padding: 4px 10px;
+      margin-bottom: 16px;
+      display: inline-block;
     }
-    .story-tag::before { content: '◆'; font-size: 7px; }
+    .story-tag::before { content: none; }
 
     .story-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 5vw, 56px);
+      font-size: clamp(36px, 5vw, 62px);
       font-weight: 400;
-      color: var(--ink);
+      color: #ffffff;
       line-height: 1.05;
       letter-spacing: -0.01em;
       margin-bottom: 20px;
     }
-    .story-title em { font-style: italic; color: var(--terra); }
+    .story-title em { font-style: italic; color: var(--yellow-pale); }
 
     .story-lede {
       font-size: 17px;
-      color: var(--ink2);
+      color: rgba(255,255,255,0.7);
       font-style: italic;
       line-height: 1.55;
       max-width: 560px;
@@ -171,57 +203,6 @@
       letter-spacing: 0.1em;
       color: rgba(255,255,255,0.75);
       font-weight: 500;
-    }
-
-    /* ── HERO IMAGE ── */
-    .hero-image-wrap {
-      width: 100%;
-      height: 520px;
-      overflow: hidden;
-      position: relative;
-    }
-    .hero-image-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-image-placeholder {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1c1814 0%, #2a5c48 45%, #8b4a2a 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
-    .placeholder-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-    .placeholder-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      color: rgba(255,255,255,0.85);
-      font-weight: 400;
-      text-align: center;
-      max-width: 600px;
-      padding: 0 24px;
-      line-height: 1.2;
-    }
-    .image-caption {
-      font-family: 'DM Mono', monospace;
-      font-size: 8.5px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink3);
-      padding: 12px 48px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
     }
 
     /* ── STORY BODY ── */
@@ -461,14 +442,13 @@
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
       .nav-links { display: none; }
-      .hero-inner { padding: 40px 24px 60px; }
+      .hero-inner { padding: 0 24px 40px; }
       .story-meta { grid-template-columns: 1fr 1fr; gap: 16px; }
       .meta-item { border-right: none; margin-right: 0; padding-right: 0; }
       .article-layout { grid-template-columns: 1fr; padding: 48px 24px 60px; }
       .article-body { padding: 0; border-right: none; }
       .article-sidebar { padding: 24px 0 0; position: static; top: auto; }
       .pull-quote { margin: 2em -24px; padding: 32px 24px; }
-      .hero-image-wrap { height: 300px; }
       .more-stories { padding: 40px 24px; }
       .story-cards { grid-template-columns: 1fr; }
       footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
@@ -492,6 +472,7 @@
 
 <!-- HERO -->
 <div class="story-hero">
+  <div class="hero-img"></div>
   <div class="hero-inner">
     <div class="breadcrumb">
       <a href="/">Home</a>
@@ -529,12 +510,6 @@
     </div>
   </div>
 </div>
-
-<!-- HERO IMAGE -->
-<div class="hero-image-wrap">
-  <img src="https://res.cloudinary.com/dzi5yuumz/image/upload/v1774122361/Screenshot_2026-03-22_at_1.15.34_AM_trbsol.png" alt="Anini in Upper Dibang Valley, Arunachal Pradesh">
-</div>
-<div class="image-caption">◆ &nbsp; Upper Dibang Valley · Arunachal Pradesh · The Dibang River in winter</div>
 
 <!-- STORY BODY -->
 <div class="article-layout">
