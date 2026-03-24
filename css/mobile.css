@@ -1,0 +1,271 @@
+/*
+ * mobile.css — Incitetales
+ * Shared mobile styles for all pages except homepage
+ * Link: <link rel="stylesheet" href="../css/mobile.css">
+ */
+
+@media (max-width: 768px) {
+
+  /* ── NAV ── */
+  nav {
+    padding: 14px 20px !important;
+  }
+
+  /* ── STORY PAGES (maguri-beel, anini) ── */
+  .story-hero {
+    padding: 90px 20px 40px !important;
+  }
+  .hero-content {
+    padding: 0 20px 32px !important;
+  }
+  .story-headline {
+    font-size: clamp(28px, 8vw, 44px) !important;
+  }
+  .story-standfirst {
+    font-size: 15px !important;
+  }
+  .article-layout {
+    display: block !important;
+    padding: 0 20px !important;
+  }
+  .article-body {
+    padding: 40px 0 32px !important;
+    border-right: none !important;
+  }
+  .article-body p {
+    font-size: 16px !important;
+  }
+  .article-body h2 {
+    font-size: 24px !important;
+  }
+  .pullquote p {
+    font-size: 18px !important;
+  }
+  .article-sidebar {
+    position: static !important;
+    padding: 0 0 40px !important;
+    border-top: 1px solid var(--border);
+  }
+  .article-meta {
+    padding: 12px 20px !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .meta-left {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .meta-divider { display: none !important; }
+  .meta-right { display: none !important; }
+  .related-section {
+    padding: 40px 20px !important;
+  }
+  .related-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── STORY HERO (anini style) ── */
+  .hero-headline {
+    font-size: clamp(32px, 9vw, 52px) !important;
+    margin-bottom: 20px !important;
+  }
+  .hero-quote {
+    font-size: 15px !important;
+  }
+  .story-wrap {
+    padding: 40px 20px 60px !important;
+  }
+  .pull-quote {
+    margin: 2em -20px !important;
+    padding: 28px 20px !important;
+  }
+  .getting-there {
+    padding: 24px 20px !important;
+  }
+  .more-stories {
+    padding: 40px 20px !important;
+  }
+  .story-cards {
+    grid-template-columns: 1fr !important;
+  }
+  footer {
+    padding: 28px 20px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+
+  /* ── ITINERARY BUILDER ── */
+  .builder-layout {
+    display: block !important;
+    padding: 0 !important;
+  }
+  .builder-sidebar {
+    padding: 20px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .builder-main {
+    padding: 20px !important;
+  }
+  .builder-hero {
+    padding: 90px 20px 40px !important;
+  }
+  .form-grid,
+  .field-row,
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+  .idea-input-wrap,
+  .idea-section {
+    padding: 20px !important;
+  }
+  .generate-btn,
+  #generate-btn,
+  #idea-generate-btn {
+    width: 100% !important;
+  }
+  .insight-selector {
+    margin: 0 -20px !important;
+  }
+  .interpretation-card {
+    padding: 20px !important;
+  }
+  .interpretation-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* ── ITINERARY RESULT ── */
+  .result-hero {
+    padding: 90px 20px 40px !important;
+  }
+  .result-wrap {
+    padding: 32px 20px 60px !important;
+  }
+  .day-card {
+    padding: 20px !important;
+  }
+  .info-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .result-actions {
+    flex-direction: column !important;
+    padding: 20px !important;
+  }
+
+  /* ── SHARE YOUR STORY ── */
+  .page-hero {
+    padding: 90px 20px 48px !important;
+  }
+  .form-wrap {
+    padding: 40px 20px 60px !important;
+  }
+  .field-row {
+    grid-template-columns: 1fr !important;
+  }
+  .compare-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .compare-panel-body {
+    max-height: 240px !important;
+  }
+  .confirm-btns {
+    flex-direction: column !important;
+  }
+  .btn-publish,
+  .btn-edit {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .success-state {
+    padding: 40px 20px !important;
+  }
+
+  /* ── STORIES LISTING PAGE ── */
+  .page-header {
+    padding: 90px 20px 40px !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .total-count { text-align: left !important; }
+  .total-num { font-size: 48px !important; }
+  .tabs-bar {
+    padding: 0 20px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .places-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .place-card {
+    height: 280px !important;
+  }
+  .place-name {
+    font-size: clamp(28px, 8vw, 40px) !important;
+  }
+  .field-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .bottom-cta {
+    flex-direction: column !important;
+    padding: 40px 20px !important;
+    gap: 20px !important;
+  }
+  .btn-yellow {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* ── DISCOVER NE / EXPLORE NEARBY / MERCH ── */
+  .section-wrap {
+    padding: 48px 20px !important;
+  }
+  .grid-2,
+  .grid-3,
+  .card-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .section-header {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+
+  /* ── UNIVERSAL FIXES ── */
+  h1 { font-size: clamp(28px, 8vw, 48px) !important; }
+  h2 { font-size: clamp(22px, 6vw, 36px) !important; }
+
+  /* Prevent horizontal scroll */
+  img, video, iframe {
+    max-width: 100% !important;
+  }
+
+  /* Touch-friendly tap targets */
+  a, button {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* Table overflow on mobile */
+  .fact-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+    padding: 0 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .place-card {
+    height: 240px !important;
+  }
+  .interpretation-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
