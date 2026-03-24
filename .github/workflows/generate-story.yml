@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Generate story HTML
         env:
@@ -28,6 +28,8 @@ jobs:
           STORY_AUTHOR: ${{ github.event.client_payload.author_name }}
           STORY_LOCATION: ${{ github.event.client_payload.location }}
         run: |
+          echo "Story slug: $STORY_SLUG"
+          echo "Supabase URL: $SUPABASE_URL"
           node .github/scripts/generate-story.js
 
       - name: Commit and push story
