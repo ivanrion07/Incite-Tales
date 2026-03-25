@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incitetales — Technical Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap');
+
+  :root {
+    --bg: #0e0e0e;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --border: #2a2a2a;
+    --border2: #333;
+    --gold: #c8a96e;
+    --gold2: #e8c88e;
+    --text: #e8e4dc;
+    --text2: #a89880;
+    --text3: #6a5f52;
+    --green: #4a9e6a;
+    --blue: #5a8fbf;
+    --amber: #d4943a;
+    --red: #c05a4a;
+    --purple: #8a7abf;
+    --teal: #4a9e9e;
+    --sans: 'Lato', sans-serif;
+    --serif: 'Playfair Display', Georgia, serif;
+    --mono: 'Source Code Pro', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── Layout ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 32px 0;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo span { display: block; font-family: var(--sans); font-size: 11px; color: var(--text3); letter-spacing: 1px; margin-top: 4px; }
+
+  .nav-section { padding: 8px 24px 4px; font-size: 10px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase; margin-top: 8px; }
+  .nav-item { display: block; padding: 7px 24px; font-size: 13px; color: var(--text2); text-decoration: none; border-left: 2px solid transparent; transition: all 0.15s; }
+  .nav-item:hover, .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(200,169,110,0.06); }
+
+  .main {
+    margin-left: 260px;
+    max-width: 900px;
+    padding: 64px 56px 120px;
+  }
+
+  /* ── Typography ── */
+  h1 { font-family: var(--serif); font-size: 42px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 12px; }
+  h2 { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--text); margin: 56px 0 20px; padding-top: 56px; border-top: 1px solid var(--border); }
+  h3 { font-family: var(--sans); font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; margin: 32px 0 12px; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; }
+  h4 { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--text); margin: 24px 0 8px; }
+  p { margin-bottom: 16px; color: var(--text2); }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .lead { font-size: 17px; color: var(--text); line-height: 1.8; margin-bottom: 32px; }
+  .meta { font-size: 12px; color: var(--text3); letter-spacing: 1px; margin-bottom: 40px; }
+  .meta span { display: inline-block; margin-right: 20px; }
+
+  /* ── Code ── */
+  code { font-family: var(--mono); font-size: 13px; background: var(--bg3); color: var(--gold2); padding: 2px 6px; border-radius: 3px; border: 1px solid var(--border); }
+  pre { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 6px; padding: 20px 24px; overflow-x: auto; margin: 20px 0; }
+  pre code { background: none; border: none; padding: 0; color: var(--text); font-size: 13px; line-height: 1.6; }
+
+  /* ── Diagram container ── */
+  .diagram-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 24px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+  .diagram-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .badge-done { background: rgba(74,158,106,0.15); color: var(--green); border: 1px solid rgba(74,158,106,0.3); }
+  .badge-wip  { background: rgba(212,148,58,0.15); color: var(--amber); border: 1px solid rgba(212,148,58,0.3); }
+  .badge-plan { background: rgba(90,143,191,0.15); color: var(--blue);  border: 1px solid rgba(90,143,191,0.3); }
+  .badge-v    { background: rgba(200,169,110,0.1); color: var(--gold);  border: 1px solid rgba(200,169,110,0.25); }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  th { background: var(--bg3); color: var(--gold); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border2); }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; }
+  .card-title { font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .card-val { font-size: 22px; font-family: var(--serif); color: var(--text); }
+  .card-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 28px; margin: 20px 0; }
+  .timeline::before { content:''; position:absolute; left:6px; top:8px; bottom:8px; width:1px; background: var(--border2); }
+  .tl-item { position: relative; margin-bottom: 28px; }
+  .tl-dot { position:absolute; left:-28px; top:4px; width:13px; height:13px; border-radius:50%; border:2px solid var(--gold); background:var(--bg); }
+  .tl-dot.done { background: var(--gold); }
+  .tl-date { font-size: 11px; color: var(--text3); letter-spacing: 1px; margin-bottom: 4px; }
+  .tl-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .tl-body { font-size: 13px; color: var(--text2); }
+
+  /* ── Env table ── */
+  .env-row { display: flex; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .env-key { font-family: var(--mono); color: var(--gold2); font-size: 12px; min-width: 200px; }
+  .env-val { color: var(--text2); }
+
+  /* ── Section hero ── */
+  .section-hero { background: linear-gradient(135deg, rgba(200,169,110,0.08), rgba(200,169,110,0.02)); border: 1px solid rgba(200,169,110,0.15); border-radius: 8px; padding: 28px 32px; margin-bottom: 32px; }
+
+  /* ── SVG diagram overrides ── */
+  svg text { fill: var(--text2); font-family: var(--sans); }
+  svg .node-label { fill: var(--text); font-weight: 700; }
+  svg .node-sub  { fill: var(--text3); font-size: 12px; }
+</style>
+
+<style>
+  /* --- Force backgrounds to print (Chrome strips them by default) --- */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* --- Fill entire page with dark background --- */
+  html, body {
+    background: #0e0e0e !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* --- Remove sidebar --- */
+  .sidebar { display: none !important; }
+
+  /* --- Main content: full width, no side margins --- */
+  .main {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    padding: 40px 56px 60px !important;
+  }
+
+  /* --- Tighten section spacing to reduce blank pages --- */
+  h2 {
+    margin-top: 32px !important;
+    padding-top: 32px !important;
+  }
+
+  /* --- Page settings --- */
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  /* --- Print-specific --- */
+  @media print {
+    html, body { background: #0e0e0e !important; }
+    .sidebar { display: none !important; }
+    .main {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: 100% !important;
+      padding: 40px 56px 60px !important;
+    }
+    h2 { margin-top: 32px !important; padding-top: 32px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">INCITETALES<span>Technical Documentation</span></div>
+  <div class="nav-section">Overview</div>
+  <a class="nav-item active" href="#overview">Project Overview</a>
+  <a class="nav-item" href="#stack">Tech Stack</a>
+  <a class="nav-item" href="#versions">Version History</a>
+  <div class="nav-section">Architecture</div>
+  <a class="nav-item" href="#site-arch">Site Architecture</a>
+  <a class="nav-item" href="#story-pipeline">Story Pipeline</a>
+  <a class="nav-item" href="#itinerary">Itinerary Builder</a>
+  <a class="nav-item" href="#insightengine">InsightEngine v3.0</a>
+  <div class="nav-section">Infrastructure</div>
+  <a class="nav-item" href="#infra">Infrastructure Map</a>
+  <a class="nav-item" href="#env">Environment Variables</a>
+  <a class="nav-item" href="#database">Database Schema</a>
+  <div class="nav-section">Roadmap</div>
+  <a class="nav-item" href="#phases">Phase Roadmap</a>
+  <a class="nav-item" href="#masi">MASI / Grants</a>
+  <a class="nav-item" href="#ops">Daily Ops</a>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <section id="overview">
+    <div class="meta">
+      <span>v3.0 — March 2026</span>
+      <span>Last updated: 25 Mar 2026</span>
+      <span>Guwahati, Assam</span>
+    </div>
+    <h1>Incitetales</h1>
+    <p class="lead">Northeast India's first community-powered travel intelligence platform — where traveller stories directly improve AI-generated itineraries. Built from Guwahati by Indranuj.</p>
+
+    <div class="card-grid">
+      <div class="card"><div class="card-title">Live URL</div><div class="card-val" style="font-size:14px;"><a href="https://ivanrion07.github.io/Incite-Tales">incitetales.com</a></div><div class="card-sub">GitHub Pages</div></div>
+      <div class="card"><div class="card-title">Phase</div><div class="card-val">1</div><div class="card-sub">Pipeline live · MASI submission</div></div>
+      <div class="card"><div class="card-title">Launch target</div><div class="card-val">Apr 2026</div><div class="card-sub">MASI submission deadline</div></div>
+      <div class="card"><div class="card-title">Stories live</div><div class="card-val">2</div><div class="card-sub">Editorial stories live</div></div>
+    </div>
+
+    <h3>What Incitetales is</h3>
+    <p>Northeast India's first AI-powered travel intelligence platform built on verified local knowledge. Core product: an AI itinerary builder anchored in a structured destination database built from personal field experience across Assam, Arunachal Pradesh, Meghalaya, Nagaland, Mizoram, and Sikkim.</p>
+<p><strong>Revenue model — in order of activation:</strong></p>
+<p><strong>1. Booking commission</strong> — Traveller generates an itinerary, selects experiences (stays, guides, activities, transport). Incitetales books everything on their behalf and keeps a small commission per booking. Operators keep the majority. This is the primary revenue engine once operator network is live.</p>
+<p><strong>2. Operator monthly subscription</strong> — Homestays, taxi operators, local guides, and experience providers pay a fixed monthly subscription to be listed, verified, and featured within Incitetales itineraries. Subscription-only — no per-booking deduction on top. Operators who earn more from Incitetales bookings move to higher tiers.</p>
+<p><strong>3. Newsletter sponsorship</strong> — The Incitetales weekly newsletter reaches a pre-qualified Northeast India travel audience. Regional tourism brands, hospitality businesses, and travel companies sponsor issues at fixed rates. Editorial independence maintained.</p>
+<p><strong>4. NE India knowledge API (Phase 4)</strong> — As the verified destination database grows across all eight Northeast states, the structured intelligence becomes licensable to travel companies, OTAs, and state tourism departments who need accurate NE India data they cannot build themselves.</p>
+
+    <h3>What makes it different</h3>
+    <table>
+      <tr><th>vs</th><th>Competitor</th><th>Incitetales advantage</th></tr>
+      <tr><td>Government NE tourism sites</td><td>Static brochures, no soul</td><td>Living platform — stories grow the AI</td></tr>
+      <tr><td>Travel blogs</td><td>One person, frozen in time</td><td>Community-sourced, multi-voice, verified</td></tr>
+      <tr><td>MakeMyTrip / Thrillophilia</td><td>Sell packages from Delhi</td><td>Built from Guwahati — Arunachal permit intelligence no OTA offers</td></tr>
+      <tr><td>Other Assam-made platforms</td><td>Operator sites dressed as content</td><td>Content-first, trust before booking, InsightEngine flywheel</td></tr>
+    </table>
+  </section>
+
+  <!-- ═══ STACK ═══ -->
+  <section id="stack">
+    <h2>Tech Stack</h2>
+    <div class="diagram-box">
+      <div class="diagram-label">Full Stack Overview</div>
+      <svg width="100%" viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#6a5f52" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- Frontend -->
+        <rect x="20" y="20" width="200" height="290" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <text x="120" y="46" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="11" letter-spacing="2" font-weight="700">FRONTEND</text>
+        <rect x="36" y="58" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="120" y="73" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">GitHub Pages</text>
+        <text x="120" y="88" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">ivanrion07.github.io</text>
+        <rect x="36" y="108" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="120" y="123" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">HTML / CSS / JS</text>
+        <text x="120" y="138" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">No framework</text>
+        <rect x="36" y="158" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="120" y="173" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Google Analytics</text>
+        <text x="120" y="188" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">GA4 — G-43DB1SDT7Z</text>
+        <rect x="36" y="208" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="120" y="223" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Figma + Procreate</text>
+        <text x="120" y="238" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Design + illustration</text>
+        <rect x="36" y="258" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="120" y="273" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">VS Code + Gemini CLI</text>
+        <text x="120" y="288" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Dev environment</text>
+
+        <!-- Backend -->
+        <rect x="240" y="20" width="200" height="200" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <text x="340" y="46" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="11" letter-spacing="2" font-weight="700">BACKEND</text>
+        <rect x="256" y="58" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="340" y="73" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Cloudflare Worker</text>
+        <text x="340" y="88" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">incitetales-api.workers.dev</text>
+        <rect x="256" y="108" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="340" y="123" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Groq API</text>
+        <text x="340" y="138" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">llama-3.3-70b-versatile</text>
+        <rect x="256" y="158" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="340" y="173" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Brevo</text>
+        <text x="340" y="188" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c64696060634c65626f657869786d60697f226f6361">[email&#160;protected]</a></text>
+
+        <!-- Data -->
+        <rect x="460" y="20" width="200" height="200" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <text x="560" y="46" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="11" letter-spacing="2" font-weight="700">DATA + CI/CD</text>
+        <rect x="476" y="58" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="560" y="73" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Supabase</text>
+        <text x="560" y="88" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">stories + insights tables</text>
+        <rect x="476" y="108" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="560" y="123" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">GitHub Actions</text>
+        <text x="560" y="138" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Auto story page gen</text>
+        <rect x="476" y="158" width="168" height="38" rx="6" fill="#222" stroke="#333"/>
+        <text x="560" y="173" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Squarespace DNS</text>
+        <text x="560" y="188" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">incitetales.com domain</text>
+
+        <!-- Arrows frontend → backend -->
+        <line x1="220" y1="180" x2="240" y2="150" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr)" opacity="0.5"/>
+        <line x1="440" y1="130" x2="460" y2="130" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr)" opacity="0.5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ VERSION HISTORY ═══ -->
+  <section id="versions">
+    <h2>Version History</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot done"></div>
+        <div class="tl-date">MAR 2026 — CURRENT</div>
+        <div class="tl-title">v3.0 — InsightEngine + Story Pipeline <span class="badge badge-v">v3.0</span></div>
+        <div class="tl-body">InsightEngine v3.0 live — Cloudflare Worker reads Supabase insights table, fuzzy-matches destination, injects verified facts into Groq system prompt. Share Your Story pipeline fully working. GitHub Actions auto-generates story pages. Stories listing page with Editorial + Field tabs. GA4 installed across all pages. Supabase stories + insights tables live. Homepage redesigned with carousel.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot done"></div>
+        <div class="tl-date">MAR 2026</div>
+        <div class="tl-title">v2.0 — Itinerary Builder + Email <span class="badge badge-v">v2.0</span></div>
+        <div class="tl-body">Cloudflare Worker deployed with Groq API integration (llama-3.3-70b). Brevo email delivery wired to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3bbb6bfbfbc93babdb0baa7b6a7b2bfb6a0fdb0bcbe">[email&#160;protected]</a>. 5-step form flow on itinerary-builder.html. Arunachal permit intelligence added as key differentiator. Covers: Assam, Meghalaya, Mizoram, Arunachal (Dibang Valley, Kameng, Mechuka, Lohit), Goa, Darjeeling, Sikkim.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot done"></div>
+        <div class="tl-date">MAR 2026</div>
+        <div class="tl-title">v1.0 — Site launch + First Story <span class="badge badge-v">v1.0</span></div>
+        <div class="tl-body">index.html live on GitHub Pages. maguri-beel.html — first story page (Maguri Beel, Assam). Squarespace domain pointing to GitHub Pages. Basic nav, footer, brand identity established.</div>
+      </div>
+    </div>
+
+    <h3>What's Built</h3>
+    <table>
+      <tr><th>Feature</th><th>Details</th><th>Status</th></tr>
+      <tr><td>Homepage</td><td>Full dark hero, 9-image carousel, yellow ticker, What is Incitetales, Bridge CTA, newsletter</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Editorial Stories</td><td>Maguri Beel (Tinsukia) + Anini-Roing (Upper Dibang Valley) — long-form, personal, verified</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Stories Listing Page</td><td>Magazine layout, Editorial tab (state cards) + Field Stories tab (Supabase-powered, dynamic)</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Share Your Story</td><td>Submission form → Groq polish + extract → before/after confirmation → Supabase save → GitHub Actions page gen</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>AI Itinerary Builder</td><td>Idea parser, intent detection, InsightEngine scope match, Groq generation, result page, email delivery</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>InsightEngine v3.0</td><td>Unified brain — 16 JSON entries (8 insights + 8 Arunachal districts) + Supabase insights table. Smart extractor, AI-only flag, geographic guard</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Supabase Database</td><td>stories table (field submissions) + insights table (AI-extracted place data). RLS policies, public read/insert</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>GitHub Actions Runner</td><td>repository_dispatch trigger → fetch story from Supabase → generate HTML → commit + push → Pages deploys</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Cloudflare Worker v2</td><td>Handles itinerary generation, story polish + extract, story publish, Supabase save, GitHub dispatch</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>GA4 Analytics</td><td>G-43DB1SDT7Z — installed across all pages. Page views, scrolls, outbound clicks tracked.</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Mobile CSS</td><td>Shared css/mobile.css across all 9 pages — single file fix</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Arunachal Destination DB</td><td>8 districts — West Kameng, Tawang, Ziro, Mechuka, Dibang Valley, Changlang, East Siang, Lohit/Namsai</td><td><span class="badge badge-done">✓ Live</span></td></tr>
+      <tr><td>Why Incitetales page</td><td>Separate page at /why-incitetales/</td><td><span class="badge badge-wip">⏳ Building</span></td></tr>
+      <tr><td>Mobile navigation</td><td>Hamburger menu for all pages</td><td><span class="badge badge-wip">⏳ Building</span></td></tr>
+      <tr><td>MASI ID application</td><td>All text drafted, innovation note ready — submission pending</td><td><span class="badge badge-wip">⏳ Pending</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ═══ SITE ARCHITECTURE ═══ -->
+  <section id="site-arch">
+    <h2>Site Architecture</h2>
+    <p>Incitetales runs on a deliberately lean architecture — static HTML on GitHub Pages, no framework, no build step. Every page is hand-authored, every CSS class is intentional, every line of JS earns its place. The stack was chosen to stay under ₹1,000/month forever, deploy in seconds, and never go down because a dependency broke. The intelligence lives in the data — not the infrastructure.</p>
+
+    <div class="diagram-box">
+      <div class="diagram-label">Page Structure</div>
+      <svg width="100%" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- Root -->
+        <rect x="300" y="20" width="160" height="48" rx="8" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="380" y="41" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="13" font-weight="700">index.html</text>
+        <text x="380" y="57" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Homepage</text>
+
+        <!-- L1 pages -->
+        <rect x="40" y="120" width="150" height="48" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="115" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">stories/</text>
+        <text x="115" y="157" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">index.html — listing</text>
+
+        <rect x="220" y="120" width="150" height="48" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="295" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">itinerary-builder</text>
+        <text x="295" y="157" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">.html — AI builder</text>
+
+        <rect x="400" y="120" width="150" height="48" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="475" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">share-your-story</text>
+        <text x="475" y="157" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">.html — submission</text>
+
+        <rect x="580" y="120" width="150" height="48" rx="8" fill="#1a2420" stroke="#4a9e6a" stroke-width="1"/>
+        <text x="655" y="141" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="13" font-weight="700">Discover NE</text>
+        <text x="655" y="157" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Planned — Phase 2</text>
+
+        <!-- L2 story pages -->
+        <rect x="20" y="260" width="130" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+        <text x="85" y="278" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="12" font-weight="700">maguri-beel.html</text>
+        <text x="85" y="293" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Maguri Beel</text>
+
+        <rect x="165" y="260" width="130" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+        <text x="230" y="278" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="12" font-weight="700">assam-diaries.html</text>
+        <text x="230" y="293" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Assam Diaries</text>
+
+        <rect x="20" y="320" width="275" height="36" rx="6" fill="#161616" stroke="#222"/>
+        <text x="157" y="343" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">+ 4 more story pages (auto-generated by GitHub Actions)</text>
+
+        <!-- Arrows from root -->
+        <line x1="340" y1="68" x2="160" y2="120" stroke="#c8a96e" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.5"/>
+        <line x1="370" y1="68" x2="300" y2="120" stroke="#c8a96e" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.5"/>
+        <line x1="400" y1="68" x2="470" y2="120" stroke="#c8a96e" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.5"/>
+        <line x1="420" y1="68" x2="640" y2="120" stroke="#4a9e6a" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.4" stroke-dasharray="4 3"/>
+
+        <!-- Arrows from stories/ -->
+        <line x1="100" y1="168" x2="80" y2="260" stroke="#6a5f52" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.6"/>
+        <line x1="130" y1="168" x2="210" y2="260" stroke="#6a5f52" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.6"/>
+        <line x1="115" y1="168" x2="155" y2="320" stroke="#6a5f52" stroke-width="0.8" marker-end="url(#arr2)" opacity="0.4" stroke-dasharray="3 3"/>
+
+        <!-- GitHub Actions label -->
+        <rect x="380" y="280" width="170" height="32" rx="6" fill="#1a2018" stroke="#4a9e6a" stroke-width="0.8"/>
+        <text x="465" y="300" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="12">⚙ GitHub Actions auto-gen</text>
+        <line x1="290" y1="338" x2="380" y2="296" stroke="#4a9e6a" stroke-width="0.7" opacity="0.5" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ STORY PIPELINE ═══ -->
+  <section id="story-pipeline">
+    <h2>Story Submission Pipeline</h2>
+    <p>The pipeline transforms a raw user story submission into a published HTML page and a structured insight row in Supabase — fully automated once triggered.</p>
+
+    <div class="diagram-box">
+      <div class="diagram-label">End-to-End Story Pipeline</div>
+      <svg width="100%" viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+          <marker id="arr3g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#4a9e6a" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+
+        <!-- Step 1: User submits -->
+        <rect x="280" y="20" width="200" height="56" rx="8" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="380" y="43" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="13" font-weight="700">User submits story</text>
+        <text x="380" y="62" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">share-your-story.html form</text>
+
+        <!-- Arrow -->
+        <line x1="380" y1="76" x2="380" y2="108" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr3)"/>
+
+        <!-- Step 2: Groq polish -->
+        <rect x="280" y="108" width="200" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="380" y="131" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Groq polishes text</text>
+        <text x="380" y="149" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">llama-3.3-70b-versatile</text>
+
+        <!-- Arrow -->
+        <line x1="380" y1="164" x2="380" y2="196" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr3)"/>
+
+        <!-- Step 3: JSON extraction -->
+        <rect x="280" y="196" width="200" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="380" y="219" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">JSON extraction</text>
+        <text x="380" y="237" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">slug, title, place, content</text>
+
+        <!-- Fork -->
+        <line x1="380" y1="252" x2="380" y2="284" stroke="#c8a96e" stroke-width="1"/>
+        <line x1="380" y1="284" x2="180" y2="284" stroke="#c8a96e" stroke-width="1"/>
+        <line x1="380" y1="284" x2="580" y2="284" stroke="#c8a96e" stroke-width="1"/>
+        <line x1="180" y1="284" x2="180" y2="316" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr3)"/>
+        <line x1="580" y1="284" x2="580" y2="316" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr3)"/>
+
+        <!-- Step 4a: GitHub Actions -->
+        <rect x="80" y="316" width="200" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="180" y="339" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">GitHub Actions</text>
+        <text x="180" y="357" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Writes .html story page</text>
+
+        <!-- Step 4b: Supabase -->
+        <rect x="480" y="316" width="200" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="580" y="339" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Supabase INSERT</text>
+        <text x="580" y="357" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">stories + insights tables</text>
+
+        <!-- Arrows to output -->
+        <line x1="180" y1="372" x2="180" y2="404" stroke="#4a9e6a" stroke-width="1" marker-end="url(#arr3g)"/>
+        <line x1="580" y1="372" x2="580" y2="404" stroke="#4a9e6a" stroke-width="1" marker-end="url(#arr3g)"/>
+
+        <!-- Outputs -->
+        <rect x="80" y="404" width="200" height="56" rx="8" fill="#1a2018" stroke="#4a9e6a" stroke-width="1"/>
+        <text x="180" y="427" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="13" font-weight="700">Live story page</text>
+        <text x="180" y="445" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Auto-published on GitHub Pages</text>
+
+        <rect x="480" y="404" width="200" height="56" rx="8" fill="#1a2018" stroke="#4a9e6a" stroke-width="1"/>
+        <text x="580" y="427" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="13" font-weight="700">InsightEngine row</text>
+        <text x="580" y="445" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Feeds smarter itineraries</text>
+
+        <!-- Manual verify step -->
+        <rect x="420" y="470" width="260" height="36" rx="6" fill="#1e1a14" stroke="#c8a96e" stroke-width="0.8"/>
+        <text x="550" y="493" text-anchor="middle" fill="#a89060" font-family="Lato,sans-serif" font-size="12">⚠ Manual: SET verified=true in Supabase</text>
+        <line x1="580" y1="460" x2="550" y2="470" stroke="#c8a96e" stroke-width="0.7" opacity="0.5" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+
+    <h3>Insights Table Schema</h3>
+    <pre><code>Table: insights
+─────────────────────────────────────────────────────
+id               uuid        primary key
+story_id         uuid        FK → stories.id
+story_slug       text        e.g. "assam-diaries"
+geographic_scope text[]      ["Jorhat", "Assam", "Majuli"]
+verified_facts   text[]      ["Jorhat has lush tea gardens", ...]
+local_tips       text[]      ["immerse in cultural experiences", ...]
+warnings         text[]      [] currently empty
+stays            text[]      [] currently empty
+routes           text[]      [] currently empty
+season_notes     text        null currently
+hidden_score     integer     0-10 quality signal
+verified         boolean     false → must flip manually
+created_at       timestamptz auto
+</code></pre>
+  </section>
+
+  <!-- ═══ ITINERARY BUILDER ═══ -->
+  <section id="itinerary">
+    <h2>Itinerary Builder — User Flow</h2>
+    <p>A 5-step form on <code>itinerary-builder.html</code> that collects trip preferences, sends them to the Cloudflare Worker, and returns a personalised itinerary + optional email delivery.</p>
+
+    <div class="diagram-box">
+      <div class="diagram-label">5-Step Form Flow</div>
+      <svg width="100%" viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- Steps -->
+        <rect x="20"  y="40" width="120" height="72" rx="8" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="80"  y="68" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="11" font-weight="700">Step 1</text>
+        <text x="80"  y="84" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Destination</text>
+        <text x="80"  y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Where to?</text>
+
+        <line x1="140" y1="76" x2="160" y2="76" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr4)"/>
+
+        <rect x="160" y="40" width="120" height="72" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="220" y="68" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700">Step 2</text>
+        <text x="220" y="84" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Duration</text>
+        <text x="220" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">How long?</text>
+
+        <line x1="280" y1="76" x2="300" y2="76" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr4)"/>
+
+        <rect x="300" y="40" width="120" height="72" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="360" y="68" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700">Step 3</text>
+        <text x="360" y="84" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Group + Style</text>
+        <text x="360" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Solo / couple / group</text>
+
+        <line x1="420" y1="76" x2="440" y2="76" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr4)"/>
+
+        <rect x="440" y="40" width="120" height="72" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="500" y="68" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700">Step 4</text>
+        <text x="500" y="84" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Budget</text>
+        <text x="500" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Budget / mid / luxury</text>
+
+        <line x1="560" y1="76" x2="580" y2="76" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr4)"/>
+
+        <rect x="580" y="40" width="160" height="72" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="660" y="68" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700">Step 5</text>
+        <text x="660" y="84" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Email (optional)</text>
+        <text x="660" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Send to inbox via Brevo</text>
+      </svg>
+    </div>
+
+    <h3>Covered Destinations</h3>
+    <table>
+      <tr><th>Region</th><th>Destinations</th><th>Permit note</th></tr>
+      <tr><td>Assam</td><td>Majuli, Jorhat, Kaziranga, Guwahati, Manas, Dibru-Saikhowa, Maguri Beel</td><td>None required</td></tr>
+      <tr><td>Meghalaya</td><td>Shillong, Cherrapunji, Dawki, Mawlynnong</td><td>None required</td></tr>
+      <tr><td>Mizoram</td><td>Aizawl, Phawngpui</td><td>ILP for non-NE Indians</td></tr>
+      <tr><td>Arunachal</td><td>Dibang Valley, Kameng, Mechuka, Lohit, Tawang</td><td>ILP (Indian) / RAP+PAP (Foreign) — per-district intelligence built in</td></tr>
+      <tr><td>Nagaland</td><td>Dimapur, Kohima, Dzukou Valley</td><td>ILP for non-NE Indians</td></tr>
+      <tr><td>Sikkim</td><td>Gangtok, Gurudongmar, North Sikkim</td><td>PAP for restricted areas</td></tr>
+    </table>
+  </section>
+
+  <!-- ═══ INSIGHTENGINE ═══ -->
+  <section id="insightengine">
+    <h2>InsightEngine v3.0</h2>
+    <p>The flywheel at the heart of Incitetales. Every story submitted improves the itinerary builder — automatically, with no manual curation beyond verifying rows.</p>
+
+    <div class="diagram-box">
+      <div class="diagram-label">InsightEngine Flywheel</div>
+      <svg width="100%" viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+
+        <!-- Central flywheel label -->
+        <circle cx="380" cy="200" r="58" fill="#1e1a14" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="380" y="194" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="14" font-weight="700">Insight</text>
+        <text x="380" y="212" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="14" font-weight="700">Flywheel</text>
+
+        <!-- Node 1: User submits story -->
+        <rect x="20" y="20" width="170" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="105" y="43" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">1. Story submitted</text>
+        <text x="105" y="62" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">share-your-story.html</text>
+
+        <!-- Node 2: GitHub Actions extracts insights -->
+        <rect x="570" y="20" width="170" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="655" y="43" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">2. Insights extracted</text>
+        <text x="655" y="62" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">GitHub Actions + Groq</text>
+
+        <!-- Node 3: Supabase row -->
+        <rect x="570" y="320" width="170" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="655" y="343" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">3. Row in Supabase</text>
+        <text x="655" y="362" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">verified=true after QA</text>
+
+        <!-- Node 4: Worker injects insights -->
+        <rect x="20" y="320" width="170" height="56" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="105" y="343" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">4. Worker injects</text>
+        <text x="105" y="362" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Into Groq system prompt</text>
+
+        <!-- Node 5: Better itinerary -->
+        <rect x="20" y="172" width="170" height="56" rx="8" fill="#1a2018" stroke="#4a9e6a" stroke-width="1"/>
+        <text x="105" y="195" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="13" font-weight="700">5. Smarter itinerary</text>
+        <text x="105" y="214" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">insightCount badge shows</text>
+
+        <!-- Arrows around the flywheel -->
+        <path d="M190 48 Q300 20 322 142" fill="none" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+        <path d="M438 142 Q480 20 570 48" fill="none" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+        <path d="M655 76 L655 320" fill="none" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+        <path d="M570 348 Q440 380 438 258" fill="none" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+        <path d="M322 258 Q250 380 190 348" fill="none" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+        <path d="M105 320 L105 228" fill="none" stroke="#4a9e6a" stroke-width="1" marker-end="url(#arr5)" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <h3>Matching Logic</h3>
+    <pre><code>// Fuzzy destination match — case-insensitive substring
+function destinationMatches(scopeArray, destination) {
+  const dest = destination.toLowerCase().trim();
+  const tokens = dest.split(/[\s,]+/).filter(t => t.length > 2);
+
+  return scopeArray.some(scope => {
+    const s = scope.toLowerCase().trim();
+    if (s.includes(dest) || dest.includes(s)) return true;
+    return tokens.some(token => s.includes(token) || token.includes(s));
+  });
+}
+
+// Filter: verified=true only, top 5 by hidden_score
+const matched = allInsights
+  .filter(row => destinationMatches(row.geographic_scope, destination))
+  .sort((a, b) => (b.hidden_score || 0) - (a.hidden_score || 0))
+  .slice(0, 5);</code></pre>
+
+    <h3>What's injected into Groq</h3>
+    <pre><code>## Traveller Insights (sourced from verified community stories)
+Use these real, on-the-ground insights to enrich the itinerary.
+Weave them in naturally — don't list them verbatim.
+
+### Insight 1 (Quality score: 7/10)
+Verified facts: Jorhat has lush tea gardens | Majuli is a river island nearby | ...
+Local tips: immerse in cultural experiences | explore authentic local adventures
+Warnings: (empty)
+</code></pre>
+  </section>
+
+  <!-- ═══ INFRASTRUCTURE ═══ -->
+  <section id="infra">
+    <h2>Infrastructure Map</h2>
+
+    <div class="diagram-box">
+      <div class="diagram-label">Full Infrastructure</div>
+      <svg width="100%" viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#5a8fbf" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- User -->
+        <rect x="320" y="20" width="120" height="44" rx="8" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="380" y="47" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="13" font-weight="700">User / Browser</text>
+
+        <!-- GitHub Pages -->
+        <rect x="50" y="120" width="150" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="125" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">GitHub Pages</text>
+        <text x="125" y="158" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Static HTML hosting</text>
+
+        <!-- Cloudflare Worker -->
+        <rect x="305" y="120" width="150" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="380" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">CF Worker</text>
+        <text x="380" y="158" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">incitetales-api</text>
+
+        <!-- Squarespace DNS -->
+        <rect x="560" y="120" width="150" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="635" y="141" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Squarespace DNS</text>
+        <text x="635" y="158" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">incitetales.com</text>
+
+        <!-- Groq -->
+        <rect x="180" y="240" width="130" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="245" y="261" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Groq API</text>
+        <text x="245" y="278" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">llama-3.3-70b</text>
+
+        <!-- Supabase -->
+        <rect x="330" y="240" width="130" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="395" y="261" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Supabase</text>
+        <text x="395" y="278" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">stories + insights</text>
+
+        <!-- Brevo -->
+        <rect x="480" y="240" width="130" height="52" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="545" y="261" text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="13" font-weight="700">Brevo</text>
+        <text x="545" y="278" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Email delivery</text>
+
+        <!-- GitHub Actions -->
+        <rect x="50" y="240" width="130" height="52" rx="8" fill="#1a2018" stroke="#4a9e6a" stroke-width="1"/>
+        <text x="115" y="261" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="13" font-weight="700">GitHub Actions</text>
+        <text x="115" y="278" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Page generation</text>
+
+        <!-- Arrows -->
+        <line x1="360" y1="64" x2="200" y2="120" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.6"/>
+        <line x1="380" y1="64" x2="380" y2="120" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.6"/>
+        <line x1="400" y1="64" x2="560" y2="120" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.6"/>
+        <line x1="380" y1="172" x2="270" y2="240" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.5"/>
+        <line x1="380" y1="172" x2="390" y2="240" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.5"/>
+        <line x1="400" y1="172" x2="510" y2="240" stroke="#5a8fbf" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.5"/>
+        <line x1="125" y1="172" x2="115" y2="240" stroke="#4a9e6a" stroke-width="0.8" marker-end="url(#arr6)" opacity="0.5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ ENV VARS ═══ -->
+  <section id="env">
+    <h2>Environment Variables</h2>
+    <p>All secrets live in <strong>Cloudflare Workers → incitetales-api → Settings → Variables and Secrets</strong>. Never in source code.</p>
+
+    <div class="env-row"><span class="env-key">GROQ_API_KEY</span><span class="env-val">Groq API key — llama-3.3-70b-versatile inference</span></div>
+    <div class="env-row"><span class="env-key">BREVO_API_KEY</span><span class="env-val">Brevo SMTP API key — email delivery from <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b535e5757547b525558524f5e4f5a575e4815585456">[email&#160;protected]</a></span></div>
+    <div class="env-row"><span class="env-key">SUPABASE_URL</span><span class="env-val">Supabase project URL — https://xxxx.supabase.co</span></div>
+    <div class="env-row"><span class="env-key">SUPABASE_ANON_KEY</span><span class="env-val">Supabase anon/public key — read access to insights table</span></div>
+    <div class="env-row"><span class="env-key">GITHUB_TOKEN</span><span class="env-val">GitHub PAT token — triggers GitHub Actions story page generation</span></div>
+    <div class="env-row"><span class="env-key">GITHUB_REPO</span><span class="env-val">ivanrion07/Incite-Tales — target repo for story page commits</span></div>
+  </section>
+
+  <!-- ═══ DATABASE ═══ -->
+  <section id="database">
+    <h2>Database Schema</h2>
+    <p>Supabase (Postgres). Two tables: <code>stories</code> (raw submissions) and <code>insights</code> (extracted intelligence).</p>
+
+    <div class="diagram-box">
+      <div class="diagram-label">Supabase Schema — stories + insights</div>
+      <svg width="100%" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- stories table -->
+        <rect x="40" y="20" width="280" height="280" rx="8" fill="#1a1a1a" stroke="#333"/>
+        <rect x="40" y="20" width="280" height="36" rx="8" fill="#2a2218"/>
+        <rect x="40" y="48" width="280" height="8" fill="#2a2218"/>
+        <text x="180" y="44" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="13" font-weight="700">stories</text>
+        <text x="60"  y="82"  fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">id          uuid  PK</text>
+        <text x="60"  y="104" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">slug        text</text>
+        <text x="60"  y="126" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">title       text</text>
+        <text x="60"  y="148" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">author      text</text>
+        <text x="60"  y="170" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">place       text</text>
+        <text x="60"  y="192" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">content     text</text>
+        <text x="60"  y="214" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">polished    text</text>
+        <text x="60"  y="236" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">status      text</text>
+        <text x="60"  y="258" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">created_at  timestamptz</text>
+        <text x="60"  y="280" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">published   boolean</text>
+
+        <!-- FK arrow -->
+        <line x1="320" y1="160" x2="440" y2="160" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr7)" opacity="0.6"/>
+        <text x="380" y="150" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">story_id FK</text>
+
+        <!-- insights table -->
+        <rect x="440" y="20" width="290" height="280" rx="8" fill="#1a1a1a" stroke="#333"/>
+        <rect x="440" y="20" width="290" height="36" rx="8" fill="#2a2218"/>
+        <rect x="440" y="48" width="290" height="8" fill="#2a2218"/>
+        <text x="585" y="44" text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="13" font-weight="700">insights</text>
+        <text x="460" y="82"  fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">id              uuid  PK</text>
+        <text x="460" y="104" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">story_id        uuid  FK</text>
+        <text x="460" y="126" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">story_slug      text</text>
+        <text x="460" y="148" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">geographic_scope text[]</text>
+        <text x="460" y="170" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">verified_facts  text[]</text>
+        <text x="460" y="192" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">local_tips      text[]</text>
+        <text x="460" y="214" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">warnings        text[]</text>
+        <text x="460" y="236" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">hidden_score    integer</text>
+        <text x="460" y="258" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">verified        boolean</text>
+        <text x="460" y="280" fill="#a89880" font-family="'Source Code Pro',monospace" font-size="12">created_at      timestamptz</text>
+      </svg>
+    </div>
+
+    <h3>Key Supabase queries to know</h3>
+    <pre><code>-- Verify a story's insights after QA
+UPDATE insights SET verified = true WHERE story_slug = 'your-story-slug';
+
+-- Add a correction to verified_facts
+UPDATE insights
+SET verified_facts = array_append(verified_facts, 'Your correction here')
+WHERE story_slug = 'your-story-slug';
+
+-- See all unverified insights
+SELECT story_slug, hidden_score, created_at
+FROM insights WHERE verified = false ORDER BY created_at DESC;
+
+-- See what InsightEngine would return for a destination
+SELECT story_slug, geographic_scope, hidden_score
+FROM insights WHERE verified = true ORDER BY hidden_score DESC;</code></pre>
+  </section>
+
+  <!-- ═══ PHASES ═══ -->
+  <section id="phases">
+    <h2>Phase Roadmap</h2>
+
+    <div class="diagram-box">
+      <div class="diagram-label">4-Phase Launch Roadmap</div>
+      <svg width="100%" viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <rect x="20"  y="40" width="158" height="120" rx="8" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+        <text x="99"  y="66"  text-anchor="middle" fill="#c8a96e" font-family="Lato,sans-serif" font-size="11" font-weight="700" letter-spacing="1">PHASE 1</text>
+        <text x="99"  y="83"  text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Content Sprint</text>
+        <text x="99"  y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Mar–Apr 2026</text>
+        <text x="99"  y="118" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">MASI submission</text>
+        <text x="99"  y="133" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Web platform live</text>
+        <text x="99"  y="148" text-anchor="middle" fill="#4a9e6a" font-family="Lato,sans-serif" font-size="11" font-weight="700">✓ IN PROGRESS</text>
+
+        <line x1="178" y1="100" x2="198" y2="100" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr8)"/>
+
+        <rect x="198" y="40" width="158" height="120" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="277" y="66"  text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700" letter-spacing="1">PHASE 2</text>
+        <text x="277" y="83"  text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Flutter App</text>
+        <text x="277" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Apr–Jul 2026</text>
+        <text x="277" y="118" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">MASI ID arrives</text>
+        <text x="277" y="133" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Idea2POC grant apply</text>
+        <text x="277" y="148" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Flutter build starts</text>
+
+        <line x1="356" y1="100" x2="376" y2="100" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr8)"/>
+
+        <rect x="376" y="40" width="158" height="120" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="455" y="66"  text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700" letter-spacing="1">PHASE 3</text>
+        <text x="455" y="83"  text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">App Launch</text>
+        <text x="455" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">Aug–Sep 2026</text>
+        <text x="455" y="118" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Flutter app live</text>
+        <text x="455" y="133" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Operator onboarding</text>
+        <text x="455" y="148" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Homestays · cabs · guides</text>
+
+        <line x1="534" y1="100" x2="554" y2="100" stroke="#c8a96e" stroke-width="1" marker-end="url(#arr8)"/>
+
+        <rect x="554" y="40" width="186" height="120" rx="8" fill="#1e1e1e" stroke="#333"/>
+        <text x="647" y="66"  text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11" font-weight="700" letter-spacing="1">PHASE 4</text>
+        <text x="647" y="83"  text-anchor="middle" fill="#e8e4dc" font-family="Lato,sans-serif" font-size="12" font-weight="700">Intelligence Scale</text>
+        <text x="647" y="100" text-anchor="middle" fill="#6a5f52" font-family="Lato,sans-serif" font-size="11">2027</text>
+        <text x="647" y="118" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">NE India knowledge API</text>
+        <text x="647" y="133" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">State tourism integration</text>
+        <text x="647" y="148" text-anchor="middle" fill="#a89880" font-family="Lato,sans-serif" font-size="11">Most trusted NE platform</text>
+      </svg>
+    </div>
+
+    <h3>Planned AI Agents</h3>
+    <table>
+      <tr><th>Agent</th><th>Status</th><th>Description</th></tr>
+      <tr><td>Itinerary Builder</td><td><span class="badge badge-done">Live</span></td><td>5-step form → Groq → email. InsightEngine v3.0 active.</td></tr>
+      <tr><td>Story Extraction Agent</td><td><span class="badge badge-done">Live</span></td><td>Groq extracts place data from stories → Supabase insights table → powers itinerary builder</td></tr>
+      <tr><td>Operator Subscription Bot</td><td><span class="badge badge-plan">Phase 2</span></td><td>Onboard local operators (homestays, cabs, guides) via WhatsApp trigger</td></tr>
+      <tr><td>Permit Intelligence Agent</td><td><span class="badge badge-plan">Phase 3</span></td><td>Real-time Arunachal + Nagaland + Sikkim permit requirements per district</td></tr>
+    </table>
+  </section>
+
+  <!-- ═══ MASI ═══ -->
+  <section id="masi">
+    <h2>MASI / Grant Strategy</h2>
+
+    <div class="section-hero">
+      <h4>One-line pitch for MASI Idea2POC</h4>
+      <p style="color: var(--text); font-size:16px; font-style:italic; margin:0;">"Incitetales is Northeast India's first community-powered travel intelligence platform — where traveller stories directly improve AI-generated itineraries, built from Guwahati for the world."</p>
+    </div>
+
+    <h3>MASI Idea2POC — What you need to apply</h3>
+    <table>
+      <tr><th>Item</th><th>Status</th></tr>
+      <tr><td>Udyam Registration (MSME)</td><td><span class="badge badge-done">✓ Done</span></td></tr>
+      <tr><td>MASI application submitted at startup.assam.gov.in</td><td><span class="badge badge-wip">⏳ Pending — deadline Apr 20</span></td></tr>
+      <tr><td>Innovation Note document</td><td><span class="badge badge-done">✓ Done — ready to upload</span></td></tr>
+      <tr><td>All application text drafted (USP, problem, scalability, business model)</td><td><span class="badge badge-done">✓ Done — ready to paste</span></td></tr>
+      <tr><td>Live product URL (proof of concept)</td><td><span class="badge badge-done">incitetales.com</span></td></tr>
+      <tr><td>Bank account for disbursement</td><td><span class="badge badge-wip">To confirm</span></td></tr>
+    </table>
+
+    <h3>Grant value</h3>
+    <p>Idea2POC: <strong>₹5 lakh</strong> one-time disbursement. Use of funds: field research travel across NE states (₹80K–1.2L), photography and visual content (₹40K–60K), content development — 20+ stories (₹60K–80K), marketing and user acquisition (₹80K–1L), legal and compliance (₹20K–30K), tech upgrades — better AI tier, analytics (₹40K–60K). Current infra cost: under ₹1,000/month — the grant goes toward fieldwork, not server bills.</p>
+
+    <h3>Why your application is strong</h3>
+    <p>Most applicants come with a pitch deck. You have: a live website, working AI feature (InsightEngine v3.0), Supabase backend with real data, automated GitHub Actions pipeline, GA4 tracking, and email delivery. That's a working product, not an idea.</p>
+  </section>
+
+  <!-- ═══ OPS ═══ -->
+  <section id="ops">
+    <h2>Daily Operations</h2>
+
+    <h3>Morning (15 min)</h3>
+    <table>
+      <tr><td>Instagram DMs + comments</td><td>Reply as brand voice</td></tr>
+      <tr><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f777a7373705f76717c766b7a6b7e737a6c317c7072">[email&#160;protected]</a></td><td>Itinerary requests, story submissions</td></tr>
+      <tr><td>GA4 quick check</td><td>Any traffic spikes worth noting</td></tr>
+    </table>
+
+    <h3>Evening (20 min)</h3>
+    <table>
+      <tr><td>New stories via pipeline?</td><td>Review insights row in Supabase</td></tr>
+      <tr><td>If yes → verify</td><td><code>UPDATE insights SET verified=true WHERE story_slug='...'</code></td></tr>
+      <tr><td>Content sprint day?</td><td>Push one piece of content</td></tr>
+    </table>
+
+    <h3>Weekly (Sunday, 30 min)</h3>
+    <table>
+      <tr><td>GA4 review</td><td>Which story pages are getting traction</td></tr>
+      <tr><td>Brevo check</td><td>Any itinerary emails bouncing</td></tr>
+      <tr><td>CF Worker logs</td><td>InsightEngine errors</td></tr>
+      <tr><td>Supabase</td><td>Unverified insights piling up</td></tr>
+    </table>
+
+    <h3>As-needed</h3>
+    <table>
+      <tr><td>New story written</td><td>Publish → GitHub Actions auto-generates → verify insights row</td></tr>
+      <tr><td>New destination added</td><td>Test a POST to Worker for that destination</td></tr>
+      <tr><td>Operator outreach</td><td>Reach out to local homestays, boat operators, local guides in Assam/Arunachal to onboard as verified operators</td></tr>
+    </table>
+  </section>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-
