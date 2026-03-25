@@ -1454,7 +1454,6 @@ async function readWorkerPayload(response) {
 }
 
 function normalizeIdeaResult(result, fallbackIdea) {
-  const allowedDays = new Set(['3', '5', '7', '10', '14']);
   const allowedGroups = [
     'solo traveller',
     'couple',
@@ -1477,7 +1476,9 @@ function normalizeIdeaResult(result, fallbackIdea) {
   ];
 
   const destination = (result?.destination || '').trim() || fallbackIdea;
-  const days = allowedDays.has(String(result?.days || '').trim()) ? String(result.days).trim() : '7';
+  const rawDays = String(result?.days || '').trim();
+  const dayNumber = Number(rawDays);
+  const days = Number.isInteger(dayNumber) && dayNumber > 0 && dayNumber <= 30 ? String(dayNumber) : '7';
 
   const groupValue = String(result?.group || '').toLowerCase();
   const budgetValue = String(result?.budget || '').toLowerCase();
@@ -1508,6 +1509,27 @@ function normalizeIdeaResult(result, fallbackIdea) {
   };
 }
 
+function ensureDayOption(dayValue) {
+  const daysSelect = document.getElementById('days');
+  const normalizedDay = String(dayValue || '').trim();
+  if (!normalizedDay) return;
+  if (daysSelect.querySelector(`option[value="${normalizedDay}"]`)) return;
+
+  const option = document.createElement('option');
+  option.value = normalizedDay;
+  option.textContent = `${normalizedDay} days`;
+
+  const numericDay = Number(normalizedDay);
+  const options = Array.from(daysSelect.options).filter(opt => opt.value);
+  const insertBefore = options.find(opt => Number(opt.value) > numericDay);
+
+  if (insertBefore) {
+    daysSelect.insertBefore(option, insertBefore);
+  } else {
+    daysSelect.appendChild(option);
+  }
+}
+
 function scorePhraseMatch(text, phrase) {
   const source = String(text || '').toLowerCase();
   const target = String(phrase || '').toLowerCase().trim();
@@ -1527,13 +1549,41 @@ function toSuggestion(item, fallbackWhy) {
   return { name, why: why || 'Verified from Incitetales local knowledge.' };
 }
 
+function isConcreteSuggestionName(name, primaryDestination) {
+  const value = String(name || '').trim();
+  if (!value) return false;
+
+  const lower = value.toLowerCase();
+  const blockedExact = new Set([
+    'arunachal pradesh',
+    'assam',
+    'meghalaya',
+    'nagaland',
+    'mizoram',
+    'sikkim',
+    'goa',
+    'darjeeling',
+    'west arunachal pradesh',
+    'west kameng',
+    'upper dibang valley',
+    'lower dibang valley',
+    'dibang valley'
+  ]);
+
+  if (blockedExact.has(lower)) return false;
+  if (primaryDestination && lower === String(primaryDestination).trim().toLowerCase()) return false;
+  if (/\b(route|corridor|district|state|pradesh)\b/.test(lower)) return false;
+
+  return true;
+}
+
 function collectVerifiedSuggestions(primaryMatch, matchedInsights) {
   const suggestions = [];
   const seen = new Set();
 
   function pushSuggestion(name, why) {
     const cleanName = String(name || '').trim();
-    if (!cleanName) return;
+    if (!cleanName || !isConcreteSuggestionName(cleanName, primaryMatch?.label)) return;
     const key = cleanName.toLowerCase();
     if (seen.has(key)) return;
     seen.add(key);
@@ -1894,6 +1944,7 @@ async function generateFromIdea() {
         }
       }
     }
+    ensureDayOption(result.days);
     if (!manualSelections.days && document.querySelector(`#days option[value="${String(result.days)}"]`)) {
       document.getElementById('days').value = String(result.days);
     }
@@ -1935,16 +1986,33 @@ function hideLoading() {
 }
 
 async function generateItinerary() {
-  const dropdownDestination = manualSelections.destination ? getSelectedDestinationLabel() : '';
-  const customDestination = document.getElementById('custom-destination').value.trim() || interpretedOverrides.destination;
-  const destination = customDestination || dropdownDestination;
-  const days = manualSelections.days ? document.getElementById('days').value : (interpretedOverrides.days || document.getElementById('days').value);
-  const group = manualSelections.group ? document.getElementById('group').value : (interpretedOverrides.group || document.getElementById('group').value);
-  const budget = manualSelections.budget ? document.getElementById('budget').value : (interpretedOverrides.budget || document.getElementById('budget').value);
-  const selectedFocus = manualSelections.interests ? document.getElementById('interests').value : '';
-  const customFocus = document.getElementById('custom-focus').value.trim() || interpretedOverrides.interests;
-  const interests = customFocus || selectedFocus;
   const ideaText = document.getElementById('idea-input').value.trim();
+  const interpretationSource = currentInsights.length
+    ? currentInsights
+    : (engineReady && ideaText ? (engine.buildPromptContext(ideaText, '').matchedEntries || []) : []);
+  const liveInterpretation = ideaText ? resolveIdeaInterpretation(ideaText, interpretationSource) : null;
+
+  const dropdownDestination = manualSelections.destination ? getSelectedDestinationLabel() : '';
+  const customDestination = document.getElementById('custom-destination').value.trim()
+    || interpretedOverrides.destination
+    || liveInterpretation?.destination
+    || '';
+  const destination = customDestination || dropdownDestination;
+  const days = manualSelections.days
+    ? document.getElementById('days').value
+    : (interpretedOverrides.days || liveInterpretation?.days || document.getElementById('days').value);
+  const group = manualSelections.group
+    ? document.getElementById('group').value
+    : (interpretedOverrides.group || liveInterpretation?.group || document.getElementById('group').value);
+  const budget = manualSelections.budget
+    ? document.getElementById('budget').value
+    : (interpretedOverrides.budget || liveInterpretation?.budget || document.getElementById('budget').value);
+  const selectedFocus = manualSelections.interests ? document.getElementById('interests').value : '';
+  const customFocus = document.getElementById('custom-focus').value.trim()
+    || interpretedOverrides.interests
+    || liveInterpretation?.interests
+    || '';
+  const interests = customFocus || selectedFocus;
 
   if (!destination) { alert('Tell us where you want to go.'); return; }
 
