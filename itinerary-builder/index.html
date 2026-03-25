@@ -1353,6 +1353,76 @@ function titleCase(text) {
   return text.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
+function extractJsonBlock(text) {
+  if (!text || typeof text !== 'string') return null;
+
+  const cleaned = text.replace(/```json|```/gi, '').trim();
+  const directStart = cleaned.startsWith('{') ? cleaned.indexOf('{') : -1;
+  const directEnd = cleaned.endsWith('}') ? cleaned.lastIndexOf('}') : -1;
+  if (directStart === 0 && directEnd === cleaned.length - 1) return cleaned;
+
+  let depth = 0;
+  let start = -1;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < cleaned.length; i++) {
+    const char = cleaned[i];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === '\\') {
+        escaped = true;
+      } else if (char === '"') {
+        inString = false;
+      }
+      continue;
+    }
+
+    if (char === '"') {
+      inString = true;
+      continue;
+    }
+
+    if (char === '{') {
+      if (depth === 0) start = i;
+      depth++;
+      continue;
+    }
+
+    if (char === '}') {
+      if (depth === 0) continue;
+      depth--;
+      if (depth === 0 && start !== -1) {
+        return cleaned.slice(start, i + 1);
+      }
+    }
+  }
+
+  return null;
+}
+
+function parseModelJsonResponse(data) {
+  const text = data?.choices?.[0]?.message?.content
+    || data?.result
+    || data?.response
+    || data?.content
+    || data?.output_text
+    || '';
+
+  if (!text) {
+    throw new Error('No model text in response: ' + JSON.stringify(data));
+  }
+
+  const jsonBlock = extractJsonBlock(text);
+  if (!jsonBlock) {
+    throw new Error('Model response did not contain a valid JSON object');
+  }
+
+  return JSON.parse(jsonBlock);
+}
+
 function resetInterpretation() {
   interpretedIdea = null;
   document.getElementById('interpretation-card').style.display = 'none';
@@ -1546,9 +1616,10 @@ Rules: Destination MUST be specific. Default days 5-7. Remote destinations (Mech
       body: JSON.stringify({ action: 'generate', prompt: planningPrompt })
     });
     const data = await response.json();
-    const text = data.choices?.[0]?.message?.content;
-    if (!text) throw new Error('No text');
-    const result = JSON.parse(text.replace(/```json|```/g, '').trim());
+    if (!response.ok) {
+      throw new Error(data?.error || data?.message || ('API request failed with status ' + response.status));
+    }
+    const result = parseModelJsonResponse(data);
 
     document.getElementById('custom-destination').value = result.destination;
     const dropdown = document.getElementById('destination');
@@ -1736,10 +1807,10 @@ RULE 5 — GENERAL:
       body: JSON.stringify({ action: 'generate', prompt: itineraryPrompt })
     });
     const data = await response.json();
-    const text = data.choices?.[0]?.message?.content;
-    if (!text) throw new Error('No text in response: ' + JSON.stringify(data));
-    const clean = text.replace(/```json|```/g, '').trim();
-    const itinerary = JSON.parse(clean);
+    if (!response.ok) {
+      throw new Error(data?.error || data?.message || ('API request failed with status ' + response.status));
+    }
+    const itinerary = parseModelJsonResponse(data);
     currentItinerary = JSON.stringify(itinerary);
 
     // Save to sessionStorage and redirect to result page
