@@ -1404,12 +1404,14 @@ function extractJsonBlock(text) {
 }
 
 function parseModelJsonResponse(data) {
-  const text = data?.choices?.[0]?.message?.content
-    || data?.result
-    || data?.response
-    || data?.content
-    || data?.output_text
-    || '';
+  const text = typeof data === 'string'
+    ? data
+    : data?.choices?.[0]?.message?.content
+      || data?.result
+      || data?.response
+      || data?.content
+      || data?.output_text
+      || '';
 
   if (!text) {
     throw new Error('No model text in response: ' + JSON.stringify(data));
@@ -1421,6 +1423,74 @@ function parseModelJsonResponse(data) {
   }
 
   return JSON.parse(jsonBlock);
+}
+
+async function readWorkerPayload(response) {
+  const rawText = await response.text();
+  let data = null;
+
+  try {
+    data = rawText ? JSON.parse(rawText) : null;
+  } catch (error) {
+    data = null;
+  }
+
+  return { rawText, data };
+}
+
+function normalizeIdeaResult(result, fallbackIdea) {
+  const allowedDays = new Set(['5', '7', '10', '14']);
+  const allowedGroups = [
+    'solo traveller',
+    'couple',
+    'friend group of 3-5 people',
+    'family with children'
+  ];
+  const allowedBudgets = [
+    'budget (under ₹10,000)',
+    'mid-range (₹10,000–₹20,000)',
+    'comfortable (₹20,000–₹35,000)',
+    'premium (₹35,000+)'
+  ];
+  const allowedInterests = [
+    'wildlife and nature',
+    'culture and history',
+    'adventure and trekking',
+    'photography',
+    'food and local life',
+    'a mix of everything'
+  ];
+
+  const destination = (result?.destination || '').trim() || fallbackIdea;
+  const days = allowedDays.has(String(result?.days || '').trim()) ? String(result.days).trim() : '7';
+
+  const groupValue = String(result?.group || '').toLowerCase();
+  const budgetValue = String(result?.budget || '').toLowerCase();
+  const interestValue = String(result?.interests || '').toLowerCase();
+
+  const group = allowedGroups.find(option => option.toLowerCase() === groupValue)
+    || allowedGroups.find(option => groupValue && option.toLowerCase().includes(groupValue))
+    || 'friend group of 3-5 people';
+  const budget = allowedBudgets.find(option => option.toLowerCase() === budgetValue)
+    || allowedBudgets.find(option => budgetValue && option.toLowerCase().includes(budgetValue))
+    || 'mid-range (₹10,000–₹20,000)';
+  const interests = allowedInterests.find(option => option.toLowerCase() === interestValue)
+    || allowedInterests.find(option => interestValue && option.toLowerCase().includes(interestValue))
+    || 'a mix of everything';
+
+  const locationSuggestions = Array.isArray(result?.locationSuggestions)
+    ? result.locationSuggestions.filter(item => item && typeof item === 'object')
+    : [];
+
+  return {
+    destination,
+    days,
+    group,
+    budget,
+    interests,
+    summary: typeof result?.summary === 'string' ? result.summary : '',
+    locationSuggestions
+  };
 }
 
 function resetInterpretation() {
@@ -1615,11 +1685,12 @@ Rules: Destination MUST be specific. Default days 5-7. Remote destinations (Mech
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate', prompt: planningPrompt })
     });
-    const data = await response.json();
+    const { rawText, data } = await readWorkerPayload(response);
     if (!response.ok) {
-      throw new Error(data?.error || data?.message || ('API request failed with status ' + response.status));
+      throw new Error(data?.error || data?.message || rawText || ('API request failed with status ' + response.status));
     }
-    const result = parseModelJsonResponse(data);
+    const parsedResult = parseModelJsonResponse(data || rawText);
+    const result = normalizeIdeaResult(parsedResult, idea);
 
     document.getElementById('custom-destination').value = result.destination;
     const dropdown = document.getElementById('destination');
@@ -1806,11 +1877,11 @@ RULE 5 — GENERAL:
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate', prompt: itineraryPrompt })
     });
-    const data = await response.json();
+    const { rawText, data } = await readWorkerPayload(response);
     if (!response.ok) {
-      throw new Error(data?.error || data?.message || ('API request failed with status ' + response.status));
+      throw new Error(data?.error || data?.message || rawText || ('API request failed with status ' + response.status));
     }
-    const itinerary = parseModelJsonResponse(data);
+    const itinerary = parseModelJsonResponse(data || rawText);
     currentItinerary = JSON.stringify(itinerary);
 
     // Save to sessionStorage and redirect to result page
