@@ -1404,6 +1404,16 @@ function extractJsonBlock(text) {
 }
 
 function parseModelJsonResponse(data) {
+  if (data && typeof data === 'object' && !Array.isArray(data)) {
+    const hasStructuredItinerary = typeof data.destination === 'string'
+      && typeof data.title === 'string'
+      && Array.isArray(data.days);
+
+    if (hasStructuredItinerary) {
+      return data;
+    }
+  }
+
   const text = typeof data === 'string'
     ? data
     : data?.choices?.[0]?.message?.content
