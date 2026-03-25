@@ -1194,6 +1194,7 @@ nav {
         <div class="form-group">
           <label class="form-label">How many days?</label>
           <select class="form-select" id="days">
+            <option value="3">3 days</option>
             <option value="5">5 days</option>
             <option value="7" selected>7 days</option>
             <option value="10">10 days</option>
@@ -1315,6 +1316,8 @@ const destinationGroups = [
 let ideaRequestInFlight = false;
 let interpretedIdea = null;
 let currentItinerary = '';
+let interpretedOverrides = { destination: '', days: '', group: '', budget: '', interests: '' };
+let manualSelections = { destination: false, days: false, group: false, budget: false, interests: false };
 
 function populateDestinationDropdown() {
   const select = document.getElementById('destination');
@@ -1347,6 +1350,8 @@ function quickFill(dest, days, group, budget, interests) {
   document.getElementById('budget').value = budget;
   document.getElementById('interests').value = interests;
   document.getElementById('custom-focus').value = interests;
+  interpretedOverrides = { destination: dest, days: String(days), group, budget, interests };
+  manualSelections = { destination: false, days: true, group: true, budget: true, interests: true };
 }
 
 function titleCase(text) {
@@ -1449,7 +1454,7 @@ async function readWorkerPayload(response) {
 }
 
 function normalizeIdeaResult(result, fallbackIdea) {
-  const allowedDays = new Set(['5', '7', '10', '14']);
+  const allowedDays = new Set(['3', '5', '7', '10', '14']);
   const allowedGroups = [
     'solo traveller',
     'couple',
@@ -1639,7 +1644,7 @@ function resolveIdeaInterpretation(idea, matchedInsights) {
 }
 
 function inferDaysFromIdea(idea) {
-  const match = idea.match(/\b(5|7|10|14)\s*(day|days)\b/i);
+  const match = idea.match(/\b(\d{1,2})\s*(day|days)\b/i);
   if (match) return match[1];
   if (/\bweekend\b|\bshort\b|\bquick\b/i.test(idea)) return '5';
   if (/\bslow\b|\bdeep\b|\brelaxed\b|\blong\b/i.test(idea)) return '10';
@@ -1650,6 +1655,13 @@ function inferGroupFromIdea(idea) {
   if (/\bsolo\b|\balone\b/i.test(idea)) return 'solo traveller';
   if (/\bcouple\b|\bhoneymoon\b|\bpartner\b/i.test(idea)) return 'couple';
   if (/\bfamily\b|\bkids\b|\bchildren\b/i.test(idea)) return 'family with children';
+  const groupSizeMatch = idea.match(/\bgroup\s+of\s+(\d+)\b/i) || idea.match(/\b(\d+)\s+(people|friends)\b/i);
+  if (groupSizeMatch) {
+    const size = Number(groupSizeMatch[1]);
+    if (size <= 1) return 'solo traveller';
+    if (size === 2) return 'couple';
+    if (size >= 3) return 'friend group of 3-5 people';
+  }
   if (/\bfriends?\b|\bgroup\b/i.test(idea)) return 'friend group of 3-5 people';
   return document.getElementById('group').value || 'friend group of 3-5 people';
 }
@@ -1690,6 +1702,7 @@ function buildIdeaSuggestions(destinationLabel) {
 
 function resetInterpretation() {
   interpretedIdea = null;
+  interpretedOverrides = { destination: '', days: '', group: '', budget: '', interests: '' };
   document.getElementById('interpretation-card').style.display = 'none';
   document.getElementById('interpretation-suggestions').style.display = 'none';
   document.getElementById('interpretation-suggestion-list').innerHTML = '';
@@ -1863,31 +1876,29 @@ async function generateFromIdea() {
 
   try {
     const result = resolveIdeaInterpretation(idea, currentInsights);
+    interpretedOverrides = {
+      destination: result.destination,
+      days: String(result.days),
+      group: result.group,
+      budget: result.budget,
+      interests: result.interests
+    };
 
     document.getElementById('custom-destination').value = result.destination;
-    const dropdown = document.getElementById('destination');
-    let matchedDropdown = '';
-    for (let i = 0; i < dropdown.options.length; i++) {
-      const optionLabel = dropdown.options[i].dataset.name || dropdown.options[i].textContent || '';
-      if (scorePhraseMatch(result.destination, optionLabel) > 1 || scorePhraseMatch(optionLabel, result.destination) > 1) {
-        matchedDropdown = dropdown.options[i].value;
-        break;
-      }
-    }
-    dropdown.value = matchedDropdown;
-    if (matchedDropdown) {
-      const selectedOption = dropdown.options[dropdown.selectedIndex];
-      document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || result.destination) : result.destination;
-    }
+    if (!manualSelections.destination) document.getElementById('destination').value = '';
     document.getElementById('custom-focus').value = result.interests;
-    for (let i = 0; i < document.getElementById('interests').options.length; i++) {
-      if (document.getElementById('interests').options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
-        document.getElementById('interests').value = document.getElementById('interests').options[i].value; break;
+    if (!manualSelections.interests) {
+      for (let i = 0; i < document.getElementById('interests').options.length; i++) {
+        if (document.getElementById('interests').options[i].value.toLowerCase().includes(result.interests.toLowerCase())) {
+          document.getElementById('interests').value = document.getElementById('interests').options[i].value; break;
+        }
       }
     }
-    document.getElementById('days').value = String(result.days);
-    document.getElementById('group').value = result.group;
-    document.getElementById('budget').value = result.budget;
+    if (!manualSelections.days && document.querySelector(`#days option[value="${String(result.days)}"]`)) {
+      document.getElementById('days').value = String(result.days);
+    }
+    if (!manualSelections.group) document.getElementById('group').value = result.group;
+    if (!manualSelections.budget) document.getElementById('budget').value = result.budget;
 
     const refined = engine.buildPromptContext(idea, result.destination);
     currentInsights = refined.matchedEntries || [];
@@ -1924,14 +1935,14 @@ function hideLoading() {
 }
 
 async function generateItinerary() {
-  const dropdownDestination = getSelectedDestinationLabel();
-  const customDestination = document.getElementById('custom-destination').value.trim();
+  const dropdownDestination = manualSelections.destination ? getSelectedDestinationLabel() : '';
+  const customDestination = document.getElementById('custom-destination').value.trim() || interpretedOverrides.destination;
   const destination = customDestination || dropdownDestination;
-  const days = document.getElementById('days').value;
-  const group = document.getElementById('group').value;
-  const budget = document.getElementById('budget').value;
-  const selectedFocus = document.getElementById('interests').value;
-  const customFocus = document.getElementById('custom-focus').value.trim();
+  const days = manualSelections.days ? document.getElementById('days').value : (interpretedOverrides.days || document.getElementById('days').value);
+  const group = manualSelections.group ? document.getElementById('group').value : (interpretedOverrides.group || document.getElementById('group').value);
+  const budget = manualSelections.budget ? document.getElementById('budget').value : (interpretedOverrides.budget || document.getElementById('budget').value);
+  const selectedFocus = manualSelections.interests ? document.getElementById('interests').value : '';
+  const customFocus = document.getElementById('custom-focus').value.trim() || interpretedOverrides.interests;
   const interests = customFocus || selectedFocus;
   const ideaText = document.getElementById('idea-input').value.trim();
 
@@ -2124,14 +2135,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('destination').addEventListener('change', (event) => {
     const selectedOption = event.target.options[event.target.selectedIndex];
+    manualSelections.destination = Boolean(event.target.value);
     document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || '') : '';
     resetInterpretation();
   });
   document.getElementById('interests').addEventListener('change', (event) => {
+    manualSelections.interests = true;
     document.getElementById('custom-focus').value = event.target.value;
     resetInterpretation();
   });
   document.getElementById('idea-input').addEventListener('input', () => {
+    manualSelections.destination = false;
     resetInterpretation();
     // Live intent parsing as user types (debounced)
     clearTimeout(window._intentDebounce);
@@ -2145,9 +2159,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 500);
   });
-  document.getElementById('days').addEventListener('change', resetInterpretation);
-  document.getElementById('group').addEventListener('change', resetInterpretation);
-  document.getElementById('budget').addEventListener('change', resetInterpretation);
+  document.getElementById('days').addEventListener('change', () => {
+    manualSelections.days = true;
+    resetInterpretation();
+  });
+  document.getElementById('group').addEventListener('change', () => {
+    manualSelections.group = true;
+    resetInterpretation();
+  });
+  document.getElementById('budget').addEventListener('change', () => {
+    manualSelections.budget = true;
+    resetInterpretation();
+  });
   document.querySelectorAll('.sample-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
       quickFill(pill.dataset.destination, pill.dataset.days, pill.dataset.group, pill.dataset.budget, pill.dataset.interests);
