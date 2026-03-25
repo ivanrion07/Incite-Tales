@@ -1493,42 +1493,139 @@ function normalizeIdeaResult(result, fallbackIdea) {
   };
 }
 
-function inferDestinationFromIdea(idea) {
+function scorePhraseMatch(text, phrase) {
+  const source = String(text || '').toLowerCase();
+  const target = String(phrase || '').toLowerCase().trim();
+  if (!source || !target) return 0;
+  if (source.includes(target)) return target.split(/[^a-z0-9]+/).filter(token => token.length > 2).length + 3;
+
+  const tokens = target.split(/[^a-z0-9]+/).filter(token => token.length > 2);
+  return tokens.reduce((count, token) => count + (source.includes(token) ? 1 : 0), 0);
+}
+
+function toSuggestion(item, fallbackWhy) {
+  if (!item) return null;
+  const parts = String(item).split(/\s+[—-]\s+/);
+  const name = (parts[0] || '').trim();
+  const why = (parts.slice(1).join(' — ') || fallbackWhy || '').trim();
+  if (!name) return null;
+  return { name, why: why || 'Verified from Incitetales local knowledge.' };
+}
+
+function collectVerifiedSuggestions(primaryMatch, matchedInsights) {
+  const suggestions = [];
+  const seen = new Set();
+
+  function pushSuggestion(name, why) {
+    const cleanName = String(name || '').trim();
+    if (!cleanName) return;
+    const key = cleanName.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    suggestions.push({ name: cleanName, why: String(why || 'Verified from Incitetales local knowledge.').trim() });
+  }
+
+  if (primaryMatch?.type === 'nested-destination') {
+    (primaryMatch.source.what_is_there || []).forEach((item) => {
+      const parsed = toSuggestion(item, primaryMatch.source.tagline || primaryMatch.insight?.incitetales_angle);
+      if (parsed) pushSuggestion(parsed.name, parsed.why);
+    });
+
+    (primaryMatch.source.local_tips || []).forEach((tip) => {
+      const parsed = toSuggestion(tip, 'Local tip verified in the matched destination data.');
+      if (parsed) pushSuggestion(parsed.name, parsed.why);
+    });
+  }
+
+  matchedInsights.forEach((insight) => {
+    (insight.key_stops || []).forEach((stop) => {
+      if (stop?.name && stop?.why) pushSuggestion(stop.name, stop.why);
+    });
+
+    (insight.destinations || []).forEach((destination) => {
+      if (primaryMatch?.label && destination.name === primaryMatch.label) return;
+      if (destination?.name && destination?.tagline) pushSuggestion(destination.name, destination.tagline);
+    });
+
+    (insight.stays || []).forEach((stay) => {
+      if (stay?.name) pushSuggestion(stay.name, stay.why_recommended || stay.notes || 'Verified stay from local knowledge.');
+    });
+  });
+
+  return suggestions.slice(0, 3);
+}
+
+function findVerifiedDestinationMatch(idea, matchedInsights) {
   const lowerIdea = idea.toLowerCase();
-  const dropdown = document.getElementById('destination');
-  let bestOption = null;
-  let bestScore = 0;
+  let bestMatch = null;
 
-  for (let i = 0; i < dropdown.options.length; i++) {
-    const option = dropdown.options[i];
-    const label = (option.dataset.name || option.textContent || '').trim();
-    if (!label) continue;
+  matchedInsights.forEach((insight) => {
+    (insight.destinations || []).forEach((destination) => {
+      const score = scorePhraseMatch(lowerIdea, destination.name || destination.id);
+      if (!bestMatch || score > bestMatch.score) {
+        bestMatch = score > 0 ? {
+          type: 'nested-destination',
+          label: destination.name || destination.id || '',
+          insight,
+          source: destination,
+          score
+        } : bestMatch;
+      }
+    });
 
-    const tokens = label.toLowerCase().split(/[^a-z0-9]+/).filter(token => token.length > 2);
-    const score = tokens.reduce((count, token) => count + (lowerIdea.includes(token) ? 1 : 0), 0);
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestOption = option;
+    const insightLabel = insight.title || insight.district || insight.name || '';
+    const insightScore = scorePhraseMatch(lowerIdea, insightLabel);
+    if (!bestMatch || insightScore > bestMatch.score) {
+      bestMatch = insightScore > 0 ? {
+        type: 'insight',
+        label: insightLabel,
+        insight,
+        source: insight,
+        score: insightScore
+      } : bestMatch;
     }
+
+    (insight.key_stops || []).forEach((stop) => {
+      const stopScore = scorePhraseMatch(lowerIdea, stop.name);
+      if (!bestMatch || stopScore > bestMatch.score) {
+        bestMatch = stopScore > 0 ? {
+          type: 'key-stop',
+          label: stop.name || '',
+          insight,
+          source: stop,
+          score: stopScore
+        } : bestMatch;
+      }
+    });
+  });
+
+  return bestMatch;
+}
+
+function resolveIdeaInterpretation(idea, matchedInsights) {
+  const verifiedMatch = findVerifiedDestinationMatch(idea, matchedInsights);
+
+  if (verifiedMatch) {
+    return normalizeIdeaResult({
+      destination: verifiedMatch.label,
+      days: inferDaysFromIdea(idea),
+      group: inferGroupFromIdea(idea),
+      budget: inferBudgetFromIdea(idea),
+      interests: inferInterestsFromIdea(idea),
+      summary: verifiedMatch.insight?.incitetales_angle || verifiedMatch.source?.tagline || '',
+      locationSuggestions: collectVerifiedSuggestions(verifiedMatch, matchedInsights)
+    }, idea);
   }
 
-  if (bestOption && bestScore > 0) {
-    return {
-      value: bestOption.value,
-      label: bestOption.dataset.name || bestOption.textContent || ''
-    };
-  }
-
-  if (currentInsights.length) {
-    const insight = currentInsights[0];
-    return {
-      value: '',
-      label: insight.title || insight.district || insight.name || idea
-    };
-  }
-
-  return { value: '', label: idea };
+  return normalizeIdeaResult({
+    destination: idea,
+    days: inferDaysFromIdea(idea),
+    group: inferGroupFromIdea(idea),
+    budget: inferBudgetFromIdea(idea),
+    interests: inferInterestsFromIdea(idea),
+    summary: '',
+    locationSuggestions: []
+  }, idea);
 }
 
 function inferDaysFromIdea(idea) {
@@ -1755,21 +1852,20 @@ async function generateFromIdea() {
   showAIOnlyBadge(isAIOnly && idea.length > 5);
 
   try {
-    const inferredDestination = inferDestinationFromIdea(idea);
-    const result = normalizeIdeaResult({
-      destination: inferredDestination.label,
-      days: inferDaysFromIdea(idea),
-      group: inferGroupFromIdea(idea),
-      budget: inferBudgetFromIdea(idea),
-      interests: inferInterestsFromIdea(idea),
-      summary: '',
-      locationSuggestions: buildIdeaSuggestions(inferredDestination.label)
-    }, idea);
+    const result = resolveIdeaInterpretation(idea, currentInsights);
 
     document.getElementById('custom-destination').value = result.destination;
     const dropdown = document.getElementById('destination');
-    dropdown.value = inferredDestination.value || '';
-    if (dropdown.value) {
+    let matchedDropdown = '';
+    for (let i = 0; i < dropdown.options.length; i++) {
+      const optionLabel = dropdown.options[i].dataset.name || dropdown.options[i].textContent || '';
+      if (scorePhraseMatch(result.destination, optionLabel) > 1 || scorePhraseMatch(optionLabel, result.destination) > 1) {
+        matchedDropdown = dropdown.options[i].value;
+        break;
+      }
+    }
+    dropdown.value = matchedDropdown;
+    if (matchedDropdown) {
       const selectedOption = dropdown.options[dropdown.selectedIndex];
       document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || result.destination) : result.destination;
     }
