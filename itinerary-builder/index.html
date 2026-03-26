@@ -144,6 +144,58 @@ nav {
   z-index: 1;
 }
 
+.hero-gallery {
+  max-width: 980px;
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-gallery-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 240px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-gallery-card:nth-child(2) {
+  transform: translateY(18px);
+}
+
+.hero-gallery-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.hero-gallery-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28,24,20,0.06) 0%, rgba(28,24,20,0.34) 100%);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-gallery {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .hero-gallery-card,
+  .hero-gallery-card:nth-child(2) {
+    min-height: 180px;
+    transform: none;
+  }
+}
+
 /* ── MAIN LAYOUT ── */
 .main-wrap {
   max-width: 560px;
@@ -1100,6 +1152,17 @@ nav {
   <div class="hero-label">Powered by AI · Free to use</div>
   <h1 class="hero-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h1>
   <p class="hero-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with transport, permits, budget, and the spots only locals know.</p>
+  <div class="hero-gallery">
+    <div class="hero-gallery-card">
+      <img src="https://res.cloudinary.com/dzi5yuumz/image/upload/v1774554076/pexels-atiswan-goel-694029654-18006918_ai4pb7.jpg" alt="Northeast India travel landscape" loading="eager" decoding="async">
+    </div>
+    <div class="hero-gallery-card">
+      <img src="https://res.cloudinary.com/dzi5yuumz/image/upload/v1773951951/meghalaya-1_ttwdfi.jpg" alt="Meghalaya landscape" loading="eager" decoding="async">
+    </div>
+    <div class="hero-gallery-card">
+      <img src="https://res.cloudinary.com/dzi5yuumz/image/upload/v1773951948/assam-1_c6opsn.jpg" alt="Assam landscape" loading="eager" decoding="async">
+    </div>
+  </div>
 </div>
 
 <!-- MAIN -->
