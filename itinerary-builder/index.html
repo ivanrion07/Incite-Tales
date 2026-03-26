@@ -85,12 +85,10 @@ nav {
 /* ── HERO ── */
 .page-hero {
   padding: 150px 48px 110px;
-  background:
-    linear-gradient(180deg, rgba(14, 13, 11, 0.46) 0%, rgba(14, 13, 11, 0.68) 100%),
-    url("https://res.cloudinary.com/dzi5yuumz/image/upload/v1774554076/pexels-atiswan-goel-694029654-18006918_ai4pb7.jpg") center 42% / cover no-repeat;
   position: relative;
   overflow: hidden;
   text-align: center;
+  isolation: isolate;
 }
 
 .page-hero::before {
@@ -101,6 +99,39 @@ nav {
     radial-gradient(ellipse 60% 80% at 80% 50%, rgba(42,92,72,0.2) 0%, transparent 60%),
     radial-gradient(ellipse 40% 60% at 20% 80%, rgba(245,200,66,0.09) 0%, transparent 50%);
   pointer-events: none;
+  z-index: 1;
+}
+
+.hero-backgrounds {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-position: center 42%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.hero-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14, 13, 11, 0.46) 0%, rgba(14, 13, 11, 0.68) 100%);
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-label {
@@ -151,6 +182,9 @@ nav {
 @media (max-width: 768px) {
   .page-hero {
     padding: 120px 20px 80px;
+  }
+
+  .hero-slide {
     background-position: center center;
   }
 }
@@ -1108,9 +1142,16 @@ nav {
 
 <!-- HERO -->
 <div class="page-hero">
-  <div class="hero-label">Powered by AI · Free to use</div>
-  <h1 class="hero-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h1>
-  <p class="hero-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with transport, permits, budget, and the spots only locals know.</p>
+  <div class="hero-backgrounds" aria-hidden="true">
+    <div class="hero-slide is-active" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1774554076/pexels-atiswan-goel-694029654-18006918_ai4pb7.jpg');"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773951951/meghalaya-1_ttwdfi.jpg');"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dzi5yuumz/image/upload/v1773951948/assam-1_c6opsn.jpg');"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-label">Powered by AI · Free to use</div>
+    <h1 class="hero-title">Build your<br><em>Northeast itinerary</em><br>in seconds</h1>
+    <p class="hero-sub">Tell us where you want to go. We'll generate a complete day-by-day plan — with transport, permits, budget, and the spots only locals know.</p>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -2202,7 +2243,25 @@ function prefillFromUrl() {
   }
 }
 
+function initHeroCarousel() {
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  if (slides.length < 2) return;
+
+  let activeIndex = slides.findIndex((slide) => slide.classList.contains('is-active'));
+  if (activeIndex === -1) {
+    activeIndex = 0;
+    slides[0].classList.add('is-active');
+  }
+
+  setInterval(() => {
+    slides[activeIndex].classList.remove('is-active');
+    activeIndex = (activeIndex + 1) % slides.length;
+    slides[activeIndex].classList.add('is-active');
+  }, 3000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroCarousel();
   populateDestinationDropdown();
   prefillFromUrl();
   document.getElementById('idea-generate-btn').addEventListener('click', generateFromIdea);
