@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darjeeling + Sikkim Stories — Incitetales</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--bg2:#fffdf5;--ink:#1c1814;--ink3:#6a6058;--terra:#8b4a2a;--yellow:#f5c842;--border:#ede8d8;--border2:#e0d8c4;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:16px 48px;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);text-decoration:none;}
+.nav-logo span{background:var(--yellow);padding:0 4px;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--terra);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#fff;background:var(--ink);padding:9px 18px;text-decoration:none;}
+.nav-cta:hover{background:var(--terra);}
+.place-hero{height:400px;position:relative;overflow:hidden;margin-top:57px;}
+.place-hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#080e0c 0%,#0c1610 40%,#080e0a 70%,#060a08 100%);}
+.place-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,24,20,0.2) 0%,rgba(28,24,20,0.8) 100%);}
+.place-hero-content{position:absolute;bottom:0;left:0;right:0;padding:40px 48px;z-index:2;}
+.place-breadcrumb{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;}
+.place-breadcrumb a{color:rgba(255,255,255,0.5);text-decoration:none;}
+.place-breadcrumb a:hover{color:var(--yellow);}
+.place-breadcrumb span{color:var(--yellow);}
+.place-title{font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);font-weight:400;color:#fff;line-height:1.0;margin-bottom:12px;}
+.place-desc{font-size:15px;color:rgba(255,255,255,0.65);font-style:italic;max-width:560px;line-height:1.65;}
+.stories-wrap{max-width:1100px;margin:0 auto;padding:56px 48px 80px;}
+.stories-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.stories-header-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ink);}
+.stories-header-count{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);}
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+.story-card{background:var(--bg);text-decoration:none;color:inherit;display:block;transition:background 0.2s;position:relative;}
+.story-card:hover{background:var(--bg2);}
+.story-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--yellow);transform:scaleX(0);transition:transform 0.3s;transform-origin:left;}
+.story-card:hover::before{transform:scaleX(1);}
+.story-card-img{height:200px;position:relative;overflow:hidden;}
+.story-card-img-bg{position:absolute;inset:0;transition:transform 0.5s ease;background-size:cover;background-position:center;}
+.story-card:hover .story-card-img-bg{transform:scale(1.04);}
+.story-card-body{padding:20px 22px 24px;}
+.story-location{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.story-location::before{content:'◆';font-size:5px;}
+.story-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:10px;}
+.story-excerpt{font-size:13px;color:var(--ink3);line-height:1.6;font-style:italic;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.story-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border);}
+.story-meta{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);}
+.story-read{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:5px;}
+.story-card:hover .story-read{color:var(--terra);}
+.story-read::after{content:'→';}
+.story-card.soon{opacity:0.45;pointer-events:none;}
+.soon-badge{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);border:1px solid var(--border2);padding:3px 8px;}
+.builder-cta{background:var(--ink);padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;margin-top:2px;}
+.cta-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.25em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px;}
+.cta-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;font-style:italic;color:#fff;}
+.btn-yellow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);background:var(--yellow);padding:13px 24px;text-decoration:none;font-weight:500;white-space:nowrap;flex-shrink:0;}
+.btn-yellow:hover{background:#f0d060;}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.12em;color:var(--ink3);text-transform:uppercase;}
+.footer-tagline{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ink3);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../" class="nav-logo">Incite<span>tales</span></a>
+  <ul class="nav-links">
+    <li><a href="../stories/" class="active">Stories</a></li>
+    <li><a href="../itinerary-builder/">Itinerary Builder</a></li>
+    <li><a href="../discover-ne/">Discover NE</a></li>
+    <li><a href="../explore-nearby/">Explore Nearby</a></li>
+    <li><a href="../merch/">Merch</a></li>
+  </ul>
+  <a href="../itinerary-builder/" class="nav-cta">Plan a Trip</a>
+</nav>
+<div class="place-hero">
+  <div class="place-hero-bg"></div>
+  <div class="place-hero-overlay"></div>
+  <div class="place-hero-content">
+    <div class="place-breadcrumb"><a href="../stories/">Stories</a> › <span>Darjeeling + Sikkim</span></div>
+    <h1 class="place-title">Darjeeling + Sikkim</h1>
+    <p class="place-desc">Tiger Hill at sunrise, the toy train, Gurudongmar Lake at 17,000 feet. Stories from the eastern Himalayas.</p>
+  </div>
+</div>
+<div class="stories-wrap">
+  <div class="stories-header">
+    <div class="stories-header-title">All Darjeeling + Sikkim stories</div>
+    <div class="stories-header-count">2 coming soon</div>
+  </div>
+  <div class="stories-grid">
+    <a class="story-card soon"><div class="story-card-img"><div class="story-card-img-bg" style="background:linear-gradient(160deg,#080e0c 0%,#0c1610 50%,#060a08 100%);"></div></div><div class="story-card-body"><div class="story-location">Darjeeling · West Bengal</div><h3 class="story-title">Tiger Hill Before the Sun Rises</h3><p class="story-excerpt">Everyone goes to Tiger Hill. Almost no one knows which side to stand on, or how early you actually need to arrive.</p><div class="story-footer"><span class="soon-badge">Coming soon</span></div></div></a><a class="story-card soon"><div class="story-card-img"><div class="story-card-img-bg" style="background:linear-gradient(160deg,#0e0a18 0%,#14101e 50%,#080610 100%);"></div></div><div class="story-card-body"><div class="story-location">Gurudongmar · North Sikkim</div><h3 class="story-title">Gurudongmar: The Lake at 17,000 Feet</h3><p class="story-excerpt">The road passes through army checkposts and cloud cover. Then the lake appears, impossibly blue, impossibly still.</p><div class="story-footer"><span class="soon-badge">Coming soon</span></div></div></a>
+  </div>
+</div>
+<div class="builder-cta">
+  <div>
+    <div class="cta-label">◆ &nbsp; Plan your Darjeeling + Sikkim trip</div>
+    <div class="cta-title">7 days, both states, permits sorted.</div>
+  </div>
+  <a href="../itinerary-builder/" class="btn-yellow">Build My Itinerary →</a>
+</div>
+<footer>
+  <span class="footer-copy">© 2026 Incitetales · Guwahati, Assam</span>
+  <span class="footer-tagline">"One story. Every week."</span>
+</footer>
+</body>
+</html>
