@@ -9,20 +9,50 @@
   /* ── NAV ── */
   nav {
     padding: 14px 20px !important;
+    gap: 12px !important;
+  }
+  .nav-logo {
+    font-size: 18px !important;
+  }
+  .nav-links {
+    display: none !important;
+  }
+  .nav-cta {
+    padding: 8px 14px !important;
+    white-space: nowrap !important;
   }
 
   /* ── STORY PAGES (maguri-beel, anini) ── */
   .story-hero {
     padding: 90px 20px 40px !important;
   }
-  .hero-content {
+  .hero-content,
+  .hero-inner {
     padding: 0 20px 32px !important;
+    max-width: none !important;
   }
   .story-headline {
     font-size: clamp(28px, 8vw, 44px) !important;
   }
+  .story-title {
+    font-size: clamp(32px, 9vw, 48px) !important;
+  }
+  .story-lede {
+    font-size: 15px !important;
+    margin-bottom: 32px !important;
+  }
   .story-standfirst {
     font-size: 15px !important;
+  }
+  .story-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  .meta-item {
+    border-right: none !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
   }
   .article-layout {
     display: block !important;
@@ -38,7 +68,8 @@
   .article-body h2 {
     font-size: 24px !important;
   }
-  .pullquote p {
+  .pullquote p,
+  .pull-quote p {
     font-size: 18px !important;
   }
   .article-sidebar {
@@ -208,6 +239,7 @@
   }
   .bottom-cta {
     flex-direction: column !important;
+    align-items: flex-start !important;
     padding: 40px 20px !important;
     gap: 20px !important;
   }
@@ -216,19 +248,79 @@
     text-align: center !important;
   }
 
+  /* ── STORIES STATE PAGES ── */
+  .place-hero {
+    height: auto !important;
+    min-height: 320px !important;
+  }
+  .place-hero-content {
+    padding: 32px 20px !important;
+  }
+  .place-title {
+    font-size: clamp(32px, 10vw, 48px) !important;
+  }
+  .place-desc {
+    max-width: none !important;
+  }
+  .stories-wrap {
+    padding: 40px 20px 60px !important;
+  }
+  .stories-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .stories-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .story-footer {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .builder-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 36px 20px !important;
+    gap: 20px !important;
+  }
+
   /* ── DISCOVER NE / EXPLORE NEARBY / MERCH ── */
   .section-wrap {
     padding: 48px 20px !important;
   }
-  .grid-2,
-  .grid-3,
-  .card-grid {
+  .trips-grid,
+  .merch-grid,
+  .nearby-card {
     grid-template-columns: 1fr !important;
   }
   .section-header {
     flex-direction: column !important;
     gap: 12px !important;
     align-items: flex-start !important;
+  }
+  .trip-card,
+  .nearby-body {
+    padding: 24px !important;
+  }
+  .trip-footer,
+  .merch-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .nearby-visual {
+    height: 240px !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 0 !important;
+  }
+  .footer-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
   }
 
   /* ── UNIVERSAL FIXES ── */
@@ -239,22 +331,33 @@
   img, video, iframe {
     max-width: 100% !important;
   }
+  .place-card,
+  .story-card,
+  .trip-card,
+  .merch-card {
+    display: block !important;
+    width: 100% !important;
+  }
 
   /* Touch-friendly tap targets */
-  a, button {
+  button,
+  .nav-cta,
+  .btn-yellow,
+  .btn-ghost,
+  .trip-book,
+  .generate-btn,
+  #generate-btn,
+  #idea-generate-btn,
+  .btn-publish,
+  .btn-edit,
+  .btn-share {
     min-height: 44px !important;
-    display: inline-flex !important;
     align-items: center !important;
   }
 
   /* Table overflow on mobile */
   .fact-grid {
     grid-template-columns: 1fr !important;
-  }
-  .footer-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 24px !important;
-    padding: 0 20px !important;
   }
 }
 
