@@ -1,0 +1,138 @@
+{
+  "id": "peren",
+  "state": "Nagaland",
+  "district": "Peren",
+  "district_headquarters": "Peren",
+  "tagline": "The new southern district and gateway to Manipur",
+  "description": "Peren is one of Nagaland's newer districts (carved from Kohima). It is in the southern part of the state, sharing a border with Manipur. The district is less touristy than Kohima but still accessible. The Angami Nagas inhabit this region.",
+  "incitetales_angle": "Peren is newer and far less visited than Kohima, though it's quite accessible. The landscape is scenic and tribal culture is strong.",
+  "destinations": [
+    {
+      "id": "peren-town",
+      "name": "Peren",
+      "type": "town",
+      "altitude_m": 1600,
+      "tagline": "The emerging town of southern Nagaland",
+      "description": "Peren is a small but growing town, district headquarters. It has basic infrastructure and serves as a base for exploring the region.",
+      "what_is_there": [
+        "Angami villages around Peren",
+        "Forest landscape",
+        "Gateway to Manipur border regions"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Peren",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Basic hotels",
+          "type": "hotel",
+          "price_range": "₹600–1,000"
+        }
+      ],
+      "local_food": [
+        "Angami Naga cuisine",
+        "Smoked pork, bamboo shoot",
+        "Basic local meals"
+      ],
+      "local_tips": [
+        "Only 85km from Dimapur — easily accessible",
+        "Fewer tourists than Kohima",
+        "ATM available"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "peren-villages",
+      "name": "Angami Villages in Peren",
+      "type": "tribal-villages",
+      "tagline": "Angami Naga settlements with less tourist footprint",
+      "description": "Villages in Peren district are settled by Angami Nagas. While the same tribe as those in Kohima, these villages see far fewer tourists and offer a more authentic experience.",
+      "what_is_there": [
+        "Traditional Angami houses",
+        "Village walks",
+        "Angami tribal culture"
+      ],
+      "stays": [
+        {
+          "name": "Homestays if arranged",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Angami meals"
+      ],
+      "local_tips": [
+        "Far fewer tourists than Kohima area",
+        "Ask permission before photographing",
+        "More authentic experience due to low tourist footfall"
+      ],
+      "hidden_score": 5
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 340,
+      "travel_hours": "9–10 hours",
+      "waypoints": [
+        "Dimapur",
+        "Peren"
+      ],
+      "notes": "Closer than Kohima from Dimapur."
+    },
+    "from_dimapur": {
+      "total_distance_km": 85,
+      "travel_hours": "2–3 hours",
+      "waypoints": [
+        "Peren"
+      ],
+      "notes": "Shortest distance from Dimapur among southern districts. Quick drive on good road."
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel, Jio, BSNL available",
+    "internet": "Available in town",
+    "atm": "ATM in Peren town"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 4,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "peren",
+    "peren district",
+    "angami"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

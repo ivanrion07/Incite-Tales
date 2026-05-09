@@ -1,0 +1,168 @@
+{
+  "id": "tuensang",
+  "state": "Nagaland",
+  "district": "Tuensang",
+  "district_headquarters": "Tuensang",
+  "tagline": "The largest district and the wildest — Nagaland's eastern frontier",
+  "description": "Tuensang is Nagaland's largest district (2,536 sq km), covering 15.3% of the state's area. It borders Myanmar on the east. The landscape is wild, with dense forests and mountains. The Yimchunger and Konyak Nagas inhabit this region. Tourism infrastructure is minimal. This is genuine wilderness.",
+  "incitetales_angle": "Tuensang is Nagaland's last frontier. Few tourists venture here. The forests are untouched, and the tribal culture is deeply traditional.",
+  "destinations": [
+    {
+      "id": "tuensang-town",
+      "name": "Tuensang",
+      "type": "town",
+      "tagline": "The frontier outpost of eastern Nagaland",
+      "description": "Tuensang is the district headquarters of Nagaland's largest district. It is a small town with basic infrastructure. The surrounding region is forest and mountains.",
+      "what_is_there": [
+        "Yimchunger and Konyak tribal villages",
+        "Forest walks",
+        "Gateway to eastern Nagaland wilderness"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Tuensang",
+          "type": "government",
+          "price_range": "₹300–500",
+          "notes": "Basic. Book via DC office."
+        }
+      ],
+      "local_food": [
+        "Very basic local meals"
+      ],
+      "local_tips": [
+        "Remote and basic — stock supplies in larger towns",
+        "No ATM — carry cash",
+        "Roads are rough and unpredictable"
+      ],
+      "hidden_score": 6
+    },
+    {
+      "id": "yimchunger-villages",
+      "name": "Yimchunger Villages",
+      "type": "tribal-villages",
+      "tagline": "The Yimchunger Naga homeland",
+      "description": "The Yimchunger Nagas inhabit villages throughout Tuensang district. These are deeply traditional communities with a unique culture and language. Tourism is virtually non-existent here.",
+      "what_is_there": [
+        "Traditional villages",
+        "Yimchunger tribal culture",
+        "Forest landscape"
+      ],
+      "stays": [
+        {
+          "name": "Homestays if arranged",
+          "type": "homestay",
+          "price_range": "₹400–700 including meals",
+          "notes": "Very limited. Ask at Tuensang town office."
+        }
+      ],
+      "local_food": [
+        "Home-cooked Yimchunger meals"
+      ],
+      "local_tips": [
+        "Very few tourists — interactions are genuine",
+        "Ask permission before any photography",
+        "Guide recommended"
+      ],
+      "hidden_score": 8
+    },
+    {
+      "id": "longtrok-village",
+      "name": "Longtrok",
+      "type": "village",
+      "tagline": "Home to giant monoliths and Mithun tradition",
+      "description": "Longtrok is a village in Tuensang known for its giant monoliths and the Mithun (state animal of Nagaland). The monoliths are erected during festivals and celebrations. Mithun herds roam the surrounding forest.",
+      "what_is_there": [
+        "Giant monoliths — erected during festivals",
+        "Mithun herds — semi-domesticated gaur",
+        "Traditional Yimchunger settlement"
+      ],
+      "stays": [
+        {
+          "name": "Homestays",
+          "type": "homestay",
+          "price_range": "₹500–800 including meals"
+        }
+      ],
+      "local_food": [
+        "Home-cooked meals"
+      ],
+      "local_tips": [
+        "Mithun are the ritual animal — understand their cultural significance",
+        "Monoliths: best viewed during festivals (Nov-Dec)",
+        "Very remote village"
+      ],
+      "hidden_score": 7
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100",
+    "notes": "Tuensang borders Myanmar — may have additional restrictions. Check with DC office."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 480,
+      "travel_hours": "14–16 hours",
+      "waypoints": [
+        "Dimapur",
+        "Tuensang"
+      ],
+      "notes": "Very long journey — 2+ days. Remote mountain roads."
+    },
+    "from_dimapur": {
+      "total_distance_km": 281,
+      "travel_hours": "9–11 hours",
+      "waypoints": [
+        "Tuensang"
+      ],
+      "notes": "Mountain roads, rough in places."
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL very occasional",
+    "internet": "None",
+    "atm": "No ATM"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "festival": [
+      "november",
+      "december"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: accessible, clear. Festivals showcase Mithun and monoliths."
+  },
+  "budget_level": "budget",
+  "hidden_score": 7,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "tuensang",
+    "tuensang district",
+    "yimchunger",
+    "longtrok",
+    "mithun"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "id": "mokokchung",
+  "state": "Nagaland",
+  "district": "Mokokchung",
+  "district_headquarters": "Mokokchung",
+  "tagline": "The cultural capital of Nagaland and the Ao Naga heartland",
+  "description": "Mokokchung is known as the cultural and fashion capital of Nagaland. It is the heart of the Ao Naga tribe. The town sits at 1,500m surrounded by forested hills. Longkhum, a village 17km away, is famous for rhododendrons and cherry blossoms in spring and is where Ao culture remains deeply rooted.",
+  "incitetales_angle": "Longkhum in April is one of the most beautiful villages in Northeast India. Rhododendrons and cherry blossoms combined, and the old Ao saying holds true: 'your soul stays behind and you must return.'",
+  "destinations": [
+    {
+      "id": "mokokchung-town",
+      "name": "Mokokchung",
+      "type": "town",
+      "altitude_m": 1500,
+      "tagline": "The cultural capital with forested hills on all sides",
+      "description": "Mokokchung is a proper town with hotels, ATMs, and services. It is remarkably clean and organized. The town is a base for exploring Ao villages and Longkhum. The town market is known for fashion and textiles — Mokokchung styles are copied across Nagaland.",
+      "what_is_there": [
+        "District Museum — Ao tribal artifacts, history, textiles, art",
+        "Town market — fashion, local textiles, Naga handicrafts",
+        "Mokokchung College — on the hill, views of town below",
+        "Forest walks — pine and oak forests surrounding town"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Japfu Heritage",
+          "type": "hotel",
+          "price_range": "₹1,200–2,000"
+        },
+        {
+          "name": "Circuit House Mokokchung",
+          "type": "government",
+          "price_range": "₹600–1,000"
+        },
+        {
+          "name": "Homestays in nearby Ao villages",
+          "type": "homestay",
+          "price_range": "₹700–1,200 including meals"
+        }
+      ],
+      "local_food": [
+        "Ao Naga cuisine — smoked pork, bamboo shoot, traditional fish",
+        "Axone (fermented soybean) — pungent, a staple",
+        "Rice beer — apong, served in homes",
+        "Market food — momos, breads, street food"
+      ],
+      "local_tips": [
+        "Museum is worth 1–2 hours — excellent collection of Ao artifacts",
+        "Market walk: morning is best, watch local life, buy handicrafts",
+        "English widely spoken — Mokokchung is well-accustomed to visitors",
+        "Ask locals about Ao villages — some families offer homestays"
+      ],
+      "hidden_score": 5
+    },
+    {
+      "id": "longkhum",
+      "name": "Longkhum",
+      "type": "village",
+      "altitude_m": 1800,
+      "tagline": "Where the soul stays behind: rhododendrons and cherry blossoms in spring",
+      "description": "Longkhum is a village 17km from Mokokchung, famous for rhododendrons (March-April) and cherry blossoms (April). The old Ao saying goes: 'A single visit to Longkhum is not enough, for your soul stays behind the first time and you have to return once more to get it back.' The village is on a ridge with valley views.",
+      "what_is_there": [
+        "Rhododendron forest — March-April, entire hillsides covered in pink and white blooms",
+        "Cherry blossom trees — April, line the village streets",
+        "Longkhum village walk — traditional stone houses, peaceful",
+        "Viewpoint — from ridge above village, valley stretches below",
+        "Handlooms — buy directly from weavers, intricate patterns"
+      ],
+      "stays": [
+        {
+          "name": "Homestays in Longkhum",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals",
+          "notes": "Book in advance. Family-run, home-cooked food."
+        },
+        {
+          "name": "Circuit House Longkhum",
+          "type": "government",
+          "price_range": "₹400–700",
+          "notes": "Basic, book via DC office"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Ao meals at homestays — best food experience",
+        "Smoked pork, bamboo shoot, fresh vegetables",
+        "Rice beer — offered in homes"
+      ],
+      "local_tips": [
+        "April is peak — both rhododendrons and cherry blossoms, but crowded on weekends",
+        "March-early April is better — fewer tourists, still in bloom",
+        "Walk early morning — mist clears, light is soft",
+        "Ask homestay to arrange village walk with local guide",
+        "Handlooms: buy directly from weavers — better prices and story"
+      ],
+      "hidden_score": 8
+    },
+    {
+      "id": "ungma-village",
+      "name": "Ungma",
+      "type": "village",
+      "tagline": "The oldest and largest Ao village, heart of Ao culture",
+      "description": "Ungma is 3km from Mokokchung town. It is the oldest and largest Ao village, and the place where Ao tribal history is deepest rooted. The village structure — houses built around a central council ground (morung) — is the traditional Ao settlement pattern.",
+      "what_is_there": [
+        "Traditional houses — stone construction, thatch roofs",
+        "Morung (council ground) — central gathering place",
+        "Village walk — observe daily life",
+        "Festival activities during Hornbill season (November-December)"
+      ],
+      "stays": [
+        {
+          "name": "Homestays in Ungma",
+          "type": "homestay",
+          "price_range": "₹600–900 including meals"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Ao food at homestays"
+      ],
+      "local_tips": [
+        "Only 3km from Mokokchung — easy day trip",
+        "Visit early morning or late afternoon — village life is most active",
+        "Ask permission before photographing — locals appreciate consent",
+        "Combine with Mokokchung Museum visit for context"
+      ],
+      "hidden_score": 6
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100",
+    "processing_time": "1–2 days"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 380,
+      "travel_hours": "10–12 hours",
+      "waypoints": [
+        "Dimapur",
+        "Mokokchung"
+      ],
+      "notes": "Overnight bus from Guwahati is standard — reaches Mokokchung next morning. Direct buses available, 10–12 hours."
+    },
+    "from_dimapur": {
+      "total_distance_km": 209,
+      "travel_hours": "5–6 hours",
+      "waypoints": [
+        "Mokokchung"
+      ],
+      "notes": "Buses and shared taxis available. Mountain road via NH-61."
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel, Jio, BSNL — all networks available",
+    "internet": "Available in hotels",
+    "atm": "ATMs in Mokokchung town"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "bloom": [
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "March-April: Longkhum rhododendrons and cherry blossoms — book early. October-November: clear skies, comfortable walks. Monsoon: roads can be problematic."
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 6,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "mokokchung",
+    "mokokchung district",
+    "longkhum",
+    "ungma",
+    "ao naga",
+    "doyang reservoir"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november",
+      "march",
+      "april"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "id": "wokha",
+  "state": "Nagaland",
+  "district": "Wokha",
+  "district_headquarters": "Wokha",
+  "tagline": "The Lotha Naga homeland and the Amur falcon capital",
+  "description": "Wokha is the district of the Lotha Nagas. The Doyang Reservoir is known worldwide for the millions of Amur falcons that stop here every October on their migration from Siberia to Africa. The district is also the traditional headhunting homeland — now peaceful, with a rich tribal culture.",
+  "incitetales_angle": "Doyang Reservoir in October: millions of Amur falcons fill the sky at dusk. One of the most extraordinary bird spectacles on Earth.",
+  "destinations": [
+    {
+      "id": "wokha-town",
+      "name": "Wokha",
+      "type": "town",
+      "tagline": "The Lotha Naga cultural center",
+      "description": "Wokha is a small, pleasant town sitting at the gateway to Doyang Reservoir. It has basic hotels, ATMs, and is the base for visiting the falcon migrations.",
+      "what_is_there": [
+        "Town market — local handicrafts, textiles",
+        "Lotha tribal culture — villages around town",
+        "Gateway to Doyang Reservoir"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Wokha",
+          "type": "hotel",
+          "price_range": "₹800–1,500"
+        },
+        {
+          "name": "Circuit House Wokha",
+          "type": "government",
+          "price_range": "₹400–700"
+        }
+      ],
+      "local_food": [
+        "Lotha Naga cuisine — smoked pork, bamboo shoot",
+        "Apong rice beer",
+        "Local market food"
+      ],
+      "local_tips": [
+        "Base for visiting Doyang Reservoir",
+        "Stock up fuel and supplies here"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "doyang-reservoir",
+      "name": "Doyang Reservoir",
+      "type": "wetland-birdwatching",
+      "tagline": "Millions of Amur falcons stop here in October — the Falcon capital of the world",
+      "description": "Doyang Reservoir is a man-made lake fed by the Doyang River. Every October, millions of Amur falcons descend here for 2–3 weeks on their migration from Siberia to Africa. The birds roost over the water at dusk. The spectacle is extraordinary — the sky turns dark with birds. It is one of the most significant bird migration sites on Earth.",
+      "what_is_there": [
+        "Amur falcon migration — October, millions of birds",
+        "Reservoir walk — scenic, birdwatching, morning and dusk",
+        "Migratory waterfowl — November-February, various species",
+        "Fishery — traditional fishing methods on the reservoir"
+      ],
+      "stays": [
+        {
+          "name": "Forest Rest House at Doyang",
+          "type": "forest-lodge",
+          "price_range": "₹500–800",
+          "notes": "Book via Forest Dept. Basic but positioned perfectly for viewing."
+        },
+        {
+          "name": "Homestays in nearby villages",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals"
+        }
+      ],
+      "local_food": [
+        "Carry food from Wokha or arrange through Forest Dept",
+        "Fresh fish available at the reservoir",
+        "Homestays provide home-cooked meals"
+      ],
+      "local_tips": [
+        "Amur falcon peak: October 15–25 — arrive a week before for consistent viewing",
+        "Dusk viewing: 5:30–6:30pm — birds roost over water, turn sky dark",
+        "Bring binoculars and camera with good zoom",
+        "November-February: other migratory species still present, good birdwatching",
+        "Early morning walks: excellent for other bird species"
+      ],
+      "hidden_score": 9
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 380,
+      "travel_hours": "10–12 hours",
+      "waypoints": [
+        "Dimapur",
+        "Wokha"
+      ],
+      "notes": "Via NH-39 to Dimapur, then mountain road via Merapani route (shorter: 71.7km from Dimapur) or via Kohima route (174km from Dimapur)."
+    },
+    "from_dimapur": {
+      "total_distance_km": 124,
+      "travel_hours": "3–4 hours",
+      "waypoints": [
+        "Wokha"
+      ],
+      "notes": "Two routes: via Kohima (174km, longer) or via Merapani (71.7km, shorter, scenic mountain road)."
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel and BSNL in Wokha town",
+    "internet": "Limited",
+    "atm": "ATM in Wokha town"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "falcon": [
+      "october"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October: Amur falcon migration — main reason to visit. Early October: arrival begins. Mid-October: peak numbers. November-February: other migratory species. Clear skies Oct-Nov."
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 7,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "wokha",
+    "wokha district",
+    "doyang reservoir",
+    "doyang",
+    "amur falcon",
+    "lotha naga"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

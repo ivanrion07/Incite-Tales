@@ -1,0 +1,245 @@
+{
+  "id": "kohima",
+  "state": "Nagaland",
+  "district": "Kohima",
+  "district_headquarters": "Kohima",
+  "tagline": "The war memorial, Hornbill Festival, and Naga tribal heartland",
+  "description": "Kohima is the capital of Nagaland and the cultural heart of the state. Home to the Angami Nagas, the district sits on a ridge at 1,261m. The WWII Kohima War Memorial is one of India's most significant. The Hornbill Festival (December) draws visitors from across India.",
+  "incitetales_angle": "Kohima War Memorial at dawn is among the most moving pilgrimage sites in India. Few Indians know about it.",
+  "destinations": [
+    {
+      "id": "kohima-town",
+      "name": "Kohima",
+      "type": "town",
+      "altitude_m": 1261,
+      "tagline": "Ridge-top capital with a war memorial that changes you",
+      "description": "Kohima is built on a ridge with a commanding view of the valley below. The town is the administrative and cultural heart of Nagaland. The Hornbill Festival transforms the entire town in December. Outside the festival, Kohima is quiet and walkable.",
+      "what_is_there": [
+        "Kohima War Memorial — 1944 WWII site, one of India's most significant war memorials",
+        "State Museum — Naga tribal artifacts, history, textiles",
+        "Kezama Village — traditional Angami Naga settlement, 20km from town",
+        "Khonoma Village — first Indian village to declare itself a wildlife sanctuary, famous for conservation",
+        "Hornbill Festival — December, 10-day festival of Naga culture, music, dance, food",
+        "Naga Heritage Village — reconstructed traditional Naga village with museum",
+        "Ridge viewpoint — walk the ridge at dusk, view valley below"
+      ],
+      "stays": [
+        {
+          "name": "HPTDC Hotel Sarai",
+          "type": "hotel",
+          "price_range": "₹1,500–2,500"
+        },
+        {
+          "name": "Circuit House Kohima",
+          "type": "government",
+          "price_range": "₹600–1,200",
+          "notes": "Book via DC office"
+        },
+        {
+          "name": "Homestays in Kezama or Khonoma",
+          "type": "homestay",
+          "price_range": "₹800–1,500 including meals",
+          "notes": "Best authentic experience"
+        }
+      ],
+      "local_food": [
+        "Smoked pork with bamboo shoot — the Naga standard",
+        "Naga fish curry — river fish in mustard and chili",
+        "Apong — rice beer, served in every home",
+        "Axone (fermented soybean) — pungent, addictive, quintessentially Naga",
+        "Naga green salad — boiled vegetables with chili",
+        "Market food — momos, local breads"
+      ],
+      "local_tips": [
+        "War Memorial: arrive by 6am for dawn ceremony (if available), few crowds",
+        "Hornbill Festival (December): book accommodation 4 months ahead, prices triple",
+        "Khonoma village walk is best in morning — 2-hour loop through forest and fields",
+        "Kezama: ask permission before photographing people or festivals",
+        "English is widely spoken — Kohima is well-accustomed to visitors"
+      ],
+      "hidden_score": 5
+    },
+    {
+      "id": "kohima-war-memorial",
+      "name": "Kohima War Memorial",
+      "type": "historical-memorial",
+      "tagline": "One of WWII's most significant battle sites, now a place of pilgrimage",
+      "description": "The Kohima War Cemetery commemorates the 1944 Battle of Kohima, where Japanese and British forces fought for control of this ridge. British forces held the position. Nearly 1,500 soldiers are buried here. The memorial inscription reads: 'When you go home, tell them of us and say, for your tomorrow, we gave our today.'",
+      "what_is_there": [
+        "War cemetery — rows of graves, each with a name and date",
+        "Memorial stone — inscription, garden, peaceful setting",
+        "Kohima Garrison (historic) — still operational nearby",
+        "Views from the ridge — the valley stretched below"
+      ],
+      "stays": [],
+      "local_food": [],
+      "local_tips": [
+        "Open sunrise to sunset — arrive early for fewer crowds",
+        "Dress respectfully — this is a place of pilgrimage and remembrance",
+        "Read the stone inscription slowly — it encapsulates the sacrifice",
+        "Spend 30 minutes minimum — sit quietly, read the names"
+      ],
+      "hidden_score": 4
+    },
+    {
+      "id": "khonoma-village",
+      "name": "Khonoma",
+      "type": "village",
+      "tagline": "India's first wildlife sanctuary village",
+      "description": "Khonoma was the first village in India to declare itself a wildlife sanctuary. The Angami Nagas here have protected the forest for centuries. The village sits on a ridge with 360° views. Morning or evening walks through the village and forest are excellent.",
+      "what_is_there": [
+        "Forest — protected and dense, full of birds and wildlife",
+        "Village walk — traditional stone houses, terraced fields",
+        "Viewpoint — from ridge above village, valley stretches below",
+        "Khonoma museum — small, local history"
+      ],
+      "stays": [
+        {
+          "name": "Homestays in Khonoma",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals",
+          "notes": "Ask in village, family-run, meals included"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Angami meals at homestays",
+        "Bamboo shoot curry, smoked pork, apong"
+      ],
+      "local_tips": [
+        "Khonoma is 20km from Kohima town — book transport ahead",
+        "Walk the forest early morning for birds — bring binoculars",
+        "Ask before photographing — locals are welcoming but appreciate consent",
+        "Stay overnight if possible — evening in the village is peaceful"
+      ],
+      "hidden_score": 7
+    },
+    {
+      "id": "dzuko-valley",
+      "name": "Dzuko Valley",
+      "type": "valley",
+      "altitude_m": 2440,
+      "tagline": "Alpine meadow, rhododendrons, and one of Nagaland's most beautiful valleys",
+      "description": "Dzuko Valley is a high-altitude alpine meadow straddling the Nagaland-Manipur border. Accessible from Kohima, the trek is a 2-day undertaking. Rhododendrons bloom April-May. The valley floor is open, ringed by cliffs.",
+      "what_is_there": [
+        "Alpine meadow — open grassland at 2,440m",
+        "Rhododendron forest — April-May bloom",
+        "Crystal stream — cold, clear water",
+        "Sunrise from valley rim — 360° views on clear mornings"
+      ],
+      "stays": [
+        {
+          "name": "Rest hut in Dzuko Valley",
+          "type": "forest-hut",
+          "price_range": "₹300–500",
+          "notes": "Basic, book via Forest Dept. Limited capacity."
+        }
+      ],
+      "local_food": [
+        "Carry all food from Kohima"
+      ],
+      "local_tips": [
+        "Trek: Kohima → Japfu base → Japfu peak (1 day hike) → Dzuko Valley (2nd day)",
+        "Best season: April-May (rhododendrons), October-November (clear skies)",
+        "Guide strongly recommended — paths are unmarked",
+        "Water available at streams — carry purification tablets"
+      ],
+      "hidden_score": 8
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at https://ilp.nagaland.gov.in or through Commissioner website",
+    "cost": "₹100",
+    "processing_time": "1–2 days",
+    "notes": "ILP mandatory for all Indian tourists. Apply online (as of Jan 2025). Print or have digital copy."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 350,
+      "travel_days": 1,
+      "travel_hours": "9–10 hours",
+      "waypoints": [
+        "Tezpur",
+        "Bhalukpong (Assam-Nagaland border)",
+        "Dimapur",
+        "Kohima"
+      ],
+      "day_split": {
+        "start": "Guwahati",
+        "end": "Kohima",
+        "distance_km": 350,
+        "drive_hours": "9–10 hours",
+        "stops": [
+          "Tezpur for breakfast (2 hours from Guwahati)",
+          "Bhalukpong border checkpoint",
+          "Dimapur taxi/bus stand (refuel option)"
+        ],
+        "notes": "Leave Guwahati by 4–5am. Direct drive via NH-27 and NH-39. Mountain road begins after Dimapur. Reach Kohima by evening."
+      },
+      "nearest_railhead": "Dimapur (74km from Kohima)",
+      "nearest_airport": "Dimapur Airport (75km from Kohima)"
+    },
+    "from_dimapur": {
+      "total_distance_km": 74,
+      "travel_hours": "2.5–3 hours",
+      "waypoints": [
+        "Kohima"
+      ],
+      "notes": "Shortest route. Taxi or bus from Dimapur railway station/airport. Mountain road but well-maintained."
+    }
+  },
+  "connectivity": {
+    "mobile": "Airtel, Jio, BSNL available in Kohima town. Signal good.",
+    "internet": "Available in hotels and cafes in Kohima.",
+    "atm": "Multiple ATMs in Kohima — State Bank, HDFC, ICICI"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november",
+      "december"
+    ],
+    "festival": [
+      "december"
+    ],
+    "rhododendrons": [
+      "april",
+      "may"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: clear skies, best for trekking and village walks. December: Hornbill Festival dominates — book early, prices high. April-May: Dzuko Valley rhododendrons. Monsoon: roads can be slippery."
+  },
+  "budget_level": "mid-range",
+  "hidden_score": 5,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "kohima",
+    "kohima district",
+    "khonoma",
+    "kezama",
+    "dzuko valley",
+    "kohima war memorial",
+    "angami"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november",
+      "december"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

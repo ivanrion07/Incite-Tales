@@ -1,0 +1,95 @@
+{
+  "id": "dimapur",
+  "state": "Nagaland",
+  "district": "Dimapur",
+  "district_headquarters": "Dimapur",
+  "tagline": "The gateway of Nagaland",
+  "description": "Dimapur is Nagaland's commercial hub and main entry point. The Nagaland Express train arrives here, the only commercial airport in the state is 7km away, and all major highways converge. The city itself is not a tourist destination, but the entry point to everywhere else.",
+  "incitetales_angle": "Most travelers treat Dimapur as a transfer point. It's the junction where every journey in Nagaland begins.",
+  "destinations": [
+    {
+      "id": "dimapur-town",
+      "name": "Dimapur",
+      "type": "transport-hub",
+      "tagline": "Where every Nagaland journey begins",
+      "description": "Dimapur is a bustling commercial city on the Dhansiri River. It has good hotels, ATMs, fuel, and all services. Most travelers spend 1–2 hours here transitioning to other districts. The town itself has limited tourist appeal but is well-equipped.",
+      "what_is_there": [
+        "Railway Station — second busiest in Northeast India, trains to Guwahati",
+        "Dimapur Airport — 7km away, flights to Guwahati and Kolkata",
+        "Dhansiri River — walk the banks, peaceful early morning",
+        "Market area — local goods, Naga handicrafts"
+      ],
+      "stays": [
+        {
+          "name": "Hotel Mount Elbrus",
+          "type": "hotel",
+          "price_range": "₹1,500–2,500"
+        },
+        {
+          "name": "Hotel Japfu",
+          "type": "hotel",
+          "price_range": "₹800–1,500"
+        },
+        {
+          "name": "Circuit House Dimapur",
+          "type": "government",
+          "price_range": "₹600–1,200"
+        }
+      ],
+      "local_food": [
+        "Naga cuisine available in local restaurants",
+        "Smoked pork, bamboo shoot, apong",
+        "Standard Indian, Chinese, continental food in hotels"
+      ],
+      "local_tips": [
+        "Dimapur Railway Station: taxis to Kohima (₹200–300 shared) congregate outside",
+        "Dimapur Airport: 7km northeast of city, taxis available, expensive (₹400–600 to city)",
+        "Old NST Bus Stand: main bus terminal, buses to all districts",
+        "Spend minimal time here unless transferring — go to Kohima or other districts",
+        "All banks, ATMs, fuel here — stock up before heading to remote districts"
+      ],
+      "hidden_score": 2
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "how_to_apply": "Online at https://ilp.nagaland.gov.in",
+    "cost": "₹100",
+    "processing_time": "1–2 days"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 289,
+      "travel_hours": "9–10 hours by road",
+      "waypoints": [
+        "Tezpur",
+        "Bhalukpong",
+        "Dimapur"
+      ],
+      "notes": "By road: NH-27 and NH-39. By train: Nagaland Express (23:30 dep, 05:00 arr next morning) — most comfortable option. By air: IndiGo flights from Guwahati to Dimapur (1.5 hours)."
+    }
+  },
+  "connectivity": {
+    "mobile": "All networks — Airtel, Jio, BSNL",
+    "internet": "Widely available",
+    "atm": "Multiple ATMs — HDFC, ICICI, State Bank, etc.",
+    "petrol": "Multiple fuel pumps"
+  },
+  "best_season": {
+    "notes": "Dimapur is a year-round hub. Visit only if transitioning to other districts."
+  },
+  "budget_level": "mid-range",
+  "hidden_score": 2,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "dimapur",
+    "dimapur district",
+    "nagaland gateway",
+    "dhansiri"
+  ]
+}

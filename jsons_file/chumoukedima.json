@@ -1,0 +1,89 @@
+{
+  "id": "chumoukedima",
+  "state": "Nagaland",
+  "district": "Chumoukedima",
+  "district_headquarters": "Chumoukedima",
+  "tagline": "The newest district and the gateway landscape between Assam and Nagaland hills",
+  "description": "Chumoukedima is Nagaland's newest district, carved from Dimapur in 2024. It lies directly adjacent to Dimapur and serves as the transitional zone between Assam's plains and Nagaland's hills. The district includes part of the landscape that visitors pass through on the Guwahati-Dimapur-Kohima route. Minimal tourism infrastructure but good location for a quick stop.",
+  "incitetales_angle": "Chumoukedima is the edge of Nagaland — where the plains meet the hills. Few tourists think of it as a destination, but it marks the beginning of the state.",
+  "destinations": [
+    {
+      "id": "chumoukedima-town",
+      "name": "Chumoukedima",
+      "type": "town",
+      "tagline": "The entry town to Nagaland's hill landscape",
+      "description": "Chumoukedima is a growing town, the newest district headquarters. It sits between the plains and the hills. The town is more developed than typical district towns due to its proximity to Dimapur.",
+      "what_is_there": [
+        "Transitional landscape — plains to hills",
+        "Gateway viewpoint into Nagaland hills",
+        "Market area"
+      ],
+      "stays": [
+        {
+          "name": "Basic hotels",
+          "type": "hotel",
+          "price_range": "₹500–1,000"
+        },
+        {
+          "name": "Circuit House Chumoukedima",
+          "type": "government",
+          "price_range": "₹300–600"
+        }
+      ],
+      "local_food": [
+        "Mix of Assamese and Naga cuisine",
+        "Basic local meals"
+      ],
+      "local_tips": [
+        "Only 20–30km from Dimapur — quick transit stop",
+        "Marks the visual entry into Nagaland's hill region",
+        "Minimal tourism — most travelers pass through without stopping"
+      ],
+      "hidden_score": 2
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100",
+    "notes": "Technically requires ILP as part of Nagaland, though very close to Assam-Nagaland border."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 280,
+      "travel_hours": "8–9 hours",
+      "waypoints": [
+        "Dimapur",
+        "Chumoukedima"
+      ],
+      "notes": "Direct route, en route to rest of Nagaland."
+    },
+    "from_dimapur": {
+      "total_distance_km": 30,
+      "travel_hours": "1 hour",
+      "waypoints": [
+        "Chumoukedima"
+      ],
+      "notes": "Very quick from Dimapur — most travelers don't bother stopping."
+    }
+  },
+  "connectivity": {
+    "mobile": "All networks available",
+    "internet": "Available",
+    "atm": "ATM in town"
+  },
+  "best_season": {
+    "notes": "Year-round — this is a transit point, not a destination."
+  },
+  "budget_level": "budget",
+  "hidden_score": 2,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "chumoukedima",
+    "chumoukedima district"
+  ]
+}

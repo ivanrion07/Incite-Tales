@@ -1,0 +1,171 @@
+{
+  "id": "mon",
+  "state": "Nagaland",
+  "district": "Mon",
+  "district_headquarters": "Mon",
+  "tagline": "The Konyak Naga homeland and the legacy of a warrior culture",
+  "description": "Mon is Nagaland's northeasternmost district, home to the Konyak Nagas — historically known as fierce warriors and the last practicing headhunters in India (practice ended in the 1960s). The district is remote but accessible. The Konyaks have a distinct culture, facial tattoos (rare now, seen only in elders), and a warrior tradition that shaped their identity.",
+  "incitetales_angle": "The Konyak Nagas are the most distinctive tribal group in Nagaland. Their facial tattoos, warrior history, and isolation created a unique culture. Few tourists visit Mon.",
+  "destinations": [
+    {
+      "id": "mon-town",
+      "name": "Mon",
+      "type": "town",
+      "tagline": "The Konyak Naga capital",
+      "description": "Mon is a small town serving as the district headquarters. It is the base for exploring Konyak villages and culture. The town has basic infrastructure.",
+      "what_is_there": [
+        "Konyak tribal settlements around town",
+        "Traditional Konyak houses — distinctive architecture",
+        "Market — local goods"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Mon",
+          "type": "government",
+          "price_range": "₹300–600",
+          "notes": "Book via DC office"
+        },
+        {
+          "name": "Basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹400–700"
+        }
+      ],
+      "local_food": [
+        "Konyak cuisine — smoked pork, bamboo shoot",
+        "Apong rice beer",
+        "Local dhabas"
+      ],
+      "local_tips": [
+        "Base for Konyak village exploration",
+        "Tattooed elders are a visual link to history",
+        "Ask permission before photographing",
+        "Festivals (Nov-Dec) show Konyak tradition"
+      ],
+      "hidden_score": 5
+    },
+    {
+      "id": "konyak-villages",
+      "name": "Konyak Villages",
+      "type": "tribal-villages",
+      "tagline": "The warrior culture of the Konyak Nagas",
+      "description": "Konyak villages around Mon are deeply traditional. The Konyaks were historically headhunters (practice ended in 1960s). Today they are known for their warrior tradition, tattoos (facial and body), distinctive architecture, and unique cultural practices. The older generation bears facial tattoos — a mark of warrior status in pre-colonial times.",
+      "what_is_there": [
+        "Traditional Konyak houses — morungs (men's houses), intricate woodcarving",
+        "Tattooed elders — living history of Konyak tradition",
+        "Village walks — observe daily life",
+        "Warrior history and artifacts in some villages"
+      ],
+      "stays": [
+        {
+          "name": "Homestays in villages",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals",
+          "notes": "Book through DC office or ask in Mon town"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Konyak meals — traditionally smoked pork and bamboo"
+      ],
+      "local_tips": [
+        "Tattooed elders: ask permission before photographing, show respect",
+        "Villages are welcoming but private — let them invite you",
+        "Festivals (Nov-Dec): best time for cultural immersion",
+        "Guide recommended — helps with introductions"
+      ],
+      "hidden_score": 8
+    },
+    {
+      "id": "konyak-culture-center",
+      "name": "Konyak Heritage & Culture",
+      "type": "cultural-immersion",
+      "tagline": "Understanding the warrior legacy of the Konyaks",
+      "description": "The Konyak Nagas have one of the most distinct cultures in Northeast India. Their facial and body tattoos (now rare), warrior history, and isolation created a unique identity. Understanding Konyak culture means understanding pre-colonial Northeast warrior societies.",
+      "what_is_there": [
+        "Morung (men's house) — traditional gathering place, cultural significance",
+        "Tattoo tradition — visual and historical context",
+        "Headhunting history — now purely historical, important to understand context",
+        "Festivals — Konyak New Year and others showcase living tradition"
+      ],
+      "stays": [],
+      "local_food": [],
+      "local_tips": [
+        "Read about Konyak history before visiting — context is important",
+        "Headhunting practice ended in 1960s — it's historical, not current",
+        "Elders who practiced tattoos are living historians",
+        "Cultural respect is essential — this is not a museum but a living community"
+      ],
+      "hidden_score": 7
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100",
+    "notes": "Mon borders Arunachal Pradesh and Myanmar — may have additional restrictions. Check with DC office."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 500,
+      "travel_hours": "14–16 hours",
+      "waypoints": [
+        "Dimapur",
+        "Mon"
+      ],
+      "notes": "Very long journey — 2+ days. Remote roads."
+    },
+    "from_dimapur": {
+      "total_distance_km": 283,
+      "travel_hours": "9–11 hours",
+      "waypoints": [
+        "Mon"
+      ],
+      "notes": "Mountain roads, remote."
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL occasional, no reliable Airtel",
+    "internet": "None",
+    "atm": "No ATM — carry cash from Dimapur"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "festival": [
+      "november",
+      "december"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: accessible, clear. Festivals showcase Konyak tradition."
+  },
+  "budget_level": "budget",
+  "hidden_score": 7,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "mon",
+    "mon district",
+    "konyak",
+    "konyak naga"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

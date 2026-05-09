@@ -1,0 +1,156 @@
+{
+  "id": "zunheboto",
+  "state": "Nagaland",
+  "district": "Zunheboto",
+  "district_headquarters": "Zunheboto",
+  "tagline": "The Sumi Naga heartland in the hills",
+  "description": "Zunheboto is the district of the Sumi Nagas, located in central Nagaland. The district is more remote than Kohima or Mokokchung, but accessible. Pfutsero, at 2,100m, is one of Nagaland's highest towns and sits on a ridge with spectacular views. The district has dense forests and traditional Sumi villages.",
+  "incitetales_angle": "Pfutsero is the highest town in Nagaland. The views from the ridge are extraordinary. Few tourists venture this far inland.",
+  "destinations": [
+    {
+      "id": "zunheboto-town",
+      "name": "Zunheboto",
+      "type": "town",
+      "altitude_m": 1800,
+      "tagline": "The gateway to Sumi Naga culture",
+      "description": "Zunheboto is a small, quiet town serving as the base for exploring the district. It has basic hotels and serves as the jumping-off point for Pfutsero and surrounding villages.",
+      "what_is_there": [
+        "Sumi tribal culture — villages around town",
+        "Gateway to Pfutsero trek"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Zunheboto",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹500–900"
+        }
+      ],
+      "local_food": [
+        "Sumi Naga cuisine — smoked pork, bamboo shoot",
+        "Apong rice beer",
+        "Basic market food"
+      ],
+      "local_tips": [
+        "Smaller town than Kohima or Mokokchung — fewer amenities",
+        "ATM available in town",
+        "Base for Pfutsero hike"
+      ],
+      "hidden_score": 3
+    },
+    {
+      "id": "pfutsero",
+      "name": "Pfutsero",
+      "type": "hill-station",
+      "altitude_m": 2100,
+      "tagline": "The highest town in Nagaland with views that stretch to the horizon",
+      "description": "Pfutsero sits at 2,100m on a ridge in the Satoi range. It is Nagaland's highest town. The surrounding forest is dense, and on clear mornings, the views stretch for 100km. The town itself is small but the ridge walks are exceptional. Blyth's tragopan (Nagaland's state bird) is sighted in the forests around Pfutsero.",
+      "what_is_there": [
+        "Ridge viewpoint — 360° views on clear mornings, valleys drop on all sides",
+        "Forest walks — dense forest with wildlife, good birdwatching",
+        "Blyth's tragopan sightings — November-February",
+        "Satoi range — home to several rare bird species"
+      ],
+      "stays": [
+        {
+          "name": "Rest house/guesthouses in Pfutsero",
+          "type": "guesthouse",
+          "price_range": "₹400–700",
+          "notes": "Book in advance via District office"
+        },
+        {
+          "name": "Homestays",
+          "type": "homestay",
+          "price_range": "₹600–900 including meals"
+        }
+      ],
+      "local_food": [
+        "Home-cooked food at homestays",
+        "Carry supplies from Zunheboto if needed"
+      ],
+      "local_tips": [
+        "Hike from Zunheboto: 1–2 days depending on fitness and route",
+        "Bring warm clothes — cold at 2,100m",
+        "Early morning views: wake before dawn for best light",
+        "Blyth's tragopan: hire local guide for best sighting chances"
+      ],
+      "hidden_score": 7
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 400,
+      "travel_hours": "10–12 hours",
+      "waypoints": [
+        "Dimapur",
+        "Zunheboto"
+      ],
+      "notes": "Via Dimapur, then mountain road. Overnight bus or 2-day journey."
+    },
+    "from_dimapur": {
+      "total_distance_km": 217,
+      "travel_hours": "6–7 hours",
+      "waypoints": [
+        "Zunheboto"
+      ],
+      "notes": "Mountain road via NH-61 or alternate routes."
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL mainly, limited Airtel",
+    "internet": "Very limited",
+    "atm": "ATM in Zunheboto town"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "birdwatching": [
+      "november",
+      "december",
+      "january",
+      "february"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: clear skies, best views from Pfutsero. November-February: Blyth's tragopan sightings at Satoi range. Monsoon: roads can be difficult."
+  },
+  "budget_level": "budget",
+  "hidden_score": 6,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "zunheboto",
+    "zunheboto district",
+    "pfutsero",
+    "satoi range",
+    "sumi naga"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

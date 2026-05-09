@@ -298,6 +298,42 @@ nav {
 .form-submit:hover { background: var(--forest); }
 .form-submit:disabled { background: var(--ink3); cursor: not-allowed; }
 
+.verified-banner {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  background: #eaf5f0;
+  border: 1px solid #2a5c48;
+  border-radius: 8px;
+  padding: 11px 14px;
+  margin-top: 10px;
+  animation: fadeSlideIn 0.25s ease;
+}
+.verified-banner-icon {
+  color: var(--forest);
+  font-size: 13px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.verified-banner-body { display: flex; flex-direction: column; gap: 2px; }
+.verified-banner-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--forest);
+  font-weight: 500;
+}
+.verified-banner-sub {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .form-note {
   font-family: 'DM Mono', monospace;
   font-size: 8px;
@@ -996,6 +1032,14 @@ nav {
           rows="3"
           placeholder="Offbeat Meghalaya, riverside camping, no tourist traps"
           style="resize:none;"></textarea>
+
+        <div class="verified-banner" id="idea-verified-banner">
+          <span class="verified-banner-icon">◆</span>
+          <div class="verified-banner-body">
+            <div class="verified-banner-title" id="idea-verified-title">Verified local data found</div>
+            <div class="verified-banner-sub" id="idea-verified-sub"></div>
+          </div>
+        </div>
       </div>
 
       <button class="form-submit" id="idea-generate-btn" type="button">
@@ -1054,6 +1098,13 @@ nav {
         <select class="form-select" id="destination">
           <option value="">Select destination</option>
         </select>
+        <div class="verified-banner" id="dest-verified-banner">
+          <span class="verified-banner-icon">◆</span>
+          <div class="verified-banner-body">
+            <div class="verified-banner-title" id="dest-verified-title">Verified local data found</div>
+            <div class="verified-banner-sub" id="dest-verified-sub"></div>
+          </div>
+        </div>
       </div>
 
       <div class="form-row">
@@ -1168,6 +1219,37 @@ const destinationGroups = [
 ];
 
 let ideaRequestInFlight = false;
+
+// ── Verified sources check ──
+let verifiedCheckTimer = null;
+
+async function checkVerifiedSources(destination, bannerId, titleId, subId) {
+  const banner = document.getElementById(bannerId);
+  if (!destination || destination.trim().length < 3) {
+    banner.style.display = 'none';
+    return;
+  }
+  try {
+    const res = await fetch('https://incitetales-api.incitetales.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'check', destination: destination.trim() })
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const total = (data.insightCount || 0) + (data.routeCount || 0);
+    if (total > 0) {
+      document.getElementById(titleId).textContent = '◆ We found verified local data for this destination';
+      document.getElementById(subId).textContent =
+        `${total} verified source${total > 1 ? 's' : ''} from our database — routes, stays, local tips and more will be used in your itinerary`;
+      banner.style.display = 'flex';
+    } else {
+      banner.style.display = 'none';
+    }
+  } catch (e) {
+    banner.style.display = 'none';
+  }
+}
 let interpretedIdea = null;
 let currentItinerary = '';
 let interpretedOverrides = { destination: '', days: '', group: '', budget: '', interests: '' };
@@ -1611,17 +1693,30 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('destination').addEventListener('change', (event) => {
     const selectedOption = event.target.options[event.target.selectedIndex];
     manualSelections.destination = Boolean(event.target.value);
-    document.getElementById('custom-destination').value = selectedOption ? (selectedOption.dataset.name || '') : '';
+    const destName = selectedOption ? (selectedOption.dataset.name || '') : '';
+    document.getElementById('custom-destination').value = destName;
     resetInterpretation();
+    document.getElementById('dest-verified-banner').style.display = 'none';
+    if (destName) {
+      checkVerifiedSources(destName, 'dest-verified-banner', 'dest-verified-title', 'dest-verified-sub');
+    }
   });
   document.getElementById('interests').addEventListener('change', (event) => {
     manualSelections.interests = true;
     document.getElementById('custom-focus').value = event.target.value;
     resetInterpretation();
   });
-  document.getElementById('idea-input').addEventListener('input', () => {
+  document.getElementById('idea-input').addEventListener('input', (e) => {
     manualSelections.destination = false;
     resetInterpretation();
+    clearTimeout(verifiedCheckTimer);
+    document.getElementById('idea-verified-banner').style.display = 'none';
+    const val = e.target.value.trim();
+    if (val.length >= 3) {
+      verifiedCheckTimer = setTimeout(() => {
+        checkVerifiedSources(val, 'idea-verified-banner', 'idea-verified-title', 'idea-verified-sub');
+      }, 900);
+    }
   });
   document.getElementById('days').addEventListener('change', () => {
     manualSelections.days = true;

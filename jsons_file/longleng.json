@@ -1,0 +1,146 @@
+{
+  "id": "longleng",
+  "state": "Nagaland",
+  "district": "Longleng",
+  "district_headquarters": "Longleng",
+  "tagline": "The remote Chang Naga homeland in North Nagaland",
+  "description": "Longleng is one of Nagaland's most remote districts, in the north. The Chang Nagas inhabit this area. The district is accessible but rarely visited by tourists. The roads are rough, and infrastructure is basic. It is a genuine off-the-beaten-path destination.",
+  "incitetales_angle": "Longleng is genuinely remote. Few tourists come here. The Chang Naga villages are deeply traditional, and the landscape is untouched.",
+  "destinations": [
+    {
+      "id": "longleng-town",
+      "name": "Longleng",
+      "type": "town",
+      "tagline": "The remote outpost of North Nagaland",
+      "description": "Longleng is a small town, the headquarters of the district. It has minimal tourist infrastructure. This is a place for travelers seeking true remoteness, not comfort.",
+      "what_is_there": [
+        "Chang Naga villages — traditional settlements around town",
+        "Forest landscape — dense, untouched",
+        "Gateway to northern Nagaland"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Longleng",
+          "type": "government",
+          "price_range": "₹300–500",
+          "notes": "Basic. Book via DC office."
+        },
+        {
+          "name": "Very basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹400–600"
+        }
+      ],
+      "local_food": [
+        "Basic meals at local dhabas",
+        "Carry supplies from larger towns"
+      ],
+      "local_tips": [
+        "This is a remote destination — only for off-beat travelers",
+        "Minimal infrastructure — stock up supplies in Mokokchung or Wokha",
+        "Roads are rough — allow extra travel time",
+        "No reliable phone signal"
+      ],
+      "hidden_score": 7
+    },
+    {
+      "id": "longleng-villages",
+      "name": "Chang Naga Villages",
+      "type": "tribal-villages",
+      "tagline": "Deep traditional Chang Naga culture",
+      "description": "The Chang Nagas inhabit the villages around Longleng. These are deeply traditional communities with their own language, customs, and way of life. Tourism is rare here, so interactions are genuine.",
+      "what_is_there": [
+        "Traditional Chang Naga houses — stone construction, characteristic design",
+        "Village walks — observe daily life",
+        "Traditional festivals — November-December"
+      ],
+      "stays": [
+        {
+          "name": "Homestays in villages",
+          "type": "homestay",
+          "price_range": "₹500–800 including meals",
+          "notes": "Book through DC office or ask in town"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Chang Naga meals at homestays"
+      ],
+      "local_tips": [
+        "Ask permission before photographing or entering villages",
+        "English proficiency is lower here — basic communication",
+        "Festivals (November-December): best time for cultural immersion",
+        "Very few tourists — your presence is notable"
+      ],
+      "hidden_score": 8
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 420,
+      "travel_hours": "12–14 hours",
+      "waypoints": [
+        "Dimapur",
+        "Mokokchung",
+        "Longleng"
+      ],
+      "notes": "Long journey — consider 2 days. Via Golaghat-Mariani route (260km from Dimapur, 11 hours) or via Mokokchung."
+    },
+    "from_dimapur": {
+      "total_distance_km": 260,
+      "travel_hours": "9–11 hours",
+      "waypoints": [
+        "Longleng"
+      ],
+      "notes": "Via Golaghat and Mariani (Assam), then into Nagaland. Rough mountain road. Allow extra time."
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL very occasional, no reliable Airtel",
+    "internet": "None",
+    "atm": "No ATM — carry cash from larger towns"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "festival": [
+      "november",
+      "december"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: clear skies, accessible. November-December: festivals, cultural immersion. Monsoon: roads can be impassable."
+  },
+  "budget_level": "budget",
+  "hidden_score": 8,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "longleng",
+    "longleng district",
+    "chang naga"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

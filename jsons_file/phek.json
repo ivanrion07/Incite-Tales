@@ -1,0 +1,140 @@
+{
+  "id": "phek",
+  "state": "Nagaland",
+  "district": "Phek",
+  "district_headquarters": "Phek",
+  "tagline": "The Pochury Naga district and the gateway to Manipur",
+  "description": "Phek is in southeastern Nagaland, home to the Pochury Nagas. The district is more accessible than the remote northern districts but still relatively sparsely touristed. The landscape is hilly and forested.",
+  "incitetales_angle": "Phek is quieter than Kohima but still accessible. The Pochury villages and forest walks offer a glimpse of Naga culture with fewer tourists.",
+  "destinations": [
+    {
+      "id": "phek-town",
+      "name": "Phek",
+      "type": "town",
+      "altitude_m": 1400,
+      "tagline": "The Pochury Naga district capital",
+      "description": "Phek is a small town in the hills, serving as the district headquarters. It has basic infrastructure and serves as a base for exploring Pochury villages and the surrounding forest.",
+      "what_is_there": [
+        "Pochury tribal villages",
+        "Forest landscape",
+        "Gateway to eastern Nagaland"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Phek",
+          "type": "government",
+          "price_range": "₹400–700"
+        },
+        {
+          "name": "Basic guesthouses",
+          "type": "guesthouse",
+          "price_range": "₹500–900"
+        }
+      ],
+      "local_food": [
+        "Pochury Naga cuisine",
+        "Smoked pork, bamboo shoot",
+        "Basic local meals"
+      ],
+      "local_tips": [
+        "Base for Pochury village exploration",
+        "ATM available in town",
+        "Mountain road to Phek from Kohima (145km) is scenic"
+      ],
+      "hidden_score": 4
+    },
+    {
+      "id": "pochury-villages",
+      "name": "Pochury Villages",
+      "type": "tribal-villages",
+      "tagline": "The Pochury Naga homeland",
+      "description": "Pochury villages are scattered across Phek district. The Pochury Nagas have their own language, customs, and culture. Tourism is limited here, making interactions genuine.",
+      "what_is_there": [
+        "Traditional houses",
+        "Village walks",
+        "Pochury tribal culture"
+      ],
+      "stays": [
+        {
+          "name": "Homestays if arranged",
+          "type": "homestay",
+          "price_range": "₹600–1,000 including meals"
+        }
+      ],
+      "local_food": [
+        "Home-cooked Pochury meals"
+      ],
+      "local_tips": [
+        "Ask permission before photographing",
+        "Guide recommended",
+        "Quieter than Kohima but still accessible"
+      ],
+      "hidden_score": 6
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100"
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 380,
+      "travel_hours": "10–12 hours",
+      "waypoints": [
+        "Dimapur",
+        "Kohima",
+        "Phek"
+      ],
+      "notes": "Via Dimapur and Kohima. Mountain road scenic."
+    },
+    "from_dimapur": {
+      "total_distance_km": 219,
+      "travel_hours": "6–7 hours",
+      "waypoints": [
+        "Phek"
+      ],
+      "notes": "Direct mountain road, scenic."
+    }
+  },
+  "connectivity": {
+    "mobile": "BSNL mainly",
+    "internet": "Limited",
+    "atm": "ATM in Phek town"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  },
+  "budget_level": "budget to mid-range",
+  "hidden_score": 5,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "phek",
+    "phek district",
+    "pochury",
+    "pochury naga"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}

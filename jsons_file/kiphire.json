@@ -1,0 +1,141 @@
+{
+  "id": "kiphire",
+  "state": "Nagaland",
+  "district": "Kiphire",
+  "district_headquarters": "Kiphire",
+  "tagline": "The remote east and the gateway to Mount Saramati",
+  "description": "Kiphire is a remote eastern district of Nagaland, home to the Kiphire Nagas. The district borders Myanmar. Mount Saramati (3,826m), Nagaland's highest peak, is in this region. The district is very sparsely touristed and highly remote.",
+  "incitetales_angle": "Mount Saramati is Nagaland's highest peak. Few trekkers reach it. The landscape is wild and untouched.",
+  "destinations": [
+    {
+      "id": "kiphire-town",
+      "name": "Kiphire",
+      "type": "town",
+      "tagline": "The remote eastern outpost",
+      "description": "Kiphire is a very small town, the district headquarters. It is remote and has minimal infrastructure. The surrounding region is forested and sparsely populated.",
+      "what_is_there": [
+        "Kiphire Naga villages — traditional culture",
+        "Gateway to Mount Saramati trekking",
+        "Forest landscape"
+      ],
+      "stays": [
+        {
+          "name": "Circuit House Kiphire",
+          "type": "government",
+          "price_range": "₹300–500",
+          "notes": "Basic. Book via DC office."
+        }
+      ],
+      "local_food": [
+        "Very basic meals available",
+        "Carry supplies from larger towns"
+      ],
+      "local_tips": [
+        "Very remote — only for serious off-beat travelers",
+        "Stock up supplies in previous towns",
+        "No ATM — carry cash",
+        "Roads are rough"
+      ],
+      "hidden_score": 7
+    },
+    {
+      "id": "mount-saramati",
+      "name": "Mount Saramati",
+      "type": "mountain-trek",
+      "altitude_m": 3826,
+      "tagline": "Nagaland's highest peak and one of the most remote treks in Northeast India",
+      "description": "Mount Saramati (3,826m) is Nagaland's highest peak. It sits on the Nagaland-Myanmar border. The trek to the summit is multi-day and requires serious preparation. Few trekkers attempt it. The peak offers views into Myanmar and across Nagaland.",
+      "what_is_there": [
+        "Summit — 360° views on clear days",
+        "Alpine meadow",
+        "Forest ecosystem — changes with altitude"
+      ],
+      "stays": [
+        {
+          "name": "Forest camps / basic shelters",
+          "type": "camp",
+          "price_range": "Minimal to free",
+          "notes": "No established lodging. Trek with guides and camp equipment."
+        }
+      ],
+      "local_food": [
+        "Carry all food"
+      ],
+      "local_tips": [
+        "Requires guide from Kiphire — mandatory",
+        "4–5 days round trip from Kiphire town",
+        "Best season: October-November (clear, dry)",
+        "High altitude — altitude sickness possible",
+        "Very few trekkers — feels genuine wilderness"
+      ],
+      "hidden_score": 9
+    }
+  ],
+  "permit": {
+    "required": true,
+    "type": [
+      "ILP"
+    ],
+    "cost": "₹100",
+    "notes": "Kiphire borders Myanmar — may have additional restrictions. Check with DC office before travel."
+  },
+  "routes": {
+    "from_guwahati": {
+      "total_distance_km": 450,
+      "travel_hours": "13–15 hours",
+      "waypoints": [
+        "Dimapur",
+        "Tuensang",
+        "Kiphire"
+      ],
+      "notes": "Very long journey — 2+ days. Via Dimapur, then remote mountain roads."
+    },
+    "from_dimapur": {
+      "total_distance_km": 313,
+      "travel_hours": "10–12 hours",
+      "waypoints": [
+        "Kiphire"
+      ],
+      "notes": "Remote mountain roads. Very rough. Allow extra time."
+    }
+  },
+  "connectivity": {
+    "mobile": "No reliable signal",
+    "internet": "None",
+    "atm": "No ATM — carry cash"
+  },
+  "best_season": {
+    "peak": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ],
+    "notes": "October-November: clear for mountain trekking. Monsoon: impassable roads."
+  },
+  "budget_level": "budget",
+  "hidden_score": 8,
+  "verified": true,
+  "last_updated": "2026-03",
+  "type": "destination",
+  "geographic_scope": [
+    "kiphire",
+    "kiphire district",
+    "mount saramati",
+    "saramati"
+  ],
+  "season": {
+    "best": [
+      "october",
+      "november"
+    ],
+    "avoid": [
+      "june",
+      "july",
+      "august"
+    ]
+  }
+}
