@@ -457,7 +457,7 @@ async function processStory() {
     const res = await fetch(`${WORKER_URL}/story/process`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, location, content, author_name: name })
+      body: JSON.stringify({ title, region: location, content, author_name: name })
     });
     const data = await res.json();
     clearInterval(stepTimer);
@@ -474,8 +474,8 @@ async function processStory() {
 
     // Show before/after
     document.getElementById('original-text').textContent = content;
-    document.getElementById('polished-text').textContent = data.polished;
-    renderInsights(data.extracted);
+    document.getElementById('polished-text').textContent = data.story;
+    renderInsights(data.insights);
 
     processing.classList.remove('visible');
     document.getElementById('form-section').style.display = 'none';
@@ -492,34 +492,19 @@ async function processStory() {
 }
 
 // ── Render extracted insights preview ──
-function renderInsights(extracted) {
+function renderInsights(insights) {
   const el = document.getElementById('insights-content');
-  if (!extracted) { el.innerHTML = ''; return; }
+  if (!insights || !Array.isArray(insights)) { el.innerHTML = ''; return; }
 
   let html = '';
 
-  if (extracted.geographic_scope?.length) {
-    html += `<div class="insight-row"><strong>Places covered:</strong></div>`;
-    html += '<div class="insight-tags">';
-    extracted.geographic_scope.forEach(s => {
-      html += `<span class="insight-tag">${s}</span>`;
+  if (insights.length > 0) {
+    html += `<div class="insight-row"><strong>Key insights extracted:</strong></div>`;
+    insights.slice(0, 5).forEach(i => {
+      const icon = i.type === 'place' ? '📍' : i.type === 'tip' ? '💡' : '✨';
+      html += `<div class="insight-row" style="margin-top:8px">${icon} <strong>${i.title}</strong></div>`;
+      html += `<div class="insight-row">${i.description}</div>`;
     });
-    html += '</div>';
-  }
-  if (extracted.local_tips?.length) {
-    html += `<div class="insight-row" style="margin-top:10px"><strong>Local tips your story adds:</strong></div>`;
-    extracted.local_tips.slice(0, 3).forEach(t => {
-      html += `<div class="insight-row">· ${t}</div>`;
-    });
-  }
-  if (extracted.warnings?.length) {
-    html += `<div class="insight-row" style="margin-top:10px"><strong>Warnings captured:</strong></div>`;
-    extracted.warnings.slice(0, 2).forEach(w => {
-      html += `<div class="insight-row">⚠ ${w}</div>`;
-    });
-  }
-  if (extracted.season_notes) {
-    html += `<div class="insight-row" style="margin-top:10px">🗓 ${extracted.season_notes}</div>`;
   }
 
   el.innerHTML = html;
@@ -538,14 +523,11 @@ async function publishStory() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title:            processedData.title,
-        location:         processedData.location,
-        author_name:      processedData.author_name,
-        author_email:     processedData.author_email,
-        content_original: processedData.content_original,
-        content_polished: processedData.polished,
-        extracted:        processedData.extracted,
-        slug:             processedData.slug,
+        title:     processedData.title,
+        region:    processedData.location,
+        story:     processedData.story,
+        summary:   processedData.summary,
+        insights:  processedData.insights,
       })
     });
     const data = await res.json();
