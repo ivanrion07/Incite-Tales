@@ -309,11 +309,18 @@ nav {
   margin-top: 10px;
   animation: fadeSlideIn 0.25s ease;
 }
+.verified-banner.no-data {
+  background: #fdf6ec;
+  border-color: #b07d2e;
+}
 .verified-banner-icon {
   color: var(--forest);
   font-size: 13px;
   margin-top: 1px;
   flex-shrink: 0;
+}
+.verified-banner.no-data .verified-banner-icon {
+  color: #b07d2e;
 }
 .verified-banner-body { display: flex; flex-direction: column; gap: 2px; }
 .verified-banner-title {
@@ -323,6 +330,9 @@ nav {
   text-transform: uppercase;
   color: var(--forest);
   font-weight: 500;
+}
+.verified-banner.no-data .verified-banner-title {
+  color: #b07d2e;
 }
 .verified-banner-sub {
   font-size: 12px;
@@ -1098,13 +1108,6 @@ nav {
         <select class="form-select" id="destination">
           <option value="">Select destination</option>
         </select>
-        <div class="verified-banner" id="dest-verified-banner">
-          <span class="verified-banner-icon">◆</span>
-          <div class="verified-banner-body">
-            <div class="verified-banner-title" id="dest-verified-title">Verified local data found</div>
-            <div class="verified-banner-sub" id="dest-verified-sub"></div>
-          </div>
-        </div>
       </div>
 
       <div class="form-row">
@@ -1239,13 +1242,17 @@ async function checkVerifiedSources(destination, bannerId, titleId, subId) {
     const data = await res.json();
     const total = (data.insightCount || 0) + (data.routeCount || 0);
     if (total > 0) {
+      banner.classList.remove('no-data');
       document.getElementById(titleId).textContent = '◆ We found verified local data for this destination';
       document.getElementById(subId).textContent =
         `${total} verified source${total > 1 ? 's' : ''} from our database — routes, stays, local tips and more will be used in your itinerary`;
-      banner.style.display = 'flex';
     } else {
-      banner.style.display = 'none';
+      banner.classList.add('no-data');
+      document.getElementById(titleId).textContent = '◆ No verified local data available';
+      document.getElementById(subId).textContent =
+        'Itinerary generated from general AI knowledge. Routes and timing may vary.';
     }
+    banner.style.display = 'flex';
   } catch (e) {
     banner.style.display = 'none';
   }
@@ -1696,10 +1703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const destName = selectedOption ? (selectedOption.dataset.name || '') : '';
     document.getElementById('custom-destination').value = destName;
     resetInterpretation();
-    document.getElementById('dest-verified-banner').style.display = 'none';
-    if (destName) {
-      checkVerifiedSources(destName, 'dest-verified-banner', 'dest-verified-title', 'dest-verified-sub');
-    }
+    document.getElementById('idea-verified-banner').style.display = 'none';
   });
   document.getElementById('interests').addEventListener('change', (event) => {
     manualSelections.interests = true;
