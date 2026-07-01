@@ -1321,7 +1321,9 @@ nav {
 // ─────────────────────────────────────────────────────────────
 const engine = new InsightEngine('.');
 let engineReady = false;
-engine.load().then(() => { engineReady = true; });
+engine.load().then(() => { engineReady = true; }).catch(err => {
+  console.error('InsightEngine failed to initialize:', err);
+});
 
 // Stores matched insights for the current itinerary
 let currentInsights = [];
@@ -1743,6 +1745,10 @@ Rules:
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate', prompt: planningPrompt })
     });
+    if (!response.ok) {
+      const errBody = await response.text().catch(() => '');
+      throw new Error(`API request failed (HTTP ${response.status}): ${errBody}`);
+    }
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content;
     if (!text) throw new Error('No text in response');
@@ -1906,6 +1912,10 @@ Rules:
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generate', prompt: itineraryPrompt })
     });
+    if (!response.ok) {
+      const errBody = await response.text().catch(() => '');
+      throw new Error(`API request failed (HTTP ${response.status}): ${errBody}`);
+    }
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content;
     if (!text) throw new Error('No text in response: ' + JSON.stringify(data));
@@ -2066,8 +2076,9 @@ async function saveItinerary() {
     if (response.ok) {
       document.getElementById('email-success').style.display = 'block';
       document.querySelector('.email-capture-form').style.display = 'none';
-    } else { throw new Error('Email failed'); }
+    } else { throw new Error(`Email failed (HTTP ${response.status})`); }
   } catch (error) {
+    console.error('saveItinerary error:', error);
     alert('Could not send email right now. Please try again.');
     btn.textContent = 'Send to my inbox';
     btn.disabled = false;
