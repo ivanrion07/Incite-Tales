@@ -1,86 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-43DB1SDT7Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-43DB1SDT7Z');
-</script>
+<script src="/js/analytics.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>Itinerary Builder — Incitetales</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
 <style>
-:root {
-  --bg:         #ffffff;
-  --bg2:        #fffdf5;
-  --ink:        #1c1814;
-  --ink2:       #3a342c;
-  --ink3:       #6a6058;
-  --terra:      #8b4a2a;
-  --forest:     #2a5c48;
-  --forest-dim: #4a8c70;
-  --yellow:     #f5c842;
-  --yellow-pale:#fffbe8;
-  --border:     #ede8d8;
-  --border2:    #e0d8c4;
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Lora', Georgia, serif;
-  font-size: 16px;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 48px;
-  background: rgba(255,255,255,0.97);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
-}
-
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  text-decoration: none;
-}
-.nav-logo span {
-  background: var(--yellow);
-  padding: 0 4px;
-}
-
-.nav-back {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.2s;
-}
-.nav-back:hover { color: var(--terra); }
+body::before { display: none; }
 
 /* ── HERO ── */
 .page-hero {
@@ -1187,6 +1116,7 @@ nav {
     </div>
   </div>
 
+<script src="/js/api-utils.js"></script>
 <script>
 // ── DESTINATION GROUPS ──────────────────────────────────────
 const destinationGroups = [
@@ -1301,100 +1231,8 @@ function titleCase(text) {
   return text.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
-function extractJsonBlock(text) {
-  if (!text || typeof text !== 'string') return null;
-
-  const cleaned = text.replace(/```json|```/gi, '').trim();
-  const directStart = cleaned.startsWith('{') ? cleaned.indexOf('{') : -1;
-  const directEnd = cleaned.endsWith('}') ? cleaned.lastIndexOf('}') : -1;
-  if (directStart === 0 && directEnd === cleaned.length - 1) return cleaned;
-
-  let depth = 0;
-  let start = -1;
-  let inString = false;
-  let escaped = false;
-
-  for (let i = 0; i < cleaned.length; i++) {
-    const char = cleaned[i];
-
-    if (inString) {
-      if (escaped) {
-        escaped = false;
-      } else if (char === '\\') {
-        escaped = true;
-      } else if (char === '"') {
-        inString = false;
-      }
-      continue;
-    }
-
-    if (char === '"') {
-      inString = true;
-      continue;
-    }
-
-    if (char === '{') {
-      if (depth === 0) start = i;
-      depth++;
-      continue;
-    }
-
-    if (char === '}') {
-      if (depth === 0) continue;
-      depth--;
-      if (depth === 0 && start !== -1) {
-        return cleaned.slice(start, i + 1);
-      }
-    }
-  }
-
-  return null;
-}
-
-function parseModelJsonResponse(data) {
-  if (data && typeof data === 'object' && !Array.isArray(data)) {
-    const hasStructuredItinerary = typeof data.destination === 'string'
-      && typeof data.title === 'string'
-      && Array.isArray(data.days);
-
-    if (hasStructuredItinerary) {
-      return data;
-    }
-  }
-
-  const text = typeof data === 'string'
-    ? data
-    : data?.choices?.[0]?.message?.content
-      || data?.result
-      || data?.response
-      || data?.content
-      || data?.output_text
-      || '';
-
-  if (!text) {
-    throw new Error('No model text in response: ' + JSON.stringify(data));
-  }
-
-  const jsonBlock = extractJsonBlock(text);
-  if (!jsonBlock) {
-    throw new Error('Model response did not contain a valid JSON object');
-  }
-
-  return JSON.parse(jsonBlock);
-}
-
-async function readWorkerPayload(response) {
-  const rawText = await response.text();
-  let data = null;
-
-  try {
-    data = rawText ? JSON.parse(rawText) : null;
-  } catch (error) {
-    data = null;
-  }
-
-  return { rawText, data };
-}
+// extractJsonBlock, parseModelJsonResponse, readWorkerPayload
+// are provided by /js/api-utils.js (loaded before this script)
 
 function normalizeIdeaResult(result, fallbackIdea) {
   const allowedGroups = [
