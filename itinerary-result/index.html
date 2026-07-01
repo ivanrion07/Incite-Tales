@@ -1104,8 +1104,12 @@ RULE 5 — GENERAL:
       return fallbackImages;
     }
 
+    function escapeHtml(t) {
+      if (!t) return '';
+      return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
     function escapeSvgText(t) {
-      return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      return escapeHtml(t);
     }
 
     function buildImageUrl(query, w = 1200, h = 800) {
@@ -1131,9 +1135,9 @@ RULE 5 — GENERAL:
       document.getElementById('out-destination').textContent = '◆  ' + destination.toUpperCase();
       document.getElementById('out-title').textContent = data.title;
       document.getElementById('out-meta').innerHTML = `
-    <span class="meta-chip">${days} days</span>
-    <span class="meta-chip">${group}</span>
-    <span class="meta-chip">${budget}</span>
+    <span class="meta-chip">${escapeHtml(days)} days</span>
+    <span class="meta-chip">${escapeHtml(group)}</span>
+    <span class="meta-chip">${escapeHtml(budget)}</span>
   `;
 
       // Overview + hero image
@@ -1160,19 +1164,19 @@ RULE 5 — GENERAL:
         card.className = 'day-card';
         card.innerHTML = `
       <div class="day-header ${idx === 0 ? 'active' : ''}">
-        <div class="day-number">0${day.number}</div>
+        <div class="day-number">0${escapeHtml(String(day.number))}</div>
         <div class="day-info">
-          <div class="day-title">${day.theme}</div>
-          <div class="day-route">${day.route}</div>
+          <div class="day-title">${escapeHtml(day.theme)}</div>
+          <div class="day-route">${escapeHtml(day.route)}</div>
         </div>
         <div class="day-toggle">▾</div>
       </div>
       <div class="day-content ${idx === 0 ? 'visible' : ''}">
         <div class="day-images">${dayImagesHtml}</div>
-        <div class="day-narrative">${day.narrative}</div>
-        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${day.stay}</strong></div></div>
-        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${day.transport}</div></div>
-        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${day.tip}</div></div>
+        <div class="day-narrative">${escapeHtml(day.narrative)}</div>
+        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${escapeHtml(day.stay)}</strong></div></div>
+        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${escapeHtml(day.transport)}</div></div>
+        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${escapeHtml(day.tip)}</div></div>
       </div>
     `;
         daysContainer.appendChild(card);
@@ -1186,7 +1190,7 @@ RULE 5 — GENERAL:
       if (data.permits) {
         const c = document.createElement('div');
         c.className = 'info-card full';
-        c.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${data.permits}</div>`;
+        c.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${escapeHtml(data.permits)}</div>`;
         infoGrid.appendChild(c);
       }
 
@@ -1194,14 +1198,14 @@ RULE 5 — GENERAL:
       budgetCard.className = 'info-card';
       budgetCard.innerHTML = '<div class="info-title">Budget breakdown</div>' +
         data.budget.map(item =>
-          `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${item.label}</span><span class="budget-value">${item.value}</span></div>`
+          `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${escapeHtml(item.label)}</span><span class="budget-value">${escapeHtml(item.value)}</span></div>`
         ).join('');
       infoGrid.appendChild(budgetCard);
 
       const packingCard = document.createElement('div');
       packingCard.className = 'info-card';
       packingCard.innerHTML = '<div class="info-title">Packing list</div><div class="packing-grid">' +
-        data.packing.map(item => `<div class="packing-item">${item}</div>`).join('') +
+        data.packing.map(item => `<div class="packing-item">${escapeHtml(item)}</div>`).join('') +
         '</div>';
       infoGrid.appendChild(packingCard);
 

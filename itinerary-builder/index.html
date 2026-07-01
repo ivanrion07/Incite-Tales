@@ -1226,6 +1226,11 @@ let ideaRequestInFlight = false;
 // ── Verified sources check ──
 let verifiedCheckTimer = null;
 
+function escapeHtml(text) {
+  if (!text) return '';
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 async function checkVerifiedSources(destination, bannerId, titleId, subId) {
   const banner = document.getElementById(bannerId);
   if (!destination || destination.trim().length < 3) {
@@ -1538,10 +1543,10 @@ function showInterpretation(result, originalIdea) {
   document.getElementById('interpretation-title').textContent = 'Here is what I understood';
   document.getElementById('interpretation-copy').innerHTML = `
     <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;">Suggested destination</div>
-    <div style="font-family:'Playfair Display';font-size:20px;margin-bottom:14px;">${result.destination}</div>
-    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
-    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
-    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
+    <div style="font-family:'Playfair Display';font-size:20px;margin-bottom:14px;">${escapeHtml(result.destination)}</div>
+    Looks like you're planning a <strong>${escapeHtml(result.interests)}</strong> trip.<br><br>
+    A great fit would be <strong>${escapeHtml(result.destination)}</strong> for ${escapeHtml(String(result.days))} days.<br><br>
+    This works well for a <strong>${escapeHtml(result.group)}</strong> with a ${escapeHtml(result.budget)} budget.
     <div style="margin-top:10px;font-size:12px;color:var(--forest);">✓ Strong match based on your preferences</div>
   `;
 
@@ -1556,7 +1561,7 @@ function showInterpretation(result, originalIdea) {
       .forEach(location => {
         const item = document.createElement('div');
         item.className = 'interpretation-suggestion-item';
-        item.innerHTML = `<div class="interpretation-suggestion-name">${location.name}</div><div class="interpretation-suggestion-why">${location.why}</div>`;
+        item.innerHTML = `<div class="interpretation-suggestion-name">${escapeHtml(location.name)}</div><div class="interpretation-suggestion-why">${escapeHtml(location.why)}</div>`;
         suggestionList.appendChild(item);
       });
     suggestionsWrap.style.display = suggestionList.children.length ? 'block' : 'none';

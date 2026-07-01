@@ -1460,11 +1460,11 @@ function updateInsightSelector(matchedInsights) {
     opt.innerHTML = `
       <div class="insight-option-check">✓</div>
       <div class="insight-option-body">
-        <div class="insight-option-type">${ins.type.replace('-',' ')}</div>
-        <div class="insight-option-title">${ins.title}</div>
-        <div class="insight-option-detail">${detail}</div>
+        <div class="insight-option-type">${escapeHtml(ins.type.replace('-',' '))}</div>
+        <div class="insight-option-title">${escapeHtml(ins.title)}</div>
+        <div class="insight-option-detail">${escapeHtml(detail)}</div>
       </div>
-      <div class="insight-option-score">${ins.hidden_score}</div>
+      <div class="insight-option-score">${escapeHtml(String(ins.hidden_score))}</div>
     `;
 
     opt.addEventListener('click', () => {
@@ -1582,8 +1582,12 @@ function getBestImages(title) {
   return fallbackImages;
 }
 
+function escapeHtml(text) {
+  if (!text) return '';
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 function escapeSvgText(text) {
-  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  return escapeHtml(text);
 }
 
 function buildImageUrl(query, width = 1200, height = 800) {
@@ -1664,10 +1668,10 @@ function showInterpretation(result, originalIdea) {
   document.getElementById('interpretation-title').textContent = 'Here is what I understood';
   interpretationContent.innerHTML = `
     <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;">Suggested destination</div>
-    <div style="font-family:'Playfair Display'; font-size:20px; margin-bottom:14px;">${result.destination}</div>
-    Looks like you're planning a <strong>${result.interests}</strong> trip.<br><br>
-    A great fit would be <strong>${result.destination}</strong> for ${result.days} days.<br><br>
-    This works well for a <strong>${result.group}</strong> with a ${result.budget} budget.
+    <div style="font-family:'Playfair Display'; font-size:20px; margin-bottom:14px;">${escapeHtml(result.destination)}</div>
+    Looks like you're planning a <strong>${escapeHtml(result.interests)}</strong> trip.<br><br>
+    A great fit would be <strong>${escapeHtml(result.destination)}</strong> for ${escapeHtml(String(result.days))} days.<br><br>
+    This works well for a <strong>${escapeHtml(result.group)}</strong> with a ${escapeHtml(result.budget)} budget.
     <div style="margin-top:10px; font-size:12px; color:var(--forest);">✓ Strong match based on your preferences</div>
   `;
   suggestionList.innerHTML = '';
@@ -1675,7 +1679,7 @@ function showInterpretation(result, originalIdea) {
     result.locationSuggestions.filter((l) => l.name && l.name !== result.destination).slice(0, 4).forEach((location) => {
       const item = document.createElement('div');
       item.className = 'interpretation-suggestion-item';
-      item.innerHTML = `<div class="interpretation-suggestion-name">${location.name}</div><div class="interpretation-suggestion-why">${location.why}</div>`;
+      item.innerHTML = `<div class="interpretation-suggestion-name">${escapeHtml(location.name)}</div><div class="interpretation-suggestion-why">${escapeHtml(location.why)}</div>`;
       suggestionList.appendChild(item);
     });
     suggestionsWrap.style.display = suggestionList.children.length ? 'block' : 'none';
@@ -1929,9 +1933,9 @@ function renderItinerary(data, destination, days, group, budget) {
   document.getElementById('out-destination').textContent = '◆  ' + destination.toUpperCase();
   document.getElementById('out-title').textContent = data.title;
   document.getElementById('out-meta').innerHTML = `
-    <span class="meta-chip">${days} days</span>
-    <span class="meta-chip">${group}</span>
-    <span class="meta-chip">${budget}</span>
+    <span class="meta-chip">${escapeHtml(String(days))} days</span>
+    <span class="meta-chip">${escapeHtml(group)}</span>
+    <span class="meta-chip">${escapeHtml(budget)}</span>
   `;
 
   const overviewEl = document.getElementById('out-overview');
@@ -1939,7 +1943,7 @@ function renderItinerary(data, destination, days, group, budget) {
   overviewEl.innerHTML = `
     <img class="itinerary-hero-image" src="${buildImageUrl(destinationImageQuery, 1400, 700)}" alt="${destination}"
       onerror="this.onerror=null;this.src='${buildFallbackPlaceholder(1400, 700, destination)}';" loading="lazy">
-    <div style="padding-top:18px;">${data.overview}</div>
+    <div style="padding-top:18px;">${escapeHtml(data.overview)}</div>
   `;
 
   // ── Render local insights strip ──
@@ -1952,9 +1956,9 @@ function renderItinerary(data, destination, days, group, budget) {
       const card = document.createElement('div');
       card.className = 'insight-card-mini';
       card.innerHTML = `
-        <div class="insight-card-mini-type">${ins.type.replace('-', ' ')}</div>
-        <div class="insight-card-mini-title">${ins.title}</div>
-        <div class="insight-card-mini-score">Hidden score ${ins.hidden_score}/10 · ${ins.region || ins.state}</div>
+        <div class="insight-card-mini-type">${escapeHtml(ins.type.replace('-', ' '))}</div>
+        <div class="insight-card-mini-title">${escapeHtml(ins.title)}</div>
+        <div class="insight-card-mini-score">Hidden score ${escapeHtml(String(ins.hidden_score))}/10 · ${escapeHtml(ins.region || ins.state)}</div>
       `;
       insightsRow.appendChild(card);
     });
@@ -1976,21 +1980,21 @@ function renderItinerary(data, destination, days, group, budget) {
     card.className = 'day-card';
     card.innerHTML = `
       <div class="day-header ${idx === 0 ? 'active' : ''}">
-        <div class="day-number">0${day.number}</div>
+        <div class="day-number">0${escapeHtml(String(day.number))}</div>
         <div class="day-info">
-          <div class="day-title">${day.theme}</div>
-          <div class="day-route">${day.route}</div>
+          <div class="day-title">${escapeHtml(day.theme)}</div>
+          <div class="day-route">${escapeHtml(day.route)}</div>
         </div>
         <div class="day-toggle">▾</div>
       </div>
       <div class="day-content ${idx === 0 ? 'visible' : ''}">
         <div class="day-images">${dayImagesHtml}</div>
-        <div class="time-block"><div class="time-label">Morning</div><div class="time-text">${day.morning}</div></div>
-        <div class="time-block"><div class="time-label">Afternoon</div><div class="time-text">${day.afternoon}</div></div>
-        <div class="time-block"><div class="time-label">Evening</div><div class="time-text">${day.evening}</div></div>
-        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${day.stay}</strong></div></div>
-        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${day.transport}</div></div>
-        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${day.tip}</div></div>
+        <div class="time-block"><div class="time-label">Morning</div><div class="time-text">${escapeHtml(day.morning)}</div></div>
+        <div class="time-block"><div class="time-label">Afternoon</div><div class="time-text">${escapeHtml(day.afternoon)}</div></div>
+        <div class="time-block"><div class="time-label">Evening</div><div class="time-text">${escapeHtml(day.evening)}</div></div>
+        <div class="time-block"><div class="time-label">Stay</div><div class="time-text"><strong>${escapeHtml(day.stay)}</strong></div></div>
+        <div class="time-block"><div class="time-label">Transport</div><div class="time-text">${escapeHtml(day.transport)}</div></div>
+        <div class="time-block"><div class="time-label">Local tip</div><div class="time-text" style="color:var(--forest);font-style:italic;">${escapeHtml(day.tip)}</div></div>
       </div>
     `;
     daysContainer.appendChild(card);
@@ -2003,21 +2007,21 @@ function renderItinerary(data, destination, days, group, budget) {
   if (data.permits) {
     const permitsCard = document.createElement('div');
     permitsCard.className = 'info-card full';
-    permitsCard.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${data.permits}</div>`;
+    permitsCard.innerHTML = `<div class="info-title">Permit requirements</div><div class="info-content">${escapeHtml(data.permits)}</div>`;
     infoGrid.appendChild(permitsCard);
   }
   const budgetCard = document.createElement('div');
   budgetCard.className = 'info-card';
   let budgetHTML = '<div class="info-title">Budget breakdown</div>';
   data.budget.forEach(item => {
-    budgetHTML += `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${item.label}</span><span class="budget-value">${item.value}</span></div>`;
+    budgetHTML += `<div class="budget-row ${item.isTotal ? 'total' : ''}"><span class="budget-label">${escapeHtml(item.label)}</span><span class="budget-value">${escapeHtml(item.value)}</span></div>`;
   });
   budgetCard.innerHTML = budgetHTML;
   infoGrid.appendChild(budgetCard);
   const packingCard = document.createElement('div');
   packingCard.className = 'info-card';
   let packingHTML = '<div class="info-title">Packing list</div><div class="packing-grid">';
-  data.packing.forEach(item => { packingHTML += `<div class="packing-item">${item}</div>`; });
+  data.packing.forEach(item => { packingHTML += `<div class="packing-item">${escapeHtml(item)}</div>`; });
   packingHTML += '</div>';
   packingCard.innerHTML = packingHTML;
   infoGrid.appendChild(packingCard);

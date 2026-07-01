@@ -432,6 +432,11 @@ Minimum 200 words. No maximum." required></textarea>
 <script>
 const WORKER_URL = 'https://incitetales-stories-api.incitetales.workers.dev';
 
+function escapeHtml(text) {
+  if (!text) return '';
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 let processedData = null;
 
 // ── Word counter ──
@@ -523,8 +528,8 @@ function renderInsights(insights) {
     html += `<div class="insight-row"><strong>Key insights extracted:</strong></div>`;
     insights.slice(0, 5).forEach(i => {
       const icon = i.type === 'place' ? '📍' : i.type === 'tip' ? '💡' : '✨';
-      html += `<div class="insight-row" style="margin-top:8px">${icon} <strong>${i.title}</strong></div>`;
-      html += `<div class="insight-row">${i.description}</div>`;
+      html += `<div class="insight-row" style="margin-top:8px">${icon} <strong>${escapeHtml(i.title)}</strong></div>`;
+      html += `<div class="insight-row">${escapeHtml(i.description)}</div>`;
     });
   }
 

@@ -2,10 +2,15 @@ import fs from "fs";
 import path from "path";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  "https://zlxmwkfwehpfziyfsdqq.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpseG13a2Z3ZWhwZnppeWZzZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODU1NTAsImV4cCI6MjA4OTg2MTU1MH0.g1JEQ2eJxKnn472TdsdWocySEC1ED_TwxSMGKjYG7Rk"
-);
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error("❌ Missing environment variables: SUPABASE_URL and SUPABASE_ANON_KEY must be set.");
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const basePath = "./data/insights/destinations";
 
