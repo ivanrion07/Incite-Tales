@@ -721,8 +721,13 @@ footer {
 </footer>
 
 <script>
-const SUPABASE_URL = 'https://zlxmwkfwehpfziyfsdqq.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpseG13a2Z3ZWhwZnppeWZzZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODU1NTAsImV4cCI6MjA4OTg2MTU1MH0.g1JEQ2eJxKnn472TdsdWocySEC1ED_TwxSMGKjYG7Rk';
+const SUPABASE_URL = window.__ENV__?.SUPABASE_URL || 'https://zlxmwkfwehpfziyfsdqq.supabase.co';
+const SUPABASE_KEY = window.__ENV__?.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpseG13a2Z3ZWhwZnppeWZzZHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODU1NTAsImV4cCI6MjA4OTg2MTU1MH0.g1JEQ2eJxKnn472TdsdWocySEC1ED_TwxSMGKjYG7Rk';
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
 
 let fieldLoaded = false;
 
@@ -765,10 +770,10 @@ async function loadFieldStories() {
       const excerpt = s.content_polished ? s.content_polished.substring(0, 140).trim() + '...' : '';
       a.innerHTML = '<div class="field-card-body">' +
         '<div class="field-badge">◆ Field Story</div>' +
-        '<div class="field-card-region">' + s.location + '</div>' +
-        '<div class="field-card-title">' + s.title + '</div>' +
-        '<div class="field-card-author">By ' + s.author_name + '</div>' +
-        '<p class="field-card-excerpt">' + excerpt + '</p>' +
+        '<div class="field-card-region">' + escapeHtml(s.location) + '</div>' +
+        '<div class="field-card-title">' + escapeHtml(s.title) + '</div>' +
+        '<div class="field-card-author">By ' + escapeHtml(s.author_name) + '</div>' +
+        '<p class="field-card-excerpt">' + escapeHtml(excerpt) + '</p>' +
         '</div>';
       grid.appendChild(a);
     });
