@@ -9,7 +9,7 @@ const SUPABASE_URL     = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const STORY_SLUG       = process.env.STORY_SLUG;
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !STORY_SLUG) {
+if (require.main === module && (!SUPABASE_URL || !SUPABASE_ANON_KEY || !STORY_SLUG)) {
   console.error('Missing environment variables');
   process.exit(1);
 }
@@ -146,24 +146,28 @@ ${paragraphs}
 }
 
 // ── Main ──
-(async () => {
-  try {
-    console.log(`Fetching story: ${STORY_SLUG}`);
-    const story = await fetchStory();
-    if (!story) {
-      console.error(`Story not found: ${STORY_SLUG}`);
+if (require.main === module) {
+  (async () => {
+    try {
+      console.log(`Fetching story: ${STORY_SLUG}`);
+      const story = await fetchStory();
+      if (!story) {
+        console.error(`Story not found: ${STORY_SLUG}`);
+        process.exit(1);
+      }
+
+      const html      = generateHTML(story);
+      const dir       = path.join('stories', story.slug);
+      const filePath  = path.join(dir, 'index.html');
+
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(filePath, html);
+      console.log(`✅ Generated: ${filePath}`);
+    } catch (err) {
+      console.error('Error:', err.message);
       process.exit(1);
     }
+  })();
+}
 
-    const html      = generateHTML(story);
-    const dir       = path.join('stories', story.slug);
-    const filePath  = path.join(dir, 'index.html');
-
-    fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(filePath, html);
-    console.log(`✅ Generated: ${filePath}`);
-  } catch (err) {
-    console.error('Error:', err.message);
-    process.exit(1);
-  }
-})();
+module.exports = { generateHTML, fetchStory };

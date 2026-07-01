@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "test": "jest --verbose"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
