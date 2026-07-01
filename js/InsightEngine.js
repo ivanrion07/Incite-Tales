@@ -18,32 +18,35 @@ class InsightEngine {
 
   // ── LOAD ────────────────────────────────────────────────────
   async load() {
-    try {
-      const indexRes = await fetch(`${this.basePath}/index.json`);
-      const index = await indexRes.json();
+    const indexRes = await fetch(`${this.basePath}/index.json`);
+    if (!indexRes.ok) {
+      throw new Error(`InsightEngine: failed to load index (HTTP ${indexRes.status})`);
+    }
+    const index = await indexRes.json();
 
-      const promises = index.entries.map(async (entry) => {
-        try {
-          const res = await fetch(`${this.basePath}/${entry.file}`);
-          const data = await res.json();
-          // Tag with index metadata in case file doesn't have it
-          if (!data.id) data.id = entry.id;
-          if (!data.type) data.type = entry.type;
-          if (!data.state && entry.state) data.state = entry.state;
-          return data;
-        } catch (err) {
-          console.warn(`InsightEngine: failed to load ${entry.file}`, err);
+    const promises = index.entries.map(async (entry) => {
+      try {
+        const res = await fetch(`${this.basePath}/${entry.file}`);
+        if (!res.ok) {
+          console.warn(`InsightEngine: failed to load ${entry.file} (HTTP ${res.status})`);
           return null;
         }
-      });
+        const data = await res.json();
+        // Tag with index metadata in case file doesn't have it
+        if (!data.id) data.id = entry.id;
+        if (!data.type) data.type = entry.type;
+        if (!data.state && entry.state) data.state = entry.state;
+        return data;
+      } catch (err) {
+        console.warn(`InsightEngine: failed to load ${entry.file}`, err);
+        return null;
+      }
+    });
 
-      const results = await Promise.all(promises);
-      this.insights = results.filter(Boolean);
-      this.loaded = true;
-      console.log(`InsightEngine v2.0: loaded ${this.insights.length} entries (insights + destinations)`);
-    } catch (err) {
-      console.error('InsightEngine: failed to load index', err);
-    }
+    const results = await Promise.all(promises);
+    this.insights = results.filter(Boolean);
+    this.loaded = true;
+    console.log(`InsightEngine v2.0: loaded ${this.insights.length} entries (insights + destinations)`);
   }
 
   // ── GEOGRAPHIC SCOPE MATCH ──────────────────────────────────

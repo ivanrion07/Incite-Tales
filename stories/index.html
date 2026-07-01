@@ -746,6 +746,9 @@ async function loadFieldStories() {
       SUPABASE_URL + '/rest/v1/stories?type=eq.field_story&status=eq.published&order=published_at.desc&select=*',
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
     );
+    if (!res.ok) {
+      throw new Error(`Failed to fetch field stories (HTTP ${res.status})`);
+    }
     const stories = await res.json();
     loading.classList.remove('visible');
     document.getElementById('count-field').textContent = stories.length || '0';
@@ -770,6 +773,7 @@ async function loadFieldStories() {
       grid.appendChild(a);
     });
   } catch(e) {
+    console.error('Failed to load field stories:', e);
     loading.classList.remove('visible');
     empty.classList.add('visible');
   }

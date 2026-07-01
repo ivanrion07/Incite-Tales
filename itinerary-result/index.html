@@ -1242,7 +1242,8 @@ RULE 5 — GENERAL:
           document.getElementById('email-success').style.display = 'block';
           document.querySelector('.email-capture-form').style.display = 'none';
         } else throw new Error('Email failed');
-      } catch {
+      } catch (error) {
+        console.error('Email save error:', error);
         alert('Could not send email right now. Please try again.');
         btn.textContent = 'Send to my inbox';
         btn.disabled = false;
@@ -1285,7 +1286,9 @@ RULE 5 — GENERAL:
 
         const rawText = await response.text();
         let data = null;
-        try { data = rawText ? JSON.parse(rawText) : null; } catch { data = null; }
+        try { data = rawText ? JSON.parse(rawText) : null; } catch (parseErr) {
+          console.warn('Failed to parse API response as JSON:', parseErr);
+        }
 
         if (!response.ok) {
           throw new Error(data?.error || data?.message || rawText || ('API request failed with status ' + response.status));

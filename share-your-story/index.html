@@ -480,6 +480,10 @@ async function processStory() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, region: location, content, author_name: name })
     });
+    if (!res.ok) {
+      const errBody = await res.text().catch(() => '');
+      throw new Error(`Story processing failed (HTTP ${res.status}): ${errBody}`);
+    }
     const data = await res.json();
     clearInterval(stepTimer);
 
@@ -504,6 +508,7 @@ async function processStory() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (err) {
+    console.error('Story processing error:', err);
     clearInterval(stepTimer);
     showError('Something went wrong. Please try again.');
     btn.disabled = false;
@@ -551,6 +556,10 @@ async function publishStory() {
         insights:  processedData.insights,
       })
     });
+    if (!res.ok) {
+      const errBody = await res.text().catch(() => '');
+      throw new Error(`Publish failed (HTTP ${res.status}): ${errBody}`);
+    }
     const data = await res.json();
 
     if (data.error) {
@@ -571,6 +580,7 @@ async function publishStory() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (err) {
+    console.error('Publish error:', err);
     showError('Failed to publish. Please try again.');
     btn.disabled = false;
     btn.innerHTML = '<span>Publish my story →</span>';

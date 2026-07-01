@@ -28,6 +28,10 @@ function fetchStory() {
       }
     };
     https.get(options, (res) => {
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        reject(new Error(`Supabase API returned HTTP ${res.statusCode}`));
+        return;
+      }
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {

@@ -1254,6 +1254,7 @@ async function checkVerifiedSources(destination, bannerId, titleId, subId) {
     }
     banner.style.display = 'flex';
   } catch (e) {
+    console.warn('checkVerifiedSources failed:', e);
     banner.style.display = 'none';
   }
 }
@@ -1389,7 +1390,8 @@ async function readWorkerPayload(response) {
 
   try {
     data = rawText ? JSON.parse(rawText) : null;
-  } catch (error) {
+  } catch (parseError) {
+    console.warn('readWorkerPayload: failed to parse response as JSON:', parseError.message);
     data = null;
   }
 

@@ -15,7 +15,7 @@ async function migrateFile(filePath) {
 
   console.log(`\n📦 Migrating: ${data.id}`);
 
-  await supabase.from("regions").upsert({
+  const { error: regionError } = await supabase.from("regions").upsert({
     id: data.id,
     state: data.state,
     district: data.district,
@@ -26,18 +26,24 @@ async function migrateFile(filePath) {
     verified: data.verified,
     last_updated: data.last_updated
   });
+  if (regionError) {
+    throw new Error(`Failed to upsert region ${data.id}: ${regionError.message}`);
+  }
 
-  await supabase.from("region_meta").upsert({
+  const { error: metaError } = await supabase.from("region_meta").upsert({
     region_id: data.id,
     permit: data.permit,
     routes: data.routes,
     connectivity: data.connectivity,
     season: data.season
   });
+  if (metaError) {
+    throw new Error(`Failed to upsert region_meta for ${data.id}: ${metaError.message}`);
+  }
 
   for (const place of data.destinations || []) {
 
-    await supabase.from("places").upsert({
+    const { error: placeError } = await supabase.from("places").upsert({
       id: place.id,
       region_id: data.id,
       name: place.name,
@@ -47,6 +53,9 @@ async function migrateFile(filePath) {
       description: place.description,
       hidden_score: place.hidden_score
     });
+    if (placeError) {
+      throw new Error(`Failed to upsert place ${place.id}: ${placeError.message}`);
+    }
 
     console.log(`📍 Place: ${place.name}`);
 
@@ -60,28 +69,35 @@ async function migrateFile(filePath) {
       if (!items) continue;
 
       for (const item of items) {
-        await supabase.from("place_content").upsert({
+        const { error: contentError } = await supabase.from("place_content").upsert({
           place_id: place.id,
           category: type,
           content: item
         });
+        if (contentError) {
+          throw new Error(`Failed to upsert place_content for ${place.id} (${type}): ${contentError.message}`);
+        }
       }
     }
 
     for (const stay of place.stays || []) {
-      await supabase.from("stays").upsert({
+      const { error: stayError } = await supabase.from("stays").upsert({
         place_id: place.id,
         name: stay.name,
         type: stay.type,
         price_range: stay.price_range,
         notes: stay.notes
       });
+      if (stayError) {
+        throw new Error(`Failed to upsert stay for ${place.id} (${stay.name}): ${stayError.message}`);
+      }
     }
   }
 }
 
 async function migrateAll() {
   const states = fs.readdirSync(basePath);
+  const errors = [];
 
   for (const state of states) {
     const statePath = path.join(basePath, state);
@@ -104,8 +120,15 @@ async function migrateAll() {
         await migrateFile(filePath);
       } catch (err) {
         console.error("❌ Error in:", file, err.message);
+        errors.push({ file, error: err.message });
       }
     }
+  }
+
+  if (errors.length > 0) {
+    console.error(`\n⚠️ Migration completed with ${errors.length} error(s):`);
+    errors.forEach(({ file, error }) => console.error(`  - ${file}: ${error}`));
+    process.exit(1);
   }
 
   console.log("\n🎉 ALL STATES MIGRATED");
